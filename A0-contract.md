@@ -34,9 +34,9 @@ We hereby agree to work together as a team on the course project in CISC / CMPE 
 We each promise to make our best effort to ensure that the team works together and that we equitably share the workload and opportunities for learning on all project phases.
 
 Team Member #1:
-Name: 
+Name: Tyler Pitcher
 
-Student Number:	
+Student Number:	20238659
 
 
 Team Member #2:
