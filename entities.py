@@ -5,7 +5,7 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
 db = SQLAlchemy(app)
 
-def User(db.Model):
+class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(25), unique=True, nullable=False)
     password = db.Column(db.String(60), nullable=False)
@@ -13,3 +13,15 @@ def User(db.Model):
     wallet = db.Column(db.Float, nullable=False, default=0.0)
     posts = db.relationships('Post', backref='seller', lazy=True)
     reviews = db.relationships('Review', backref='author', lazy=True)
+    
+    def __repr__(self):
+        return '<User %r>' % self.username
+        
+class Review(db.Model):
+    reviewId = db.Column(db.Integer, primary_key=True)
+    author = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    rating = db.Column(db.Float)
+    description = db.Column(db.text, nullable=False)
+    
+    def __repr__(self)
+        return '<Review %r>' % self.reviewId
