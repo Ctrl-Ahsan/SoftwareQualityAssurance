@@ -46,11 +46,11 @@ Name: Wilson Hammell
 Student Number:	20074037
 
 
-Team Member #3: 
+Team Member #3:
 
-Name: 
+Name: Luka Milosevic
 
-Student Number:
+Student Number:20170844
 
 
 Team Member #4:
