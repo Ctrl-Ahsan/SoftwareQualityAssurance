@@ -23,5 +23,14 @@ class Review(db.Model):
     rating = db.Column(db.Float)
     description = db.Column(db.text, nullable=False)
     
-    def __repr__(self)
+    def __repr__(self):
         return '<Review %r>' % self.reviewId
+        
+class Transaction(db.Model):
+    transactionId = db.Column(db.Integer, primary_key=True)
+    seller = db.Column(db.String(25), nullable=False)
+    buyer = db.Column(db.String(25), nullable=False)
+    amount = db.Column(db.Float, nullable=False, default=0.0)
+    
+    def __repr__(self):
+        return '<Transaction %r>' % self.transactionId
