@@ -34,3 +34,12 @@ class Transaction(db.Model):
     
     def __repr__(self):
         return '<Transaction %r>' % self.transactionId
+
+class Post(db.Model):
+    postId = db.Column(db.Integer, primary_key=True)
+    seller = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    title = db.Column(db.Text, unique=True, nullable=False )
+    description = db.Column(db.text, nullable=False)
+
+    def __repr__(self):
+        return '<Post %r>' % self.postId
