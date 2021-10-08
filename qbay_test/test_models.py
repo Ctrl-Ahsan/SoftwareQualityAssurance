@@ -28,11 +28,11 @@ def test_r1_4_user_register():
 
 def test_r1_5_user_register():
     assert register('User Thirteen', 'u13@queensu.ca', '123Ab#') is True
-    # assert register('User', 'u14@queensu.ca', '123Ab#') is False
-    # assert register('User ', 'u15@queensu.ca', '123Ab#') is False
-    # assert register(' User', 'u16@queensu.ca', '123Ab#') is False
-    # assert register('userlow', 'u17@queensu.ca', '123Ab#') is False
-    # assert register('USERCAPITAL', 'u18@queensu.ca', '123Ab#') is False
+    assert register('User', 'u14@queensu.ca', '123Ab#') is False
+    assert register('User ', 'u15@queensu.ca', '123Ab#') is False
+    assert register(' User', 'u16@queensu.ca', '123Ab#') is False
+    assert register('userlow', 'u17@queensu.ca', '123Ab#') is False
+    assert register('USERCAPITAL', 'u18@queensu.ca', '123Ab#') is False
 
 # def test_r1_6_user_register():
 #     assert register('urq', 'u19@queensu.ca', '123Ab#') is True
