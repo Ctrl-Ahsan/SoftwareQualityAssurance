@@ -59,8 +59,8 @@ class Product(db.Model):
         return '<Post %r>' % self.id
 
 
-
 db.create_all()
+
 
 def is_complex_password(password):
     if not bool(re.search(r'[\s!\"#\$%&\'\(\)\*\+,-\./:;<=>\?@\[\]\^_`\{\|\}~]', password)):
@@ -71,14 +71,17 @@ def is_complex_password(password):
         return False
     return len(password) >= 6
 
+
 def is_email(email):
     regex = r'([!#-\'*+/-9=?A-Z^-~-]+(\.[!#-\'*+/-9=?A-Z^-~-]+)*|"([]!#-[^-~ \t]|(\\[\t -~]))+")@([!#-\'*+/-9=?A-Z^-~-]+(\.[!#-\'*+/-9=?A-Z^-~-]+)*|\[[\t -Z^-~]*])'
     return bool(re.match(regex, email))
+
 
 def is_proper_username(name):
     if len(name) < 3 or len(name) > 19:
         return False
     return bool(re.match(r'^[A-z0-9]+[A-z0-9 ]*[A-z0-9]+$', name))
+
 
 def register(name, email, password):
     '''
