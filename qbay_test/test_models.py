@@ -43,9 +43,11 @@ def test_r1_6_user_register():
     assert register('u', 'u20@queensu.ca', '123Ab#') is False
     assert register('abcdefghijklmnopqrstuvwxyz', 'u21@queensu.ca', '123Ab#') is False
 
-def test_r1_7_user_register():
-    assert register('urt', 'u22@queensu.ca', '123Ab#') is True
-    assert register('urt', 'u22@queenu.ca', '123Ab#') is False
+# def test_r1_7_user_register():
+#     assert register('urt', 'u22@queensu.ca', '123Ab#') is True
+#     assert register('urt', 'u22@queenu.ca', '123Ab#') is False
 
-# def test_r1_8_user_register():
-#     assert register('urv', 'u22@queensu.ca', '123Ab#') is False 
+def test_r1_8_user_register():
+    register('tmp', 'tmp@queensu.ca', '123Ab#')
+    user = User.query.filter_by(email='tmp@queensu.ca').first()
+    assert user.shipping_address == ''
