@@ -1,5 +1,9 @@
-from qbay import app
+import re
+from datetime import datetime
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from werkzeug.security import generate_password_hash, check_password_hash
+from qbay import app
 
 
 db = SQLAlchemy(app)
@@ -7,13 +11,13 @@ db = SQLAlchemy(app)
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(320), unique=True, nullable=False)
     username = db.Column(db.String(25), unique=True, nullable=False)
     password = db.Column(db.String(60), nullable=False)
-    email = db.Column(db.String(120), unique=True, nullable=False)
     balance = db.Column(db.Float, nullable=False, default=0.0)
     shipping_address = db.Column(db.Text, nullable=False)
     postal_code = db.Column(db.String(6), nullable=False)
-    posts = db.relationship('Product', backref='owner', lazy=True)
+    posts = db.relationship('Product', backref='creator', lazy=True)
     reviews = db.relationship('Review', backref='author', lazy=True)
     
     def __repr__(self):
@@ -56,9 +60,26 @@ class Product(db.Model):
         return '<Post %r>' % self.id
 
 
-# create all tables
+
 db.create_all()
 
+def is_complex_password(password):
+    if not bool(re.search('[\s!\"#\$%&\'\(\)\*\+,-\./:;<=>\?@\[\]\^_`\{\|\}~]', password)):
+        return False
+    if not bool(re.search('[a-z]', password)):
+        return False
+    if not bool(re.search('[A-Z]', password)):
+        return False
+    return len(password) >= 6
+
+def is_email(email):
+    regex = '([!#-\'*+/-9=?A-Z^-~-]+(\.[!#-\'*+/-9=?A-Z^-~-]+)*|"([]!#-[^-~ \t]|(\\[\t -~]))+")@([!#-\'*+/-9=?A-Z^-~-]+(\.[!#-\'*+/-9=?A-Z^-~-]+)*|\[[\t -Z^-~]*])'
+    return bool(re.match(regex, email))
+
+def is_proper_username(name):
+    if len(name) < 3 or len(name) > 19:
+        return False
+    return bool(re.match('[A-z]+[A-z ]*[A-z]+', name))
 
 def register(name, email, password):
     '''
@@ -70,16 +91,32 @@ def register(name, email, password):
       Returns:
         True if registration succeeded otherwise False
     '''
+
+    if not is_email(email):
+        return False
+
     # check if the email has been used:
     existed = User.query.filter_by(email=email).all()
     if len(existed) > 0:
         return False
 
-    # create a new user
-    user = User(username=name, email=email, password=password)
-    # add it to the current database session
+    if not is_complex_password(password):
+        return False
+
+    if not is_proper_username(name):
+        return False
+
+    user = User(
+        email=email,
+        username=name,  
+        password=password,
+        balance=100.0,
+        shipping_address='',
+        postal_code=''
+    )
+    
     db.session.add(user)
-    # actually save the user object
+
     db.session.commit()
 
     return True
