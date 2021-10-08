@@ -53,6 +53,7 @@ class Product(db.Model):
     title = db.Column(db.Text, unique=True, nullable=False)
     description = db.Column(db.Text, nullable=False)
     price = db.Column(db.Float, nullable=False)
+    last_modified = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
     def __repr__(self):
         return '<Post %r>' % self.id
