@@ -2,11 +2,6 @@ from qbay import app
 from flask_sqlalchemy import SQLAlchemy
 
 
-'''
-This file defines data models and related business logics
-'''
-
-
 db = SQLAlchemy(app)
 
 
@@ -52,7 +47,7 @@ class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     owner = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     owner_email = db.Column(db.String(120), nullable=False)
-    title = db.Column(db.Text, unique=True, nullable=False )
+    title = db.Column(db.Text, unique=True, nullable=False)
     description = db.Column(db.Text, nullable=False)
     price = db.Column(db.Float, nullable=False)
 
