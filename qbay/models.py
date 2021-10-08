@@ -10,9 +10,8 @@ db = SQLAlchemy(app)
 
 
 class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(320), unique=True, nullable=False)
-    username = db.Column(db.String(25), unique=True, nullable=False)
+    email = db.Column(db.String(320), primary_key=True)
+    username = db.Column(db.String(19), unique=True, nullable=False)
     password = db.Column(db.String(60), nullable=False)
     balance = db.Column(db.Float, nullable=False, default=0.0)
     shipping_address = db.Column(db.Text, nullable=False)
@@ -21,13 +20,13 @@ class User(db.Model):
     reviews = db.relationship('Review', backref='author', lazy=True)
     
     def __repr__(self):
-        return '<User %r>' % self.username
+        return '<User %r>' % self.email
 
 
 class Review(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    user_email = db.Column(db.String(25), unique=False, nullable=False)
+    user_email = db.Column(db.String(320), unique=False, nullable=False)
     score = db.Column(db.Integer)
     review = db.Column(db.Text, nullable=False)
     
@@ -38,9 +37,9 @@ class Review(db.Model):
 class Transaction(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    user_email = db.Column(db.String(120), nullable=False, unique=False)
-    seller = db.Column(db.String(25), nullable=False)
-    buyer = db.Column(db.String(25), nullable=False)
+    user_email = db.Column(db.String(320), nullable=False, unique=False)
+    seller = db.Column(db.String(19), nullable=False)
+    buyer = db.Column(db.String(19), nullable=False)
     price = db.Column(db.Float, nullable=False, default=0.0)
     product_id = db.Column(db.Integer, nullable=False)
     
@@ -50,7 +49,7 @@ class Transaction(db.Model):
 
 class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    owner = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    owner = db.Column(db.Integer, db.ForeignKey('user.email'), nullable=False)
     owner_email = db.Column(db.String(120), nullable=False)
     title = db.Column(db.Text, unique=True, nullable=False)
     description = db.Column(db.Text, nullable=False)

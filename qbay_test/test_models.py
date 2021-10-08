@@ -1,23 +1,16 @@
 from qbay.models import User, register, login
 from sqlalchemy.inspection import inspect
 
-# def test_r1_1_user_register():
-    
-#     '''
-#     Testing R1-7: If the email has been used, the operation failed.
-#     '''
-
-#     assert register('u0', 'test0@test.com', '123456') is True
-#     assert register('u0', 'test1@test.com', '123456') is True
-#     assert register('u1', 'test0@test.com', '123456') is False
-
 def test_r1_1_user_register():
+    '''
+    Testing R1-7: If the email has been used, the operation failed.
+    '''
     assert register('ur0', 'u0@test.ca', '123Ab#') is True
     assert register('ur1', '', '123Ab#') is False
     assert register('ur2', 'u2@test.ca', '') is False
 
-# def test_r1_2_user_register():
-#     assert inspect(User).primary_key[0].name == 'email'
+def test_r1_2_user_register():
+    assert inspect(User).primary_key[0].name == 'email'
 
 def test_r1_3_user_register():
     assert register('ura', 'u3@gmail.com', '123Ab#') is True
