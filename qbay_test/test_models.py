@@ -43,6 +43,7 @@ def test_r1_6_user_register():
     assert register('u', 'u20@queensu.ca', '123Ab#') is False
     assert register('abcdefghijklmnopqrstuv', 'u21@qq.ca', '123Ab#') is False
 
+
 def test_r1_7_user_register():
     register('urt', 'u22@queensu.ca', '123Ab#') 
     result = register('urt', 'u22@queensu.ca', '123Ab#') 
