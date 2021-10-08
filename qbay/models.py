@@ -62,7 +62,8 @@ db.create_all()
 
 
 def is_complex_password(password):
-    if not bool(re.search(r'[\s!\"#\$%&\'\(\)\*\+,-\./:;<=>\?@\[\]\^_`\{\|\}~]', password)):
+    regex = r'[\s!\"#\$%&\'\(\)\*\+,-\./:;<=>\?@\[\]\^_`\{\|\}~]'
+    if not bool(re.search(regex, password)):
         return False
     if not bool(re.search(r'[a-z]', password)):
         return False
@@ -73,8 +74,8 @@ def is_complex_password(password):
 
 def is_email(email):
     regex = (r'([!#-\'*+/-9=?A-Z^-~-]+(\.[!#-\'*+/-9=?A-Z^-~-]+)*|\'"([]!#-[^-'
-            r'~\t]|(\\[\t -~]))+")@([!#-\'*+/-9=?A-Z^-~-]+(\.[!#-\'*+/-9=?'
-            r'A-Z^-~-]+)*|\[[\t -Z^-~]*])')
+             r'~\t]|(\\[\t -~]))+")@([!#-\'*+/-9=?A-Z^-~-]+(\.[!#-\'*+/-9=?'
+             r'A-Z^-~-]+)*|\[[\t -Z^-~]*])')
     
     return bool(re.match(regex, email))
 
