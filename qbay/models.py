@@ -78,7 +78,7 @@ def is_email(email):
 def is_proper_username(name):
     if len(name) < 3 or len(name) > 19:
         return False
-    return bool(re.match('[A-z]+[A-z ]*[A-z]+', name))
+    return bool(re.match('^[A-z0-9]+[A-z0-9 ]*[A-z0-9]+$', name))
 
 def register(name, email, password):
     '''
