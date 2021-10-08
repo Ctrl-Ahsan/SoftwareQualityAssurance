@@ -45,7 +45,8 @@ def test_r1_6_user_register():
 
 def test_r1_7_user_register():
     register('urt', 'u22@queensu.ca', '123Ab#') 
-    assert register('urt', 'u22@queenu.ca', '123Ab#') is False
+    result = register('urt', 'u22@queensu.ca', '123Ab#') 
+    assert result is False
 
 def test_r1_8_user_register():
     register('tmp', 'tmp@queensu.ca', '123Ab#')
