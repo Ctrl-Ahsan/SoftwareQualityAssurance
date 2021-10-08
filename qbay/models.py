@@ -39,6 +39,7 @@ class Transaction(db.Model):
     buyer = db.Column(db.String(25), nullable=False)
     price = db.Column(db.Float, nullable=False, default=0.0)
     product_id = db.Column(db.Integer, nullable=False)
+    
     def __repr__(self):
         return '<Transaction %r>' % self.id
 
