@@ -139,45 +139,45 @@ def createProduct(title, description, price, owner_email):
         True if product is succesfully added otherwise False
     '''
 
-    #Check if user exists
+    # Check if user exists
     userExists = User.query.filter_by(email=owner_email).all()
     if len(userExists) == 0:
         return False
 
-    #Check if title is valid
+    # Check if title is valid
     if not validTitle(title):
         return False
 
-    #Check if product name is uniqe
+    # Check if product name is uniqe
     titleExists = Product.query.filter_by(title=title).all()
     if len(titleExists) > 0:
         return False
 
-    #Check if description is valid
+    # Check if description is valid
     if not validDescription(description, title):
         return False
 
-    #check if price is valid
+    # Check if price is valid
     if not validPrice(price):
         return False
 
     #Get current date
     lastModified = datetime.today()
 
-    #Get prod id
+    # Get prod id
     productCount = Product.query(Product.id).count()
 
-    #Create product
+    # Create product
     product = Product(
-        id = productCount+1,
-        owner_email = owner_email,
-        title = title,
-        description = description,
-        price = price,
-        last_modified = lastModified
-    )
+        id=productCount+1,
+        owner_email=owner_email,
+        title=title,
+        description=description,
+        price=price,
+        last_modified=lastModified
+    ) 
 
-    #Add product, return true
+    # Add product, return true
     db.session.add(product)
     db.session.commit()
     return True
