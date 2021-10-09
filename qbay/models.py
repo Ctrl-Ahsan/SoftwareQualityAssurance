@@ -128,16 +128,14 @@ def register(name, email, password):
 
 
 def createProduct(title, description, price, owner_email):
-    '''
-    Register a new user
-      Parameters:
-        title (string):          prod title
-        description (string):    prod description
-        price (double):          prod price
-        owner_email (string):    prod owner_email
-      Returns:
-        True if product is succesfully added otherwise False
-    '''
+    # Register a new user
+    #   Parameters:
+    #     title (string):          prod title
+    #     description (string):    prod description
+    #     price (double):          prod price
+    #     owner_email (string):    prod owner_email
+    #   Returns:
+    #     True if product is succesfully added otherwise False
 
     # Check if user exists
     userExists = User.query.filter_by(email=owner_email).all()
@@ -161,7 +159,7 @@ def createProduct(title, description, price, owner_email):
     if not validPrice(price):
         return False
 
-    #Get current date
+    # Get current date
     lastModified = datetime.today()
 
     # Get prod id
@@ -169,7 +167,7 @@ def createProduct(title, description, price, owner_email):
 
     # Create product
     product = Product(
-        id=productCount+1,
+        id=productCount + 1,
         owner_email=owner_email,
         title=title,
         description=description,
@@ -184,8 +182,8 @@ def createProduct(title, description, price, owner_email):
 
 
 def validTitle(title):
-    #Returns true is the title is alphanumerical, 80 or less characters, and has no spaces at beginning or end
-    if(title[0]==" " or title[-1]==" " or len(title)>80):
+    # Returns true is the title is alphanumerical, 80 or less characters, and has no spaces at beginning or end
+    if(title[0] == " " or title[-1] == " " or len(title) > 80):
         return False
     if all(x.isalpha() or x.isnumeric() or x.isspace() for x in title):
         return True
@@ -193,15 +191,15 @@ def validTitle(title):
 
 
 def validPrice(price):
-    #Returns true if price falls in acceptable range
-    if 10<=price<=10000:
+    # Returns true if price falls in acceptable range
+    if 10 <= price <= 10000:
         return True
     return False
 
 
 def validDescription(description, title):
-    #Returns true is description length is acceptable
-    if 20<=len(description)<2000 and len(description)>len(title):
+    # Returns true is description length is acceptable
+    if 20 <= len(description) < 2000 and len(description) > len(title):
         return True
     return False
 
