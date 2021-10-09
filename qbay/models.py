@@ -48,8 +48,7 @@ class Transaction(db.Model):
 
 class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    owner = db.Column(db.Integer, db.ForeignKey('user.email'), nullable=False)
-    owner_email = db.Column(db.String(120), nullable=False)
+    owner_email = db.Column(db.Integer, db.ForeignKey('user.email'), nullable=False)
     title = db.Column(db.Text, unique=True, nullable=False)
     description = db.Column(db.Text, nullable=False)
     price = db.Column(db.Float, nullable=False)
@@ -126,6 +125,85 @@ def register(name, email, password):
     db.session.commit()
 
     return True
+
+
+def createProduct(title, description, price, owner_email):
+    '''
+    Register a new user
+      Parameters:
+        title (string):          prod title
+        description (string):    prod description
+        price (double):          prod price
+        owner_email (string):    prod owner_email
+      Returns:
+        True if product is succesfully added otherwise False
+    '''
+
+    #Check if user exists
+    userExists = User.query.filter_by(email=owner_email).all()
+    if len(userExists) == 0:
+        return False
+
+    #Check if title is valid
+    if not validTitle(title):
+        return False
+
+    #Check if product name is uniqe
+    titleExists = Product.query.filter_by(title=title).all()
+    if len(titleExists) > 0:
+        return False
+
+    #Check if description is valid
+    if not validDescription(description, title):
+        return False
+
+    #check if price is valid
+    if not validPrice(price):
+        return False
+
+    #Get current date
+    lastModified = datetime.today()
+
+    #Get prod id
+    productCount = Product.query(Product.id).count()
+
+    #Create product
+    product = Product(
+        id = productCount+1,
+        owner_email = owner_email,
+        title = title,
+        description = description,
+        price = price,
+        last_modified = lastModified
+    )
+
+    #Add product, return true
+    db.session.add(product)
+    db.session.commit()
+    return True
+
+
+def validTitle(title):
+    #Returns true is the title is alphanumerical, 80 or less characters, and has no spaces at beginning or end
+    if(title[0]==" " or title[-1]==" " or len(title)>80):
+        return False
+    if all(x.isalpha() or x.isnumeric() or x.isspace() for x in title):
+        return True
+    return False
+
+
+def validPrice(price):
+    #Returns true if price falls in acceptable range
+    if 10<=price<=10000:
+        return True
+    return False
+
+
+def validDescription(description, title):
+    #Returns true is description length is acceptable
+    if 20<=len(description)<2000 and len(description)>len(title):
+        return True
+    return False
 
 
 def login(email, password):
