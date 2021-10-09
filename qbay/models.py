@@ -182,7 +182,8 @@ def createProduct(title, description, price, owner_email):
 
 
 def validTitle(title):
-    # Returns true is the title is alphanumerical, 80 or less characters, and has no spaces at beginning or end
+    # Returns true is the title is alphanumerical, 80 or less characters
+    # and has no spaces at beginning or end
     if(title[0] == " " or title[-1] == " " or len(title) > 80):
         return False
     if all(x.isalpha() or x.isnumeric() or x.isspace() for x in title):
