@@ -48,7 +48,8 @@ class Transaction(db.Model):
 
 class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_email = db.Column(db.String, db.ForeignKey('user.email'), nullable=False)
+    user_email = db.Column(db.String, db.ForeignKey('user.email'), 
+                                                    nullable=False)
     title = db.Column(db.Text, unique=True, nullable=False)
     description = db.Column(db.Text, nullable=False)
     price = db.Column(db.Float, nullable=False)
