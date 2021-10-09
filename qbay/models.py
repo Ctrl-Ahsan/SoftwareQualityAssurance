@@ -48,7 +48,7 @@ class Transaction(db.Model):
 
 class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    owner_email = db.Column(db.Integer, db.ForeignKey('user.email'), nullable=False)
+    user_email = db.Column(db.String, db.ForeignKey('user.email'), nullable=False)
     title = db.Column(db.Text, unique=True, nullable=False)
     description = db.Column(db.Text, nullable=False)
     price = db.Column(db.Float, nullable=False)
@@ -127,18 +127,18 @@ def register(name, email, password):
     return True
 
 
-def createProduct(title, description, price, owner_email):
+def createProduct(title, description, price, user_email):
     # Register a new user
     #   Parameters:
     #     title (string):          prod title
     #     description (string):    prod description
     #     price (double):          prod price
-    #     owner_email (string):    prod owner_email
+    #     user_email (string):     prod user_email
     #   Returns:
     #     True if product is succesfully added otherwise False
 
     # Check if user exists
-    userExists = User.query.filter_by(email=owner_email).all()
+    userExists = User.query.filter_by(email=user_email).all()
     if len(userExists) == 0:
         return False
 
@@ -168,7 +168,7 @@ def createProduct(title, description, price, owner_email):
     # Create product
     product = Product(
         id=productCount + 1,
-        owner_email=owner_email,
+        user_email=user_email,
         title=title,
         description=description,
         price=price,
