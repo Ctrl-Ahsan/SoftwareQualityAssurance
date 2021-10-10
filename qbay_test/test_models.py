@@ -88,22 +88,22 @@ def test_r4_2_create_product():
     # test for valid title length
     # no more than 80 characters
     assert createProduct('title 4', 'description must be twenty chars', 
-                         10, '2021-10-10', 'email1@gmail.com') is True
+                         10, '2021-10-10', 'u0@test.ca') is True
 
     assert createProduct('8080808080808080808080808080808080'
                          '8080808080808080808080808080808080'
                          '808080808080', 'description must be twenty chars', 
-                         10, '2021-10-10', 'email1@gmail.com') is False    
+                         10, '2021-10-10', 'u0@test.ca') is False    
 
 
 def test_r4_3_create_product():
     # test for valid description length
     # total charcters between 20 and 2000
     assert createProduct('title 5', 'description must be twenty chars', 
-                         10, '2021-10-10', 'email1@gmail.com') is True  
+                         10, '2021-10-10', 'u0@test.ca') is True  
 
     assert createProduct('title 6', 'description', 
-                         10, '2021-10-10', 'email1@gmail.com') is False
+                         10, '2021-10-10', 'u0@test.ca') is False
 
     assert createProduct('title 7', 'description must be > 2000'
                          '200020002000200020002000200020002000200020002000'
@@ -134,49 +134,49 @@ def test_r4_3_create_product():
                          '200020002000200020002000200020002000200020002000'
                          '200020002000200020002000200020002000200020002000'
                          '200020002000200020002000200020002000200020002000', 
-                         10, '2021-10-10', 'email1@gmail.com') is False        
+                         10, '2021-10-10', 'u0@test.ca') is False        
 
 
 def test_r4_4_create_product():
     # test that description is longer than title
     assert createProduct('title 8', 'description must be twenty chars', 
-                         10, '2021-10-10', 'email1@gmail.com') is True 
+                         10, '2021-10-10', 'u0@test.ca') is True 
 
     assert createProduct('title 9 be longer than 20', 'description be twenty', 
-                         10, '2021-10-10', 'email1@gmail.com') is False                           
+                         10, '2021-10-10', 'u0@test.ca') is False                           
 
 
 def test_r4_5_create_product():
     # test for valid price range
     # between 10 and 10000
     assert createProduct('title 10', 'description must be twenty chars', 
-                         10, '2021-10-10', 'email1@gmail.com') is True  
+                         10, '2021-10-10', 'u0@test.ca') is True  
 
     assert createProduct('title 11', 'description must be twenty chars', 
-                         9, '2021-10-10', 'email1@gmail.com') is False
+                         9, '2021-10-10', 'u0@test.ca') is False
 
     assert createProduct('title 12', 'description must be twenty chars', 
-                         10001, '2021-10-10', 'email1@gmail.com') is False
+                         10001, '2021-10-10', 'u0@test.ca') is False
 
 
 def test_r4_6_create_product():
     # test for valid date
     # must be after 2021-01-02 and before 2025-01-02.
     assert createProduct('title 13', 'description must be twenty chars', 
-                         10, '2021-10-10', 'email1@gmail.com') is True   
+                         10, '2021-10-10', 'u0@test.ca') is True   
 
     assert createProduct('title 14', 'description must be twenty chars', 
-                         10, '2021-01-01', 'email1@gmail.com') is False
+                         10, '2021-01-01', 'u0@test.ca') is False
 
     assert createProduct('title 15', 'description must be twenty chars', 
-                         10, '2026-01-01', 'email1@gmail.com') is False      
+                         10, '2026-01-01', 'u0@test.ca') is False      
 
 
 def test_r4_7_create_product():
     # test for valid owner email
     # must be none empty and owner must exist
     assert createProduct('title 16', 'description must be twenty chars', 
-                         10, '2021-10-10', 'email1@gmail.com') is True  
+                         10, '2021-10-10', 'u0@test.ca') is True  
 
     assert createProduct('title 17', 'description must be twenty chars', 
                          10, '2021-10-10', 'fakeemail@gmail.com') is False    
@@ -188,7 +188,7 @@ def test_r4_7_create_product():
 def test_r4_8_create_product():
     # test for unique product title
     assert createProduct('title 19', 'description must be twenty chars', 
-                         10, '2021-10-10', 'email1@gmail.com') is True 
+                         10, '2021-10-10', 'u0@test.ca') is True 
 
     assert createProduct('title 19', 'description must be twenty chars', 
-                         10, '2021-10-10', 'email1@gmail.com') is False 
+                         10, '2021-10-10', 'u0@test.ca') is False 
