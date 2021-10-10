@@ -140,9 +140,9 @@ def createProduct(title, description, price, last_modified_date, owner_email):
     #     True if product is succesfully added otherwise False
 
     # Check if user exists
-    userExists = User.query.filter_by(email=owner_email).all()
-    if len(userExists) == 0:
-        return False
+    # userExists = User.query.filter_by(email=owner_email).all()
+    # if len(userExists) == 0:
+    #     return False
 
     # Check if title is valid
     if not validTitle(title):
