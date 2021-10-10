@@ -202,7 +202,7 @@ def validPrice(price):
 
 def validDescription(description, title):
     # Returns true is description length is acceptable
-    if 20 <= len(description) < 2000 and len(description) > len(title):
+    if 20 <= len(description) <= 2000 and len(description) > len(title):
         return True
     return False
 
