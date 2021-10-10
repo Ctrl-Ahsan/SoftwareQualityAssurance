@@ -69,20 +69,19 @@ def test_r1_10_user_register():
 
 
 def test_r4_1_create_product():
-    assert register('ur0', 'email1@gmail.com', '123Ab#') is True
     # test for valid title characters
     # prefix/sufix!=space, must be alphanumerical
     assert createProduct('title 1', 'description must be twenty chars', 
-                         10, '2021-10-10', 'email1@gmail.com') is True
+                         10, '2021-10-10', 'u0@test.ca') is True
 
     assert createProduct(' title 2', 'description must be twenty chars', 
-                         10, '2021-10-10', 'email1@gmail.com') is False
+                         10, '2021-10-10', 'u0@test.ca') is False
 
     assert createProduct('title 3 ', 'description must be twenty chars', 
-                         10, '2021-10-10', 'email1@gmail.com') is False      
+                         10, '2021-10-10', 'u0@test.ca') is False      
 
     assert createProduct('title $', 'description must be twenty chars', 
-                         10, '2021-10-10', 'email1@gmail.com') is False
+                         10, '2021-10-10', 'u0@test.ca') is False
 
 
 def test_r4_2_create_product():
