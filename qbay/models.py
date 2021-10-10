@@ -15,7 +15,7 @@ class User(db.Model):
     balance = db.Column(db.Float, nullable=False, default=0.0)
     shipping_address = db.Column(db.Text, nullable=False)
     postal_code = db.Column(db.String(6), nullable=False)
-    posts = db.relationship('Product', backref='creator', lazy=True)
+    # posts = db.relationship('Product', backref='creator', lazy=True)
     reviews = db.relationship('Review', backref='author', lazy=True)
     
     def __repr__(self):
@@ -48,12 +48,11 @@ class Transaction(db.Model):
 
 class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    owner = db.Column(db.Integer, db.ForeignKey('user.email'), nullable=False)
     owner_email = db.Column(db.String(120), nullable=False)
     title = db.Column(db.Text, unique=True, nullable=False)
-    description = db.Column(db.Text, nullable=False)
+    description = db.Column(db.String(2000), nullable=False)
     price = db.Column(db.Float, nullable=False)
-    last_modified = db.Column(db.DateTime, default=datetime.utcnow)
+    last_modified = db.Column(db.String(10), unique=False, nullable=False)
 
     def __repr__(self):
         return '<Post %r>' % self.id
@@ -125,6 +124,93 @@ def register(name, email, password):
 
     db.session.commit()
 
+    return True
+
+
+def createProduct(title, description, price, last_modified_date, owner_email):
+    # Register a new user
+    #   Parameters:
+    #     title (string):          prod title
+    #     description (string):    prod description
+    #     price (double):          prod price
+    #     last_modified_date(date):prod last_modified_date
+    #     owner_email (string):    prod owner_email
+    #   Returns:
+    #     True if product is succesfully added otherwise False
+
+    # Check if user exists
+    userExists = User.query.filter_by(email=owner_email).all()
+    if len(userExists) == 0:
+        return False
+
+    # Check if title is valid
+    if not validTitle(title):
+        return False
+
+    # Check if product name is uniqe
+    titleExists = Product.query.filter_by(title=title).all()
+    if len(titleExists) > 0:
+        return False
+
+    # Check if description is valid
+    if not validDescription(description, title):
+        return False
+
+    # Check if price is valid
+    if not validPrice(price):
+        return False
+
+    # Check is date is valid
+    if not validDate(last_modified_date):
+        return False
+
+    # Get prod id
+    productCount = db.session.query(Product).count()
+
+    # Create product
+    product = Product(
+        id=productCount + 1,
+        owner_email=owner_email,
+        title=title,
+        description=description,
+        price=price,
+        last_modified=last_modified_date
+    ) 
+
+    # Add product, return true
+    db.session.add(product)
+    db.session.commit()
+    return True
+
+
+def validTitle(title):
+    # Returns true is the title is alphanumerical, 80 or less characters
+    # and has no spaces at beginning or end
+    if(title[0] == " " or title[-1] == " " or len(title) > 80):
+        return False
+    if all(x.isalpha() or x.isnumeric() or x.isspace() for x in title):
+        return True
+    return False
+
+
+def validPrice(price):
+    # Returns true if price falls in acceptable range
+    if 10 <= price <= 10000:
+        return True
+    return False
+
+
+def validDescription(description, title):
+    # Returns true is description length is acceptable
+    if 20 <= len(description) <= 2000 and len(description) > len(title):
+        return True
+    return False
+
+
+def validDate(date):
+    # Returns true is date falls in acceptable range
+    if date > '2025-01-02' or date < '2021-01-02':
+        return False
     return True
 
 
