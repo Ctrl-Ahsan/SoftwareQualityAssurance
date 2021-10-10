@@ -25,7 +25,8 @@ class User(db.Model):
 class Review(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user = db.Column(db.Integer, db.ForeignKey('user.email'), nullable=False)
-    user_email = db.Column(db.String(320), unique=False, nullable=False)
+    owner_email = db.Column(db.String, db.ForeignKey('user.email'), 
+                           nullable=False)
     score = db.Column(db.Integer)
     review = db.Column(db.Text, nullable=False)
     
@@ -36,7 +37,8 @@ class Review(db.Model):
 class Transaction(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    user_email = db.Column(db.String(320), nullable=False, unique=False)
+    owner_email = db.Column(db.String, db.ForeignKey('user.email'), 
+                           nullable=False)
     seller = db.Column(db.String(19), nullable=False)
     buyer = db.Column(db.String(19), nullable=False)
     price = db.Column(db.Float, nullable=False, default=0.0)
@@ -48,12 +50,12 @@ class Transaction(db.Model):
 
 class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_email = db.Column(db.String, db.ForeignKey('user.email'), 
+    owner_email = db.Column(db.String, db.ForeignKey('user.email'), 
                            nullable=False)
     title = db.Column(db.Text, unique=True, nullable=False)
     description = db.Column(db.Text, nullable=False)
     price = db.Column(db.Float, nullable=False)
-    last_modified = db.Column(db.DateTime, default=datetime.utcnow)
+    last_modified_date = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):
         return '<Post %r>' % self.id
@@ -128,18 +130,19 @@ def register(name, email, password):
     return True
 
 
-def createProduct(title, description, price, user_email):
+def createProduct(title, description, price, last_modified_date, owner_email):
     # Register a new user
     #   Parameters:
     #     title (string):          prod title
     #     description (string):    prod description
     #     price (double):          prod price
-    #     user_email (string):     prod user_email
+    #     last_modified_date(date):prod last_modified_date
+    #     owner_email (string):    prod owner_email
     #   Returns:
     #     True if product is succesfully added otherwise False
 
     # Check if user exists
-    userExists = User.query.filter_by(email=user_email).all()
+    userExists = User.query.filter_by(email=owner_email).all()
     if len(userExists) == 0:
         return False
 
@@ -160,20 +163,21 @@ def createProduct(title, description, price, user_email):
     if not validPrice(price):
         return False
 
-    # Get current date
-    lastModified = datetime.today()
+    # Check is date is valid
+    if not validDate(last_modified_date):
+        return False
 
     # Get prod id
-    productCount = Product.query(Product.id).count()
+    productCount = db.session.query(Product).count()
 
     # Create product
     product = Product(
         id=productCount + 1,
-        user_email=user_email,
+        owner_email=owner_email,
         title=title,
         description=description,
         price=price,
-        last_modified=lastModified
+        last_modified_date=last_modified_date
     ) 
 
     # Add product, return true
@@ -204,6 +208,13 @@ def validDescription(description, title):
     if 20 <= len(description) < 2000 and len(description) > len(title):
         return True
     return False
+
+
+def validDate(date):
+    # Returns true is date falls in acceptable range
+    if date > '2025-01-02' or date < '2021-01-02':
+        return False
+    return True
 
 
 def login(email, password):
