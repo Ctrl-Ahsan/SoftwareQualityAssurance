@@ -15,7 +15,7 @@ class User(db.Model):
     balance = db.Column(db.Float, nullable=False, default=0.0)
     shipping_address = db.Column(db.Text, nullable=False)
     postal_code = db.Column(db.String(6), nullable=False)
-    posts = db.relationship('Product', backref='creator', lazy=True)
+    # posts = db.relationship('Product', backref='creator', lazy=True)
     reviews = db.relationship('Review', backref='author', lazy=True)
     
     def __repr__(self):
@@ -49,10 +49,10 @@ class Transaction(db.Model):
 class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     owner_email = db.Column(db.String(120), nullable=False)
-    title = db.Column(db.String(80), unique=True, nullable=False)
+    title = db.Column(db.Text, unique=True, nullable=False)
     description = db.Column(db.String(2000), nullable=False)
     price = db.Column(db.Float, nullable=False)
-    last_modified = db.Column(db.DateTime, default=datetime.utcnow)
+    last_modified = db.Column(db.String(10), unique=False, nullable=False)
 
     def __repr__(self):
         return '<Post %r>' % self.id
