@@ -25,8 +25,7 @@ class User(db.Model):
 class Review(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user = db.Column(db.Integer, db.ForeignKey('user.email'), nullable=False)
-    owner_email = db.Column(db.String, db.ForeignKey('user.email'), 
-                            nullable=False)
+    user_email = db.Column(db.String(320), unique=False, nullable=False)
     score = db.Column(db.Integer)
     review = db.Column(db.Text, nullable=False)
     
@@ -37,8 +36,7 @@ class Review(db.Model):
 class Transaction(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    owner_email = db.Column(db.String, db.ForeignKey('user.email'), 
-                            nullable=False)
+    user_email = db.Column(db.String(320), nullable=False, unique=False)
     seller = db.Column(db.String(19), nullable=False)
     buyer = db.Column(db.String(19), nullable=False)
     price = db.Column(db.Float, nullable=False, default=0.0)
@@ -50,12 +48,12 @@ class Transaction(db.Model):
 
 class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    owner_email = db.Column(db.String, db.ForeignKey('user.email'), 
-                            nullable=False)
+    owner = db.Column(db.Integer, db.ForeignKey('user.email'), nullable=False)
+    owner_email = db.Column(db.String(120), nullable=False)
     title = db.Column(db.Text, unique=True, nullable=False)
     description = db.Column(db.Text, nullable=False)
     price = db.Column(db.Float, nullable=False)
-    last_modified_date = db.Column(db.DateTime, default=datetime.utcnow)
+    last_modified = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):
         return '<Post %r>' % self.id
