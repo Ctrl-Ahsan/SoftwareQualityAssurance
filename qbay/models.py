@@ -48,10 +48,9 @@ class Transaction(db.Model):
 
 class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    owner = db.Column(db.Integer, db.ForeignKey('user.email'), nullable=False)
     owner_email = db.Column(db.String(120), nullable=False)
-    title = db.Column(db.Text, unique=True, nullable=False)
-    description = db.Column(db.Text, nullable=False)
+    title = db.Column(db.String(80), unique=True, nullable=False)
+    description = db.Column(db.String(2000), nullable=False)
     price = db.Column(db.Float, nullable=False)
     last_modified = db.Column(db.DateTime, default=datetime.utcnow)
 
