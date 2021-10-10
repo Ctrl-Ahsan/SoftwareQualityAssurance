@@ -26,7 +26,7 @@ class Review(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user = db.Column(db.Integer, db.ForeignKey('user.email'), nullable=False)
     owner_email = db.Column(db.String, db.ForeignKey('user.email'), 
-                           nullable=False)
+                            nullable=False)
     score = db.Column(db.Integer)
     review = db.Column(db.Text, nullable=False)
     
@@ -38,7 +38,7 @@ class Transaction(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     owner_email = db.Column(db.String, db.ForeignKey('user.email'), 
-                           nullable=False)
+                            nullable=False)
     seller = db.Column(db.String(19), nullable=False)
     buyer = db.Column(db.String(19), nullable=False)
     price = db.Column(db.Float, nullable=False, default=0.0)
@@ -51,7 +51,7 @@ class Transaction(db.Model):
 class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     owner_email = db.Column(db.String, db.ForeignKey('user.email'), 
-                           nullable=False)
+                            nullable=False)
     title = db.Column(db.Text, unique=True, nullable=False)
     description = db.Column(db.Text, nullable=False)
     price = db.Column(db.Float, nullable=False)

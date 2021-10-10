@@ -83,6 +83,7 @@ def test_r4_1_create_product():
     assert createProduct('title $', 'description must be twenty chars', 
                          10, '2021-10-10', 'email1@gmail.com') is False
 
+
 def test_r4_2_create_product():
     # test for valid title length
     # no more than 80 characters
