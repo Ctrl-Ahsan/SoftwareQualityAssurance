@@ -68,6 +68,30 @@ def test_r1_10_user_register():
     assert user.balance == 100.0
 
 
+def test_r2_1_login():
+    # test login functionality
+    testuser = login("u3@gmail.com", "123Ab#")
+    assert testuser is not None
+
+    testuser2 = login("u3@gmail.com", "wrongpassword")
+    assert testuser2 is None
+
+    testuser3 = login("notregistered@gmail.com", "123Ab#")
+    assert testuser3 is None
+
+
+def test_r2_2_login():
+    # test for pre query checks
+    testuser4 = login("u3@gmail.com", "123Ab#")
+    assert testuser4 is not None    
+
+    testuser5 = login("", "123Ab#")
+    assert testuser5 is None    
+
+    testuser6 = login("u3@gmail.com", "")
+    assert testuser6 is None    
+
+
 def test_r4_1_create_product():
     # test for valid title characters
     # prefix/sufix!=space, must be alphanumerical
@@ -192,3 +216,4 @@ def test_r4_8_create_product():
 
     assert createProduct('title 19', 'description must be twenty chars', 
                          10, '2021-10-10', 'u0@test.ca') is False 
+
