@@ -1,7 +1,7 @@
 from sqlalchemy.inspection import inspect
 from datetime import datetime
-from qbay.models import User, register, login,
-createProduct, updateUser, updateProduct
+from qbay.models import User, register, login
+from qbay.models import createProduct, updateUser, updateProduct
 
 
 def test_r1_1_user_register():
