@@ -315,7 +315,7 @@ def updateUser(username, new_username, shipping_address, postal_code):
     if not is_proper_postal_code(postal_code):
         return False
 
-    user = User.query.filter_by(username=name).first()
+    user = User.query.filter_by(username=username).first()
     user.username = new_username
     user.shipping_address = shipping_address
     user.postal_code = postal_code
