@@ -203,7 +203,7 @@ def updateProduct(title, title2, description, price):
         return False
 
     # Check if new product name is uniqe
-    if not title1 == title2:
+    if not title == title2:
         titleExists = Product.query.filter_by(title=title2).all()
         if len(titleExists) > 0:
             return False
