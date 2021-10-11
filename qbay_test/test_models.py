@@ -108,14 +108,14 @@ def test_r3_1_update_user():
 
 def test_r3_2_update_user():
     # test for valid shipping address
-    register('urq', 'u19@queensu.ca', '123Ab#')
-    assert updateUser('urq', '22 university ave') is True
-    assert updateUser('urq', '@@ university ave') is False
+    register('urqf', 'u299@queensu.ca', '123Ab#')
+    assert updateUser('urqf','urqf', '22 university ave', 'y2k 1j3') is True
+    assert updateUser('urqf','urqf', '@@ university ave', 'y2k 1j3') is False
 
 
 def test_r3_3_update_user():
     # test for valid postal code
-    register('urq', 'u19@queensu.ca', '123Ab#')
+    register('urq223', '233q@queensu.ca', '123Ab#')
     assert updateUser('urq', 'k2r 1w5') is True
     assert updateUser('urq', 'bb3 77h') is False
 
