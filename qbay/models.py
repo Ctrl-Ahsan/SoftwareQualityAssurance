@@ -251,12 +251,18 @@ def updateUser(update_type, name, update_field):
     if(update_type.upper() == "USERNAME" ):
         if updateUserName(name, update_field):
             return True
+        else:
+            return False
     elif(update_type.upper() == "SHIPPING ADDRESS"):
         if updateShippingAddress(name, update_field):
             return True
+        else:
+            return False
     elif(update_type.upper() == "POSTAL CODE"):
         if updatePostalCode(name, update_field):
             return True
+        else:
+            return False
     else:
         return False
 
