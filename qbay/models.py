@@ -252,7 +252,7 @@ def updateUser(name, update_field):
     if not is_proper_username(update_type):
         return False
 
-    if not is is_proper_shipping_address(update_type):
+    if not is_proper_shipping_address(update_type):
         return False
 
     if not is_proper_postal_code(update_type):
