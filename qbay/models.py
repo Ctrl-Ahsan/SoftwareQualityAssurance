@@ -248,13 +248,13 @@ def updateUser(update_type, name, update_field):
     # Returns:
     # The true if user info update succeeded otherwise None
 
-    if(updateType.upper() == "USERNAME" ):
+    if(update_type.upper() == "USERNAME" ):
         if updateUserName(name, update_field):
             return True
-    elif(updateType.upper() == "SHIPPING ADDRESS"):
+    elif(update_type.upper() == "SHIPPING ADDRESS"):
         if updateShippingAddress(name, update_field):
             return True
-    elif(updateType.upper() == "POSTAL CODE"):
+    elif(update_type.upper() == "POSTAL CODE"):
         if updatePostalCode(name, update_field):
             return True
     else:
