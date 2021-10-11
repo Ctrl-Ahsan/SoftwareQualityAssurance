@@ -290,6 +290,7 @@ def updateProduct(title, title2, description, price):
     # updates a product
     #   Parameters:
     #     title (string):          prod title
+    #     title2(string):
     #     description (string):    prod description
     #     price (double):          prod price
     #   Returns:
@@ -297,11 +298,6 @@ def updateProduct(title, title2, description, price):
 
     # Check if new title is valid
     if not validTitle(title2):
-        return False
-
-    # Check if old product name exists
-    titleExisted = Product.query.filter_by(title=title).all()
-    if len(titleExisted) == 0:
         return False
 
     # Check if new product name is uniqe
