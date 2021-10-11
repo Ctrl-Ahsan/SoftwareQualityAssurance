@@ -301,6 +301,7 @@ def updatePostalCode(name, new_postal_code):
 
 
 def is_proper_postal_code(postal_code):
+    postal_code.replace(" ", "")
     regex = r'[ABCEGHJKLMNPRSTVXY][0-9][A-Z][0-9][A-Z][0-9]'
     if re.match(regex, postal_code):
         return True
@@ -310,6 +311,7 @@ def is_proper_postal_code(postal_code):
 
 def is_proper_shipping_address(address):
     # returns true if shipping address is valid, false otherwise
+    address.replace(" ", "")
     if address == "" or not address.isalnum():
         return False
     else:
