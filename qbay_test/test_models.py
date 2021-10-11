@@ -274,8 +274,7 @@ def test_r5_2_update_product():
 
 def test_r5_3_update_product():
     # test for correct modified date
-    assert updateProduct.last_modified
-    == datetime.today().strftime('%Y-%m-%d') is True
+    assert updateProduct.last_modified == datetime.today().strftime('%Y-%m-%d') is True
 
 
 def test_r5_4_update_product():
