@@ -326,9 +326,8 @@ def updateUser(username, new_username, shipping_address, postal_code):
 
 def is_proper_postal_code(postal_code):
     postal_code.replace(" ", "")
-    postal_code.upper()
     regex = r'[ABCEGHJKLMNPRSTVXY][0-9][A-Z][0-9][A-Z][0-9]'
-    if re.match(regex, postal_code):
+    if re.match(regex, postal_code.upper().replace(" ", "")):
         return True
     else:
         return False
@@ -336,8 +335,7 @@ def is_proper_postal_code(postal_code):
 
 def is_proper_shipping_address(address):
     # returns true if shipping address is valid, false otherwise
-    address.replace(" ", "")
-    if address == "" or not address.isalnum():
+    if address.replace(" ", "") == "" or not address.replace(" ", "").isalnum():
         return False
     else:
         return True
