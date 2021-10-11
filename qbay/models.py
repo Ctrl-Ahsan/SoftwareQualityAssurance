@@ -274,7 +274,7 @@ def updateUserName(prev_username, new_username):
 def updatePostalCode(name, new_postal_code):
     # Updates user postal code using name to search user
     user = User.query.filter_by(username=name)
-    if is_proper_postal_Code(new_postal_code):
+    if is_proper_postal_code(new_postal_code):
         user.postal_code = new_postal_code
         db.session.commit()
 
