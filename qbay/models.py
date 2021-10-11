@@ -280,19 +280,21 @@ def updatePostalCode(name, new_postal_code):
 
 
 def is_proper_postalCode(postal_code):
-    # returns true if postal code is a valid 
-    #canadian postal code, false otherwise
+    # returns true if postal code is a valid
+    # canadian postal code, false otherwise
     postal_code = postal_code.upper().replace(" ", "")
+    badChar = ('Y', 'Z', 'D', 'F',
+               'I', 'O', 'Q', 'U')
     if len(postal_code) == 6:
         for i in range(len(postal_code)):
             if i % 2 == 0:
-                if i == 0 and not(postal_code[i].isalpha()) and 
-                not (postal_code[i] not in ('Y', 'Z', 'D', 'F', 'I', 'O', 'Q', 'U')):
+                if i == 0 and not (postal_code[i].isalpha())
+                and not (postal_code[i] not in badChar):
                     return False
                 elif not (postal_code[i].isalpha())
                 return False
             else:
-                if not(postal_code[i].isdigit()) 
+                if not(postal_code[i].isdigit())
                 & & not (0 < postal_code[i] <= 9):
                     return False
     else:
