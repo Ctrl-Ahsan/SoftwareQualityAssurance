@@ -268,7 +268,7 @@ def updateShippingAddress(name, address):
         user.shipping_address = address
         db.session.commit()
         return True
-    else
+    else:
         return False
 
 
@@ -279,7 +279,7 @@ def updateUserName(prev_username, new_username):
         user.name = new_username
         db.session.commit()
         return True
-    else
+    else:
         return False
 
 
