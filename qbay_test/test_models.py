@@ -100,6 +100,10 @@ def test_r3_1_update_user():
     
     assert updateUser('tempuser', 'newtempuser', '22 university ave', 'y2k 1j3') is True
 
+    updatedUser = User.query.filter_by(username="newtempuser").first()
+    assert (updatedUser.username == 'newtempuser') is True
+    assert (updatedUser.shipping_address == '22 university ave') is True
+    assert (updatedUser.postal_code == 'y2k 1j3') is True    
 
 
 def test_r3_2_update_user():
