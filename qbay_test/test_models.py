@@ -1,6 +1,6 @@
 from sqlalchemy.inspection import inspect
 from datetime import datetime
-from qbay.models import User, register, login
+from qbay.models import User, register, login, Product
 from qbay.models import createProduct, updateUser, updateProduct
 
 
@@ -259,7 +259,7 @@ def test_r5_1_update_product():
     updatedProd = Product.query.filter_by(title="new title").first()
     assert updatedProd.title == "new title" is True
     assert updatedProd.description == "new description must be twenty chars" is True
-    #assert updatedProd.price == 100 is True
+    assert updatedProd.price == 100 is True
 
 
 def test_r5_2_update_product():

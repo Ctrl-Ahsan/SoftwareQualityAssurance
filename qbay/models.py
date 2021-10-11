@@ -249,13 +249,13 @@ def updateUser(name, update_field):
     # Returns:
     # The true if user info update succeeded otherwise None
 
-    if not is_proper_username(update_type):
+    if not is_proper_username(update_field):
         return False
 
-    if not is_proper_shipping_address(update_type):
+    if not is_proper_shipping_address(update_field):
         return False
 
-    if not is_proper_postal_code(update_type):
+    if not is_proper_postal_code(update_field):
         return False
 
     user = User.query.filter_by(username=name)
