@@ -239,66 +239,32 @@ def login(email, password):
     return valids[0]
 
 
-def updateUser(update_type, name, update_field):
+def updateUser(name, update_field):
     # Check login information
     # Parameters:
-    # update_type (string): user information to be updated 
+    # update_type (string): user information to be updated
     # ("username", "shipping address", "postal code")
     # name (string): user username
     # update_field (string): updated value
     # Returns:
     # The true if user info update succeeded otherwise None
 
-    if(update_type.upper() == "USERNAME"):
-        if updateUserName(name, update_field):
-            return True
-        else:
-            return False
-    elif(update_type.upper() == "SHIPPING ADDRESS"):
-        if updateShippingAddress(name, update_field):
-            return True
-        else:
-            return False
-    elif(update_type.upper() == "POSTAL CODE"):
-        if updatePostalCode(name, update_field):
-            return True
-        else:
-            return False
-    else:
+    if not is_proper_username(update_type):
         return False
 
+    if not is is_proper_shipping_address(update_type):
+        return False
 
-def updateShippingAddress(name, address):
-    # Updates user shipping address using name to search user
+    if not is_proper_postal_code(update_type):
+        return False
+
     user = User.query.filter_by(username=name)
-    if is_proper_shipping_address(address):
-        user.shipping_address = address
-        db.session.commit()
-        return True
-    else:
-        return False
+    user.username = update_field
+    user.shipping_address = update_field
+    user.postal_code = update_field
 
-
-def updateUserName(prev_username, new_username):
-    # Updates username using previous username to search user
-    user = User.query.filter_by(username=prev_username)
-    if is_proper_username(new_username):
-        user.name = new_username
-        db.session.commit()
-        return True
-    else:
-        return False
-
-
-def updatePostalCode(name, new_postal_code):
-    # Updates user postal code using name to search user
-    user = User.query.filter_by(username=name)
-    if is_proper_postal_code(new_postal_code):
-        user.postal_code = new_postal_code
-        db.session.commit()
-        return True
-    else:
-        return False
+    db.session.commit()
+    return True
 
 
 def is_proper_postal_code(postal_code):
@@ -331,35 +297,36 @@ def updateProduct(title, title2, description, price):
 
     # Check if new title is valid
     if not validTitle(title1):
-        return None
+        return False
 
     # Check if old product name exists
     titleExisted = Product.query.filter_by(title=title).all()
     if len(titleExisted) == 0:
-        return None
+        return False
 
     # Check if new product name is uniqe
     titleExists = Product.query.filter_by(title=title2).all()
     if len(titleExists) > 0:
-        return None
+        return False
 
     # Check if description is valid
     if not validDescription(description, title):
-        return None
+        return False
 
     # Check if price is valid
     if not validPrice(price):
-        return None
+        return False
 
     # Query for product
     product = Product.query.filter_by(title=title).first()
 
     if(product.price > price):
-        return None
+        return False
 
     product.title = title
     product.description = description
     product.price = price
     product.last_modified = datetime.today().strftime('%Y-%m-%d')
 
-    return product
+    db.session.commit
+    return True
