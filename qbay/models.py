@@ -18,7 +18,7 @@ class User(db.Model):
     postal_code = db.Column(db.String(6), nullable=False)
     # posts = db.relationship('Product', backref='creator', lazy=True)
     reviews = db.relationship('Review', backref='author', lazy=True)
-    
+
     def __repr__(self):
         return '<User %r>' % self.email
 
@@ -29,7 +29,7 @@ class Review(db.Model):
     user_email = db.Column(db.String(320), unique=False, nullable=False)
     score = db.Column(db.Integer)
     review = db.Column(db.Text, nullable=False)
-    
+
     def __repr__(self):
         return '<Review %r>' % self.id
 
@@ -42,7 +42,7 @@ class Transaction(db.Model):
     buyer = db.Column(db.String(19), nullable=False)
     price = db.Column(db.Float, nullable=False, default=0.0)
     product_id = db.Column(db.Integer, nullable=False)
-    
+
     def __repr__(self):
         return '<Transaction %r>' % self.id
 
@@ -77,7 +77,7 @@ def is_email(email):
     regex = (r'([!#-\'*+/-9=?A-Z^-~-]+(\.[!#-\'*+/-9=?A-Z^-~-]+)*|\'"([]!#-[^-'
              r'~\t]|(\\[\t -~]))+")@([!#-\'*+/-9=?A-Z^-~-]+(\.[!#-\'*+/-9=?'
              r'A-Z^-~-]+)*|\[[\t -Z^-~]*])')
-    
+
     return bool(re.match(regex, email))
 
 
@@ -114,13 +114,13 @@ def register(name, email, password):
 
     user = User(
         email=email,
-        username=name,  
+        username=name,
         password=password,
         balance=100.0,
         shipping_address='',
         postal_code=''
     )
-    
+
     db.session.add(user)
 
     db.session.commit()
@@ -176,7 +176,7 @@ def createProduct(title, description, price, last_modified_date, owner_email):
         description=description,
         price=price,
         last_modified=last_modified_date
-    ) 
+    )
 
     # Add product, return true
     db.session.add(product)
@@ -230,66 +230,67 @@ def login(email, password):
     return valids[0]
 
 
-def updateUser(update_type, name, update_field)
+def updateUser(update_type, name, update_field):
     '''
     Check login information
       Parameters:
-        update_type (string): user information to be updated ("username", "shipping address", "postal code")
+        update_type (string): user information to 
+        be updated ("username", "shipping address", "postal code")
         name (string): user username
         update_field (string): updated value
       Returns:
         The true if user info update succeeded otherwise None
     '''
-    if(updateType.upper() == "USERNAME" )
+
+    if(updateType.upper() == "USERNAME"):
         updateUserName(name, update_field)
         return true
-    elif(updateType.upper() == "SHIPPING ADDRESS")
+    elif(updateType.upper() == "SHIPPING ADDRESS"):
         updateShippingAddress(name, update_field)
         return true
-    elif(updateType.upper() == "POSTAL CODE")
+    elif(updateType.upper() == "POSTAL CODE"):
         updatePostalCode(name, update_field)
         return true
-    else
+    else:
         return None
 
 
-
-def updateShippingAddress(name, address)
-    #Updates user shipping address using name to search user
+def updateShippingAddress(name, address):
+    # Updates user shipping address using name to search user
     user = User.query.filter_by(username=name)
     if is_proper_shipping_address(address):
-        user.shipping_address = address 
-        session.commit() 
+        user.shipping_address = address
+        session.commit()
 
 
-def updateUserName(prev_username, new_username)
-    #Updates username using previous username to search user
+def updateUserName(prev_username, new_username):
+    # Updates username using previous username to search user
     user = User.query.filter_by(username=prev_username)
     if is_proper_username(new_username):
         user.name = new_username
-        session.commit() 
+        session.commit()
 
 
-def updatePostalCode(name, new_postal_code)
-    #Updates user postal code using name to search user
+def updatePostalCode(name, new_postal_code):
+    # Updates user postal code using name to search user
     user = User.query.filter_by(username=name)
     if is_proper_postalCode(new_postal_code):
         user.postal_code = new_postal_code
         session.commit()
-        
+
 
 def is_proper_postalCode(postal_code):
-    #returns true if postal code is a valid canadian postal code, false otherwise
+    # returns true if postal code is a valid canadian postal code, false otherwise
     postal_code = postal_code.upper().replace(" ", "")
     if len(postal_code) == 6:
         for i in range(len(postal_code)):
             if i % 2 == 0:
-                if i == 0  && not(postal_code[i].isalpha()) && not(postal_code[i] not in ('Y','Z','D','F','I','O','Q','U')):
-                    return False 
-                elif not(postal_code[i].isalpha())
+                if i == 0 & & not(postal_code[i].isalpha()) & & not(postal_code[i] not in ('Y', 'Z', 'D', 'F', 'I', 'O', 'Q', 'U')):
                     return False
+                elif not(postal_code[i].isalpha())
+                return False
             else:
-                if not(postal_code[i].isdigit()) && not (0 < postal_code[i] <=9 ):
+                if not(postal_code[i].isdigit()) & & not (0 < postal_code[i] <= 9):
                     return False
     else:
         return False
@@ -297,11 +298,8 @@ def is_proper_postalCode(postal_code):
 
 
 def is_proper_shipping_address(address):
-    #returns true if shipping address is valid, false otherwise
-    if address == "" || set(address).difference(ascii_letters + digits):
+    # returns true if shipping address is valid, false otherwise
+    if address == "" | | set(address).difference(ascii_letters + digits):
         return false
     else:
         return true
-    
-        
-
