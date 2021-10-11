@@ -1,5 +1,7 @@
-from qbay.models import User, register, login, createProduct, updateUser
 from sqlalchemy.inspection import inspect
+from datetime import datetime
+from qbay.models import User, register, login,
+createProduct, updateUser, updateProduct
 
 
 def test_r1_1_user_register():
@@ -246,3 +248,90 @@ def test_r3_4_update_user():
     register('urq', 'u19@queensu.ca', '123Ab#')
     assert updateUser('username', 'urq', 'urq2') is True
     assert updateUser('username', 'urq', 'q') is False
+
+
+def test_r5_1_update_product():
+    # test for update
+    assert updateProduct("title 19", "new title",
+                         "new description must be twenty chars",
+                         100) is not None
+
+    updatedProd = Product.query.filter_by(title="new title").first()
+    assert updatedProd.title == "new title" is True
+    assert updatedProd.description ==
+    "new description must be twenty chars" is True
+    assert updatedProd.price == 100 is True
+
+
+def test_r5_2_update_product():
+    # test for ensuring price increases
+    assert updateProduct("title 16", "new title2",
+                         "new description must be twenty chars",
+                         200) is not None
+    assert updateProduct("title 16", "new title3",
+                         "new description must be twenty chars",
+                         50) is None
+
+
+def test_r5_3_update_product():
+    # test for correct modified date
+    assert updateProduct.last_modified
+    == datetime.today().strftime('%Y-%m-%d') is True
+
+
+def test_r5_4_update_product():
+    # testing for prequery checks
+    assert updateProduct("title 10", " new title4",
+                         "new description must be twenty chars",
+                         200) is None
+
+    assert updateProduct("title 10", "new title5 ",
+                         "new description must be twenty chars",
+                         200) is None
+
+    assert updateProduct("title 10", "new title$",
+                         "new description must be twenty chars",
+                         200) is None
+
+    assert updateProduct("title 10", "new title6", "short desc",
+                         200) is None
+
+    assert updateProduct("title 10", "new title7", """description must be
+                         > 2000
+                         200020002000200020002000200020002000200020002000
+                         200020002000200020002000200020002000200020002000
+                         200020002000200020002000200020002000200020002000
+                         200020002000200020002000200020002000200020002000
+                         200020002000200020002000200020002000200020002000
+                         200020002000200020002000200020002000200020002000
+                         200020002000200020002000200020002000200020002000
+                         200020002000200020002000200020002000200020002000
+                         200020002000200020002000200020002000200020002000
+                         200020002000200020002000200020002000200020002000
+                         200020002000200020002000200020002000200020002000
+                         200020002000200020002000200020002000200020002000
+                         200020002000200020002000200020002000200020002000
+                         200020002000200020002000200020002000200020002000
+                         200020002000200020002000200020002000200020002000
+                         200020002000200020002000200020002000200020002000
+                         200020002000200020002000200020002000200020002000
+                         200020002000200020002000200020002000200020002000
+                         200020002000200020002000200020002000200020002000
+                         200020002000200020002000200020002000200020002000
+                         200020002000200020002000200020002000200020002000
+                         200020002000200020002000200020002000200020002000
+                         200020002000200020002000200020002000200020002000
+                         200020002000200020002000200020002000200020002000
+                         200020002000200020002000200020002000200020002000
+                         200020002000200020002000200020002000200020002000
+                         200020002000200020002000200020002000200020002000
+                         200020002000200020002000200020002000200020002000""",
+                         200) is None
+
+    assert updateProduct("title 10", "new title8",
+                         "new description must be twenty chars",
+                         9) is None
+
+    assert updateProduct("title 10", "new title9",
+                         "new description must be twenty chars",
+                         10001) is None
