@@ -258,7 +258,7 @@ def test_r5_1_update_product():
                          "new description must be twenty chars",
                          100) is True
 
-    updatedproduct = Product.query.filter_by(title=new title).first()
+    updatedproduct = Product.query.filter_by(title="new title").first()
     assert updatedproduct.title == "new title" is True
     assert updatedproduct.description == "new description must be twenty chars" is True
     assert updatedproduct.price == 100 is True
