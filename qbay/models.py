@@ -317,7 +317,7 @@ def updateUser(username, new_username, shipping_address, postal_code):
         return False
 
     user = User.query.filter_by(username=name)
-    user.username = username
+    user.username = new_username
     user.shipping_address = shipping_address
     user.postal_code = postal_code
 
