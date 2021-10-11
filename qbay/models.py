@@ -296,7 +296,7 @@ def updateProduct(title, title2, description, price):
     #     True if product is succesfully updated otherwise False
 
     # Check if new title is valid
-    if not validTitle(title1):
+    if not validTitle(title):
         return False
 
     # Check if old product name exists

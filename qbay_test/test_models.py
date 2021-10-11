@@ -223,31 +223,31 @@ def test_r4_8_create_product():
 def test_r3_1_update_user():
     # test for exclusice user update fields
     register('urq', 'u19@queensu.ca', '123Ab#')
-    assert updateUser('shipping address', 'urq', '22 university ave') is True
-    assert updateUser('username', 'urq', 'urq2') is True
-    assert updateUser('postal code', 'urq', 'y2k 1j3') is True
-    assert updateUser('password', 'urq', 'passyword') is False
+    assert updateUser( 'urq', '22 university ave') is True
+    assert updateUser('urq', 'urq2') is True
+    assert updateUser('urq', 'y2k 1j3') is True
+    assert updateUser('urq', 'passyword') is False
 
 
 def test_r3_2_update_user():
     # test for valid shipping address
     register('urq', 'u19@queensu.ca', '123Ab#')
-    assert updateUser('shipping address', 'urq', '22 university ave') is True
-    assert updateUser('shipping address', 'urq', '@@ university ave') is False
+    assert updateUser('urq', '22 university ave') is True
+    assert updateUser('urq', '@@ university ave') is False
 
 
 def test_r3_3_update_user():
     # test for valid postal code
     register('urq', 'u19@queensu.ca', '123Ab#')
-    assert updateUser('postal code', 'urq', 'k2r 1w5') is True
-    assert updateUser('postal_code', 'urq', 'bb3 77h') is False
+    assert updateUser('urq', 'k2r 1w5') is True
+    assert updateUser('urq', 'bb3 77h') is False
 
 
 def test_r3_4_update_user():
     # test for valid username
     register('urq', 'u19@queensu.ca', '123Ab#')
-    assert updateUser('username', 'urq', 'urq2') is True
-    assert updateUser('username', 'urq', 'q') is False
+    assert updateUser('urq', 'urq2') is True
+    assert updateUser('urq', 'q') is False
 
 
 def test_r5_1_update_product():
