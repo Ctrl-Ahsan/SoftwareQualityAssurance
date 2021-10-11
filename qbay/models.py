@@ -242,13 +242,13 @@ def updateUser(update_type, name, update_field):
         The true if user info update succeeded otherwise None
     '''
 
-    if(updateType.upper() == "USERNAME"):
+    if(update_type.upper() == "USERNAME"):
         updateUserName(name, update_field)
         return True
-    elif(updateType.upper() == "SHIPPING ADDRESS"):
+    elif(update_type.upper() == "SHIPPING ADDRESS"):
         updateShippingAddress(name, update_field)
         return True
-    elif(updateType.upper() == "POSTAL CODE"):
+    elif(update_type.upper() == "POSTAL CODE"):
         updatePostalCode(name, update_field)
         return True
     else:
