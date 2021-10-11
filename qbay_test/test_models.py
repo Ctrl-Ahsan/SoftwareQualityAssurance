@@ -123,9 +123,15 @@ def test_r3_3_update_user():
 
 def test_r3_4_update_user():
     # test for valid username
-    register('urq', 'u19@queensu.ca', '123Ab#')
-    assert updateUser('urq', 'urq2') is True
-    assert updateUser('urq', 'q') is False
+    register('urq9', 'u133@queensu.ca', '123Ab#')
+    assert updateUser('urq9', 'urq9', '22 universty', 'k2r 1w5') is True
+    assert updateUser('urq9', 'u', '22 universty', 'k2r 1w5') is False
+    assert updateUser('urq9', '', '22 universty', 'k2r 1w5') is False
+    assert updateUser('urq9', 'A$AP ROCK', '22 universty', 'k2r 1w5') is False
+    assert updateUser('urq9', ' qrr', '22 universty', 'k2r 1w5') is False
+    assert updateUser('urq9', 'qrr ', '22 universty', 'k2r 1w5') is False
+    assert updateUser('urq9', 'wwwwwwwwwwwwwwwwwwwwwwwww',
+                      '22 universty', 'k2r 1w5') is False
 
 
 def test_r4_1_create_product():
