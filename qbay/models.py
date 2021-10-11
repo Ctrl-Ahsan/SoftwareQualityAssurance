@@ -300,6 +300,11 @@ def updateProduct(title, title2, description, price):
     if not validTitle(title2):
         return False
 
+    # Check if old product name exists
+    titleExisted = Product.query.filter_by(title=title).all()
+    if len(titleExisted) == 0:
+        return False
+
     # Check if new product name is uniqe
     titleExists = Product.query.filter_by(title=title2).all()
     if len(titleExists) > 0:

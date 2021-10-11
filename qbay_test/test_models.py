@@ -251,8 +251,8 @@ def test_r4_8_create_product():
 
 
 def test_r5_1_update_product():
-    newProduct = createProduct('testtitle', 'description must be twenty chars',
-                         10, '2021-10-10', 'testing@test.ca')
+    assert createProduct('testtitle', 'description must be twenty chars',
+                         10, '2021-10-10', 'testing@test.ca') is True
     # test for update
     assert updateProduct("testtitle", "new title",
                          "new description must be twenty chars",
