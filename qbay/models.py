@@ -232,7 +232,7 @@ def login(email, password):
 
 def updateUser(update_type, name, update_field):
     '''
-    Check login information
+    Update User information
       Parameters:
         update_type (string): user information to 
         be updated ("username", "shipping address", "postal code")
@@ -244,15 +244,15 @@ def updateUser(update_type, name, update_field):
 
     if(updateType.upper() == "USERNAME"):
         updateUserName(name, update_field)
-        return true
+        return True
     elif(updateType.upper() == "SHIPPING ADDRESS"):
         updateShippingAddress(name, update_field)
-        return true
+        return True
     elif(updateType.upper() == "POSTAL CODE"):
         updatePostalCode(name, update_field)
-        return true
+        return True
     else:
-        return None
+        return False
 
 
 def updateShippingAddress(name, address):
@@ -279,32 +279,16 @@ def updatePostalCode(name, new_postal_code):
         session.commit()
 
 
-def is_proper_postalCode(postal_code):
-    # returns true if postal code is a valid
-    # canadian postal code, false otherwise
-    postal_code = postal_code.upper().replace(" ", "")
-    badChar = ('Z', 'D', 'F',
-               'I', 'O', 'Q', 'U')
-    if len(postal_code) == 6:
-        for i in range(len(postal_code)):
-            if i % 2 == 0:
-                if i == 0 and not postal_code[i].isalpha()
-                and not (postal_code[i] not in badChar):
-                    return False
-                elif not postal_code[i].isalpha()
-                return False
-            else:
-                if not postal_code[i].isdigit()
-                & & not (0 < postal_code[i] <= 9):
-                    return False
-    else:
-        return False
-    return postal_code
+def is_proper_postal_code(postal_code):
+    regex = r'[ABCEGHJKLMNPRSTVXY][0-9][A-Z][0-9][A-Z][0-9]'
+    if re.match(regex, postal_code):
+        return True
+    return False
 
 
 def is_proper_shipping_address(address):
     # returns true if shipping address is valid, false otherwise
     if address == "" | | set(address).difference(ascii_letters + digits):
-        return false
+        return False
     else:
-        return true
+        return True
