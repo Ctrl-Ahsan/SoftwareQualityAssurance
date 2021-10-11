@@ -279,7 +279,7 @@ def test_r5_2_update_product():
 def test_r5_3_update_product():
     # test for correct modified date
     updatedproduct = Product.query.filter_by(title="new title").first()
-    today=datetime.today().strftime('%Y-%m-%d')
+    today = datetime.today().strftime('%Y-%m-%d')
     assert (updatedproduct.last_modified == today) is True
 
 
