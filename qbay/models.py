@@ -260,7 +260,7 @@ def updateShippingAddress(name, address):
     user = User.query.filter_by(username=name)
     if is_proper_shipping_address(address):
         user.shipping_address = address
-        session.commit()
+        db.session.commit()
 
 
 def updateUserName(prev_username, new_username):
@@ -268,15 +268,15 @@ def updateUserName(prev_username, new_username):
     user = User.query.filter_by(username=prev_username)
     if is_proper_username(new_username):
         user.name = new_username
-        session.commit()
+        db.session.commit()
 
 
 def updatePostalCode(name, new_postal_code):
     # Updates user postal code using name to search user
     user = User.query.filter_by(username=name)
-    if is_proper_postalCode(new_postal_code):
+    if is_proper_postal_Code(new_postal_code):
         user.postal_code = new_postal_code
-        session.commit()
+        db.session.commit()
 
 
 def is_proper_postal_code(postal_code):
@@ -288,7 +288,7 @@ def is_proper_postal_code(postal_code):
 
 def is_proper_shipping_address(address):
     # returns true if shipping address is valid, false otherwise
-    if address == "" or set(address).difference(ascii_letters + digits):
+    if address == "" or not address.isalnum():
         return False
     else:
         return True
