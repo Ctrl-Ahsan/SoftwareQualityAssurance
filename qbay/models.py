@@ -1,5 +1,6 @@
 import re
 from datetime import datetime
+from string import ascii_letters, digits
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from qbay import app
@@ -227,3 +228,80 @@ def login(email, password):
     if len(valids) != 1:
         return None
     return valids[0]
+
+
+def updateUser(update_type, name, update_field)
+    '''
+    Check login information
+      Parameters:
+        update_type (string): user information to be updated ("username", "shipping address", "postal code")
+        name (string): user username
+        update_field (string): updated value
+      Returns:
+        The true if user info update succeeded otherwise None
+    '''
+    if(updateType.upper() == "USERNAME" )
+        updateUserName(name, update_field)
+        return true
+    elif(updateType.upper() == "SHIPPING ADDRESS")
+        updateShippingAddress(name, update_field)
+        return true
+    elif(updateType.upper() == "POSTAL CODE")
+        updatePostalCode(name, update_field)
+        return true
+    else
+        return None
+
+
+
+def updateShippingAddress(name, address)
+    #Updates user shipping address using name to search user
+    user = User.query.filter_by(username=name)
+    if is_proper_shipping_address(address):
+        user.shipping_address = address 
+        session.commit() 
+
+
+def updateUserName(prev_username, new_username)
+    #Updates username using previous username to search user
+    user = User.query.filter_by(username=prev_username)
+    if is_proper_username(new_username):
+        user.name = new_username
+        session.commit() 
+
+
+def updatePostalCode(name, new_postal_code)
+    #Updates user postal code using name to search user
+    user = User.query.filter_by(username=name)
+    if is_proper_postalCode(new_postal_code):
+        user.postal_code = new_postal_code
+        session.commit()
+        
+
+def is_proper_postalCode(postal_code):
+    #returns true if postal code is a valid canadian postal code, false otherwise
+    postal_code = postal_code.upper().replace(" ", "")
+    if len(postal_code) == 6:
+        for i in range(len(postal_code)):
+            if i % 2 == 0:
+                if i == 0  && not(postal_code[i].isalpha()) && not(postal_code[i] not in ('Y','Z','D','F','I','O','Q','U')):
+                    return False 
+                elif not(postal_code[i].isalpha())
+                    return False
+            else:
+                if not(postal_code[i].isdigit()) && not (0 < postal_code[i] <=9 ):
+                    return False
+    else:
+        return False
+    return postal_code
+
+
+def is_proper_shipping_address(address):
+    #returns true if shipping address is valid, false otherwise
+    if address == "" || set(address).difference(ascii_letters + digits):
+        return false
+    else:
+        return true
+    
+        
+
