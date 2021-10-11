@@ -17,7 +17,7 @@ class User(db.Model):
     postal_code = db.Column(db.String(6), nullable=False)
     # posts = db.relationship('Product', backref='creator', lazy=True)
     reviews = db.relationship('Review', backref='author', lazy=True)
-    
+
     def __repr__(self):
         return '<User %r>' % self.email
 
@@ -28,7 +28,7 @@ class Review(db.Model):
     user_email = db.Column(db.String(320), unique=False, nullable=False)
     score = db.Column(db.Integer)
     review = db.Column(db.Text, nullable=False)
-    
+
     def __repr__(self):
         return '<Review %r>' % self.id
 
@@ -41,7 +41,7 @@ class Transaction(db.Model):
     buyer = db.Column(db.String(19), nullable=False)
     price = db.Column(db.Float, nullable=False, default=0.0)
     product_id = db.Column(db.Integer, nullable=False)
-    
+
     def __repr__(self):
         return '<Transaction %r>' % self.id
 
@@ -76,7 +76,7 @@ def is_email(email):
     regex = (r'([!#-\'*+/-9=?A-Z^-~-]+(\.[!#-\'*+/-9=?A-Z^-~-]+)*|\'"([]!#-[^-'
              r'~\t]|(\\[\t -~]))+")@([!#-\'*+/-9=?A-Z^-~-]+(\.[!#-\'*+/-9=?'
              r'A-Z^-~-]+)*|\[[\t -Z^-~]*])')
-    
+
     return bool(re.match(regex, email))
 
 
@@ -113,13 +113,13 @@ def register(name, email, password):
 
     user = User(
         email=email,
-        username=name,  
+        username=name,
         password=password,
         balance=100.0,
         shipping_address='',
         postal_code=''
     )
-    
+
     db.session.add(user)
 
     db.session.commit()
@@ -175,11 +175,59 @@ def createProduct(title, description, price, last_modified_date, owner_email):
         description=description,
         price=price,
         last_modified=last_modified_date
-    ) 
+    )
 
     # Add product, return true
     db.session.add(product)
     db.session.commit()
+    return True
+
+
+def updateProduct(title, title2, description, price):
+    # updates a product
+    #   Parameters:
+    #     title (string):          prod title
+    #     title2(string):
+    #     description (string):    prod description
+    #     price (double):          prod price
+    #   Returns:
+    #     True if product is succesfully updated otherwise False
+
+    # Check if new title is valid
+    if not validTitle(title2):
+        return False
+
+    # Check if old product name exists
+    titleExisted = Product.query.filter_by(title=title).all()
+    if len(titleExisted) == 0:
+        return False
+
+    # Check if new product name is uniqe
+    if not title == title2:
+        titleExists = Product.query.filter_by(title=title2).all()
+        if len(titleExists) > 0:
+            return False
+
+    # Check if description is valid
+    if not validDescription(description, title):
+        return False
+
+    # Check if price is valid
+    if not validPrice(price):
+        return False
+
+    # Query for product
+    product = Product.query.filter_by(title=title).first()
+
+    if(product.price > price):
+        return False
+
+    product.title = title2
+    product.description = description
+    product.price = price
+    product.last_modified = datetime.today().strftime('%Y-%m-%d')
+
+    db.session.commit
     return True
 
 
@@ -215,14 +263,14 @@ def validDate(date):
 
 
 def login(email, password):
-    
+
     # Check login information
     #   Parameters:
     #    email (string):    user email
     #    password (string): user password
     #   Returns:
     #     The user object if login succeeded otherwise None
-    
+
     # Perform checks prior to query
     # Check if email is valid
     if not is_email(email):
@@ -237,3 +285,59 @@ def login(email, password):
     if len(valids) != 1:
         return None
     return valids[0]
+
+
+def updateUser(username, new_username, shipping_address, postal_code):
+    # Check login information
+    # Parameters:
+    # update_type (string): user information to be updated
+    # ("username", "shipping address", "postal code")
+    # name (string): user username
+    # update_field (string): updated value
+    # Returns:
+    # The true if user info update succeeded otherwise None
+
+    if not is_proper_username(new_username):
+        return False
+
+    # Check if old username exists
+    userExisted = User.query.filter_by(username=username).all()
+    if len(userExisted) == 0:
+        return False
+
+    # Check if new name is uniqe
+    if not username == new_username:
+        userExists = User.query.filter_by(username=new_username).all()
+        if len(userExists) > 0:
+            return False
+
+    if not is_proper_shipping_address(shipping_address):
+        return False
+
+    if not is_proper_postal_code(postal_code):
+        return False
+
+    user = User.query.filter_by(username=username).first()
+    user.username = new_username
+    user.shipping_address = shipping_address
+    user.postal_code = postal_code
+
+    db.session.commit()
+    return True
+
+
+def is_proper_postal_code(postal_code):
+    regex = r'[ABCEGHJKLMNPRSTVXY][0-9][A-Z][0-9][A-Z][0-9]'
+    if re.match(regex, postal_code.upper().replace(" ", "")):
+        return True
+    else:
+        return False
+
+
+def is_proper_shipping_address(address):
+    # returns true if shipping address is valid, false otherwise
+    address_ns = address.replace(" ", "")
+    if address_ns == "" or not address_ns.isalnum():
+        return False
+    else:
+        return True
