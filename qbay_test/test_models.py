@@ -257,10 +257,10 @@ def test_r5_1_update_product():
                          100) is not False
 
     updatedProd = Product.query.filter_by(title="new title").first()
-    assert updatedProd.title = "new title" is True
-    assert updatedProd.description =
+    assert updatedProd.title == "new title" is True
+    assert updatedProd.description ==
     "new description must be twenty chars" is True
-    assert updatedProd.price = 100 is True
+    assert updatedProd.price == 100 is True
 
 
 def test_r5_2_update_product():
@@ -276,7 +276,7 @@ def test_r5_2_update_product():
 def test_r5_3_update_product():
     # test for correct modified date
     assert updateProduct.last_modified
-    = datetime.today().strftime('%Y-%m-%d') is True
+    == datetime.today().strftime('%Y-%m-%d') is True
 
 
 def test_r5_4_update_product():
