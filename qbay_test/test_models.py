@@ -251,16 +251,17 @@ def test_r4_8_create_product():
 
 
 def test_r5_1_update_product():
-    newProduct = createProduct('testtitle', 'description must be twenty chars',
-                               10, '2021-10-10', 'u0@test.ca')
+    createProduct('testtitle', 'description must be twenty chars',
+                  10, '2021-10-10', 'u0@test.ca')
     # test for update
     assert updateProduct("testtitle", "new title",
                          "new description must be twenty chars",
                          100) is True
 
-    assert newProduct.title == "new title" is True
-    assert newProduct.description == "new description must be twenty chars" is True
-    assert newProduct.price == 100 is True
+    updatedproduct = Product.query.filter_by(title=new title).first()
+    assert updatedproduct.title == "new title" is True
+    assert updatedproduct.description == "new description must be twenty chars" is True
+    assert updatedproduct.price == 100 is True
 
 
 def test_r5_2_update_product():
