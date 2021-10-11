@@ -1,4 +1,4 @@
-from qbay.models import User, register, login, createProduct
+from qbay.models import User, register, login, createProduct, updateUser
 from sqlalchemy.inspection import inspect
 
 
