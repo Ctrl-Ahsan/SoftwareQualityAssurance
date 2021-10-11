@@ -17,7 +17,7 @@ class User(db.Model):
     postal_code = db.Column(db.String(6), nullable=False)
     # posts = db.relationship('Product', backref='creator', lazy=True)
     reviews = db.relationship('Review', backref='author', lazy=True)
-    
+
     def __repr__(self):
         return '<User %r>' % self.email
 
@@ -28,7 +28,7 @@ class Review(db.Model):
     user_email = db.Column(db.String(320), unique=False, nullable=False)
     score = db.Column(db.Integer)
     review = db.Column(db.Text, nullable=False)
-    
+
     def __repr__(self):
         return '<Review %r>' % self.id
 
@@ -41,7 +41,7 @@ class Transaction(db.Model):
     buyer = db.Column(db.String(19), nullable=False)
     price = db.Column(db.Float, nullable=False, default=0.0)
     product_id = db.Column(db.Integer, nullable=False)
-    
+
     def __repr__(self):
         return '<Transaction %r>' % self.id
 
@@ -76,7 +76,7 @@ def is_email(email):
     regex = (r'([!#-\'*+/-9=?A-Z^-~-]+(\.[!#-\'*+/-9=?A-Z^-~-]+)*|\'"([]!#-[^-'
              r'~\t]|(\\[\t -~]))+")@([!#-\'*+/-9=?A-Z^-~-]+(\.[!#-\'*+/-9=?'
              r'A-Z^-~-]+)*|\[[\t -Z^-~]*])')
-    
+
     return bool(re.match(regex, email))
 
 
@@ -113,13 +113,13 @@ def register(name, email, password):
 
     user = User(
         email=email,
-        username=name,  
+        username=name,
         password=password,
         balance=100.0,
         shipping_address='',
         postal_code=''
     )
-    
+
     db.session.add(user)
 
     db.session.commit()
@@ -175,7 +175,7 @@ def createProduct(title, description, price, last_modified_date, owner_email):
         description=description,
         price=price,
         last_modified=last_modified_date
-    ) 
+    )
 
     # Add product, return true
     db.session.add(product)
@@ -215,14 +215,14 @@ def validDate(date):
 
 
 def login(email, password):
-    
+
     # Check login information
     #   Parameters:
     #    email (string):    user email
     #    password (string): user password
     #   Returns:
     #     The user object if login succeeded otherwise None
-    
+
     # Perform checks prior to query
     # Check if email is valid
     if not is_email(email):
@@ -242,13 +242,14 @@ def login(email, password):
 def updateUser(update_type, name, update_field):
     # Check login information
     # Parameters:
-    # update_type (string): user information to be updated ("username", "shipping address", "postal code")
+    # update_type (string): user information to be updated 
+    # ("username", "shipping address", "postal code")
     # name (string): user username
     # update_field (string): updated value
     # Returns:
     # The true if user info update succeeded otherwise None
 
-    if(update_type.upper() == "USERNAME" ):
+    if(update_type.upper() == "USERNAME"):
         if updateUserName(name, update_field):
             return True
         else:
@@ -302,6 +303,7 @@ def updatePostalCode(name, new_postal_code):
 
 def is_proper_postal_code(postal_code):
     postal_code.replace(" ", "")
+    postal_code.upper()
     regex = r'[ABCEGHJKLMNPRSTVXY][0-9][A-Z][0-9][A-Z][0-9]'
     if re.match(regex, postal_code):
         return True
@@ -352,12 +354,12 @@ def updateProduct(title, title2, description, price):
     # Query for product
     product = Product.query.filter_by(title=title).first()
 
-    if(product.price>price):
+    if(product.price > price):
         return None
 
     product.title = title
     product.description = description
     product.price = price
-    product.last_modified=datetime.today().strftime('%Y-%m-%d')
+    product.last_modified = datetime.today().strftime('%Y-%m-%d')
 
     return product
