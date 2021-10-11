@@ -239,7 +239,7 @@ def login(email, password):
     return valids[0]
 
 
-def updateUser(update_type, name, update_field)
+def updateUser(update_type, name, update_field):
 '''
 Check login information
   Parameters:
@@ -249,13 +249,16 @@ Check login information
   Returns:
     The true if user info update succeeded otherwise None
 '''
-    if(updateType.upper() == "USERNAME" )
-        updateUserName(name, update_field)
-    elif(updateType.upper() == "SHIPPING ADDRESS")
-        updateShippingAddress(name, update_field)
-    elif(updateType.upper() == "POSTAL CODE")
-        updatePostalCode(name, update_field)
-    else
+    if(updateType.upper() == "USERNAME" ):
+        if updateUserName(name, update_field)
+            return True
+    elif(updateType.upper() == "SHIPPING ADDRESS"):
+        if updateShippingAddress(name, update_field)
+            return True
+    elif(updateType.upper() == "POSTAL CODE"):
+        if updatePostalCode(name, update_field)
+            return True
+    else:
         return False
 
 
@@ -288,7 +291,7 @@ def updatePostalCode(name, new_postal_code):
         user.postal_code = new_postal_code
         db.session.commit()
         return True
-    else
+    else:
         return False
 
 
@@ -296,7 +299,8 @@ def is_proper_postal_code(postal_code):
     regex = r'[ABCEGHJKLMNPRSTVXY][0-9][A-Z][0-9][A-Z][0-9]'
     if re.match(regex, postal_code):
         return True
-    return False
+    else:
+        return False
 
 
 def is_proper_shipping_address(address):
@@ -305,3 +309,48 @@ def is_proper_shipping_address(address):
         return False
     else:
         return True
+        
+
+def updateProduct(title, title2, description, price):
+    # updates a product
+    #   Parameters:
+    #     title (string):          prod title
+    #     description (string):    prod description
+    #     price (double):          prod price
+    #   Returns:
+    #     True if product is succesfully updated otherwise False
+
+    # Check if new title is valid
+    if not validTitle(title1):
+        return None
+
+    # Check if old product name exists
+    titleExisted = Product.query.filter_by(title=title).all()
+    if len(titleExisted) == 0:
+        return None
+
+    # Check if new product name is uniqe
+    titleExists = Product.query.filter_by(title=title2).all()
+    if len(titleExists) > 0:
+        return None
+
+    # Check if description is valid
+    if not validDescription(description, title):
+        return None
+
+    # Check if price is valid
+    if not validPrice(price):
+        return None
+
+    # Query for product
+    product = Product.query.filter_by(title=title).first()
+
+    if(product.price>price):
+        return None
+
+    product.title = title
+    product.description = description
+    product.price = price
+    product.last_modified=datetime.today().strftime('%Y-%m-%d')
+
+    return product
