@@ -296,7 +296,7 @@ def updateProduct(title, title2, description, price):
     #     True if product is succesfully updated otherwise False
 
     # Check if new title is valid
-    if not validTitle(title):
+    if not validTitle(title2):
         return False
 
     # Check if old product name exists
@@ -323,7 +323,7 @@ def updateProduct(title, title2, description, price):
     if(product.price > price):
         return False
 
-    product.title = title
+    product.title = title2
     product.description = description
     product.price = price
     product.last_modified = datetime.today().strftime('%Y-%m-%d')

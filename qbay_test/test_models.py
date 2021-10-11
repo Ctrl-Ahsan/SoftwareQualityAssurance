@@ -94,6 +94,36 @@ def test_r2_2_login():
     assert testuser6 is None
 
 
+def test_r3_1_update_user():
+    # test for exclusice user update fields
+    register('urq', 'u19@queensu.ca', '123Ab#')
+    assert updateUser( 'urq', '22 university ave') is True
+    assert updateUser('urq', 'urq2') is True
+    assert updateUser('urq', 'y2k 1j3') is True
+    assert updateUser('urq', 'passyword') is False
+
+
+def test_r3_2_update_user():
+    # test for valid shipping address
+    register('urq', 'u19@queensu.ca', '123Ab#')
+    assert updateUser('urq', '22 university ave') is True
+    assert updateUser('urq', '@@ university ave') is False
+
+
+def test_r3_3_update_user():
+    # test for valid postal code
+    register('urq', 'u19@queensu.ca', '123Ab#')
+    assert updateUser('urq', 'k2r 1w5') is True
+    assert updateUser('urq', 'bb3 77h') is False
+
+
+def test_r3_4_update_user():
+    # test for valid username
+    register('urq', 'u19@queensu.ca', '123Ab#')
+    assert updateUser('urq', 'urq2') is True
+    assert updateUser('urq', 'q') is False
+
+
 def test_r4_1_create_product():
     # test for valid title characters
     # prefix/sufix!=space, must be alphanumerical
@@ -220,39 +250,9 @@ def test_r4_8_create_product():
                          10, '2021-10-10', 'u0@test.ca') is False
 
 
-def test_r3_1_update_user():
-    # test for exclusice user update fields
-    register('urq', 'u19@queensu.ca', '123Ab#')
-    assert updateUser( 'urq', '22 university ave') is True
-    assert updateUser('urq', 'urq2') is True
-    assert updateUser('urq', 'y2k 1j3') is True
-    assert updateUser('urq', 'passyword') is False
-
-
-def test_r3_2_update_user():
-    # test for valid shipping address
-    register('urq', 'u19@queensu.ca', '123Ab#')
-    assert updateUser('urq', '22 university ave') is True
-    assert updateUser('urq', '@@ university ave') is False
-
-
-def test_r3_3_update_user():
-    # test for valid postal code
-    register('urq', 'u19@queensu.ca', '123Ab#')
-    assert updateUser('urq', 'k2r 1w5') is True
-    assert updateUser('urq', 'bb3 77h') is False
-
-
-def test_r3_4_update_user():
-    # test for valid username
-    register('urq', 'u19@queensu.ca', '123Ab#')
-    assert updateUser('urq', 'urq2') is True
-    assert updateUser('urq', 'q') is False
-
-
 def test_r5_1_update_product():
     newProduct = createProduct('testtitle', 'description must be twenty chars',
-                         10, '2021-10-10', 'u2@test.ca')
+                         10, '2021-10-10', 'testing@test.ca')
     # test for update
     assert updateProduct("testtitle", "new title",
                          "new description must be twenty chars",
