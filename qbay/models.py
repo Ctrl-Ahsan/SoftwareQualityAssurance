@@ -183,6 +183,54 @@ def createProduct(title, description, price, last_modified_date, owner_email):
     return True
 
 
+def updateProduct(title, title2, description, price):
+    # updates a product
+    #   Parameters:
+    #     title (string):          prod title
+    #     title2(string):
+    #     description (string):    prod description
+    #     price (double):          prod price
+    #   Returns:
+    #     True if product is succesfully updated otherwise False
+
+    # Check if new title is valid
+    if not validTitle(title2):
+        return False
+
+    # Check if old product name exists
+    titleExisted = Product.query.filter_by(title=title).all()
+    if len(titleExisted) == 0:
+        return False
+
+    # Check if new product name is uniqe
+    titleExists = Product.query.filter_by(title=title2).all()
+    if len(titleExists) > 0:
+        return False
+
+    # Check if description is valid
+    if not validDescription(description, title):
+        return False
+
+    # Check if price is valid
+    if not validPrice(price):
+        return False
+
+    # Query for product
+    product = Product.query.filter_by(title=title).first()
+
+    if(product.price > price):
+        return False
+
+    product.title = title2
+    product.description = description
+    product.price = price
+    product.last_modified = datetime.today().strftime('%Y-%m-%d')
+
+    db.session.commit
+    return True
+
+
+
 def validTitle(title):
     # Returns true is the title is alphanumerical, 80 or less characters
     # and has no spaces at beginning or end
@@ -239,7 +287,7 @@ def login(email, password):
     return valids[0]
 
 
-def updateUser(name, update_field):
+def updateUser(username, new_username, shipping_address, postal_code):
     # Check login information
     # Parameters:
     # update_type (string): user information to be updated
@@ -249,19 +297,29 @@ def updateUser(name, update_field):
     # Returns:
     # The true if user info update succeeded otherwise None
 
-    if not is_proper_username(update_field):
+    if not is_proper_username(new_username):
         return False
 
-    if not is_proper_shipping_address(update_field):
+    # Check if old username exists
+    userExisted = User.query.filter_by(username=username).all()
+    if len(userExisted) == 0:
         return False
 
-    if not is_proper_postal_code(update_field):
+    # Check if new name is uniqe
+    userExists = User.query.filter_by(username=new_username).all()
+    if len(userExists) > 0:
+        return False
+
+    if not is_proper_shipping_address(shipping_address):
+        return False
+
+    if not is_proper_postal_code(postal_code):
         return False
 
     user = User.query.filter_by(username=name)
-    user.username = update_field
-    user.shipping_address = update_field
-    user.postal_code = update_field
+    user.username = username
+    user.shipping_address = shipping_address
+    user.postal_code = postal_code
 
     db.session.commit()
     return True
@@ -284,50 +342,3 @@ def is_proper_shipping_address(address):
         return False
     else:
         return True
-
-
-def updateProduct(title, title2, description, price):
-    # updates a product
-    #   Parameters:
-    #     title (string):          prod title
-    #     title2(string):
-    #     description (string):    prod description
-    #     price (double):          prod price
-    #   Returns:
-    #     True if product is succesfully updated otherwise False
-
-    # Check if new title is valid
-    if not validTitle(title2):
-        return False
-
-    # Check if old product name exists
-    titleExisted = Product.query.filter_by(title=title).all()
-    if len(titleExisted) == 0:
-        return False
-
-    # Check if new product name is uniqe
-    titleExists = Product.query.filter_by(title=title2).all()
-    if len(titleExists) > 0:
-        return False
-
-    # Check if description is valid
-    if not validDescription(description, title):
-        return False
-
-    # Check if price is valid
-    if not validPrice(price):
-        return False
-
-    # Query for product
-    product = Product.query.filter_by(title=title).first()
-
-    if(product.price > price):
-        return False
-
-    product.title = title2
-    product.description = description
-    product.price = price
-    product.last_modified = datetime.today().strftime('%Y-%m-%d')
-
-    db.session.commit
-    return True
