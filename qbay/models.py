@@ -203,9 +203,10 @@ def updateProduct(title, title2, description, price):
         return False
 
     # Check if new product name is uniqe
-    titleExists = Product.query.filter_by(title=title2).all()
-    if len(titleExists) > 0:
-        return False
+    if not title1 == title2:
+        titleExists = Product.query.filter_by(title=title2).all()
+        if len(titleExists) > 0:
+            return False
 
     # Check if description is valid
     if not validDescription(description, title):
@@ -305,9 +306,10 @@ def updateUser(username, new_username, shipping_address, postal_code):
         return False
 
     # Check if new name is uniqe
-    userExists = User.query.filter_by(username=new_username).all()
-    if len(userExists) > 0:
-        return False
+    if not username == new_username:
+        userExists = User.query.filter_by(username=new_username).all()
+        if len(userExists) > 0:
+            return False
 
     if not is_proper_shipping_address(shipping_address):
         return False
@@ -325,7 +327,6 @@ def updateUser(username, new_username, shipping_address, postal_code):
 
 
 def is_proper_postal_code(postal_code):
-    postal_code.replace(" ", "")
     regex = r'[ABCEGHJKLMNPRSTVXY][0-9][A-Z][0-9][A-Z][0-9]'
     if re.match(regex, postal_code.upper().replace(" ", "")):
         return True
@@ -335,7 +336,8 @@ def is_proper_postal_code(postal_code):
 
 def is_proper_shipping_address(address):
     # returns true if shipping address is valid, false otherwise
-    if address.replace(" ", "") == "" or not address.replace(" ", "").isalnum():
+    address_ns = address.replace(" ", "")
+    if address_ns == "" or not address_ns.isalnum():
         return False
     else:
         return True
