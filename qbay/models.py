@@ -288,7 +288,7 @@ def is_proper_postal_code(postal_code):
 
 def is_proper_shipping_address(address):
     # returns true if shipping address is valid, false otherwise
-    if address == "" | | set(address).difference(ascii_letters + digits):
+    if address == "" or set(address).difference(ascii_letters + digits):
         return False
     else:
         return True
