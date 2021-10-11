@@ -256,7 +256,7 @@ def test_r5_1_update_product():
     # test for update
     assert updateProduct("testtitle", "new title",
                          "new description must be twenty chars",
-                         100) is not False
+                         100) is True
 
     assert newProduct.title == "new title" is True
     assert newProduct.description == "new description must be twenty chars" is True
@@ -267,7 +267,7 @@ def test_r5_2_update_product():
     # test for ensuring price increases
     assert updateProduct("title 16", "new title2",
                          "new description must be twenty chars",
-                         200) is not False
+                         200) is True
     assert updateProduct("title 16", "new title3",
                          "new description must be twenty chars",
                          50) is False
