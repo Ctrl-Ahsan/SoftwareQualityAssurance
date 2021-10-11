@@ -97,7 +97,7 @@ def test_r2_2_login():
 def test_r3_1_update_user():
     # test for exclusice user update fields
     register('urq', 'u19@queensu.ca', '123Ab#')
-    assert updateUser( 'urq', '22 university ave') is True
+    assert updateUser('urq', '22 university ave') is True
     assert updateUser('urq', 'urq2') is True
     assert updateUser('urq', 'y2k 1j3') is True
     assert updateUser('urq', 'passyword') is False
@@ -261,7 +261,8 @@ def test_r5_1_update_product():
 
     updatedproduct = Product.query.filter_by(title="new title").first()
     assert (updatedproduct.title == "new title") is True
-    assert (updatedproduct.description == "new description must be twenty chars") is True
+    assert (updatedproduct.description == """new description 
+            must be twenty chars""") is True
     assert (updatedproduct.price == 100) is True
 
 
