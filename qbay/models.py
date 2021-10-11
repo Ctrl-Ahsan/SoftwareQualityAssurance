@@ -215,14 +215,24 @@ def validDate(date):
 
 
 def login(email, password):
-    '''
-    Check login information
-      Parameters:
-        email (string):    user email
-        password (string): user password
-      Returns:
-        The user object if login succeeded otherwise None
-    '''
+    
+    # Check login information
+    #   Parameters:
+    #    email (string):    user email
+    #    password (string): user password
+    #   Returns:
+    #     The user object if login succeeded otherwise None
+    
+    # Perform checks prior to query
+    # Check if email is valid
+    if not is_email(email):
+        return None
+
+    # Check is password is valid
+    if not is_complex_password(password):
+        return None
+
+    # Find and return the user is they exist
     valids = User.query.filter_by(email=email, password=password).all()
     if len(valids) != 1:
         return None
