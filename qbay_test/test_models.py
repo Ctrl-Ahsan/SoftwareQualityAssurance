@@ -96,7 +96,7 @@ def test_r2_2_login():
 
 def test_r3_1_update_user():
     # test for exclusice user update fields
-    register('urq', 'u19@queensu.ca', '123Ab#')
+    assert register('urq', 'u19@queensu.ca', '123Ab#') is True
     assert updateUser('urq', 'qru', '22 university ave', 'y2k 1j3') is True
 
     updatedUser = User.query.filter_by(username="qru").first()
