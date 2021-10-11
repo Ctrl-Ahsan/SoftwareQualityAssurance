@@ -230,7 +230,6 @@ def updateProduct(title, title2, description, price):
     return True
 
 
-
 def validTitle(title):
     # Returns true is the title is alphanumerical, 80 or less characters
     # and has no spaces at beginning or end
