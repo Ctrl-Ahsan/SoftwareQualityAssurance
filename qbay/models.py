@@ -237,3 +237,71 @@ def login(email, password):
     if len(valids) != 1:
         return None
     return valids[0]
+
+
+def updateUser(update_type, name, update_field)
+'''
+Check login information
+  Parameters:
+    update_type (string): user information to be updated ("username", "shipping address", "postal code")
+    name (string): user username
+    update_field (string): updated value
+  Returns:
+    The true if user info update succeeded otherwise None
+'''
+    if(updateType.upper() == "USERNAME" )
+        updateUserName(name, update_field)
+    elif(updateType.upper() == "SHIPPING ADDRESS")
+        updateShippingAddress(name, update_field)
+    elif(updateType.upper() == "POSTAL CODE")
+        updatePostalCode(name, update_field)
+    else
+        return False
+
+
+def updateShippingAddress(name, address):
+    # Updates user shipping address using name to search user
+    user = User.query.filter_by(username=name)
+    if is_proper_shipping_address(address):
+        user.shipping_address = address
+        db.session.commit()
+        return True
+    else
+        return False
+
+
+def updateUserName(prev_username, new_username):
+    # Updates username using previous username to search user
+    user = User.query.filter_by(username=prev_username)
+    if is_proper_username(new_username):
+        user.name = new_username
+        db.session.commit()
+        return True
+    else
+        return False
+
+
+def updatePostalCode(name, new_postal_code):
+    # Updates user postal code using name to search user
+    user = User.query.filter_by(username=name)
+    if is_proper_postal_code(new_postal_code):
+        user.postal_code = new_postal_code
+        db.session.commit()
+        return True
+    else
+        return False
+
+
+def is_proper_postal_code(postal_code):
+    regex = r'[ABCEGHJKLMNPRSTVXY][0-9][A-Z][0-9][A-Z][0-9]'
+    if re.match(regex, postal_code):
+        return True
+    return False
+
+
+def is_proper_shipping_address(address):
+    # returns true if shipping address is valid, false otherwise
+    if address == "" or not address.isalnum():
+        return False
+    else:
+        return True
