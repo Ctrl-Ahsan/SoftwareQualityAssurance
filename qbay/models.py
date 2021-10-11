@@ -240,15 +240,14 @@ def login(email, password):
 
 
 def updateUser(update_type, name, update_field):
-'''
-Check login information
-  Parameters:
-    update_type (string): user information to be updated ("username", "shipping address", "postal code")
-    name (string): user username
-    update_field (string): updated value
-  Returns:
-    The true if user info update succeeded otherwise None
-'''
+    # Check login information
+    # Parameters:
+    # update_type (string): user information to be updated ("username", "shipping address", "postal code")
+    # name (string): user username
+    # update_field (string): updated value
+    # Returns:
+    # The true if user info update succeeded otherwise None
+
     if(updateType.upper() == "USERNAME" ):
         if updateUserName(name, update_field)
             return True
@@ -309,7 +308,7 @@ def is_proper_shipping_address(address):
         return False
     else:
         return True
-        
+
 
 def updateProduct(title, title2, description, price):
     # updates a product
