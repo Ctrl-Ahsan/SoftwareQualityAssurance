@@ -1,6 +1,7 @@
 from qbay import *
 from qbay.cli import login_page, register_page
 
+
 def main():
     user = None
     while True:
@@ -18,7 +19,7 @@ def main():
             elif selection == '2':
                 register_page()
         else: 
-            selection = input (
+            selection = input(
                 'Please type 1 to go to homepage. Or 2 to update profile.')
             selection = selection.strip()
 

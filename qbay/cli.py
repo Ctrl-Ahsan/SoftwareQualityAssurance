@@ -1,5 +1,6 @@
 from qbay.models import login, register
 
+
 def login_page():
     email = input('Please input email: ')
     password = input('Please input password: ')
