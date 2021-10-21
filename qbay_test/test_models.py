@@ -5,9 +5,6 @@ from qbay.models import create_product, update_user, update_product
 
 
 def test_r1_1_user_register():
-    '''
-    Testing R1-7: If the email has been used, the operation failed.
-    '''
     assert register('ur0', 'u0@test.ca', '123Ab#') is True
     assert register('ur1', '', '123Ab#') is False
     assert register('ur2', 'u2@test.ca', '') is False
