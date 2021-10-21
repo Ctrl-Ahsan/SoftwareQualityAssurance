@@ -1,13 +1,10 @@
 from sqlalchemy.inspection import inspect
 from datetime import datetime
 from qbay.models import User, register, login, Product
-from qbay.models import createProduct, updateUser, updateProduct
+from qbay.models import create_product, update_user, update_product
 
 
 def test_r1_1_user_register():
-    '''
-    Testing R1-7: If the email has been used, the operation failed.
-    '''
     assert register('ur0', 'u0@test.ca', '123Ab#') is True
     assert register('ur1', '', '123Ab#') is False
     assert register('ur2', 'u2@test.ca', '') is False
@@ -98,8 +95,8 @@ def test_r3_1_update_user():
     # test for exclusice user update fields
     register('tempuser', 'temp19@queensu.ca', '123Ab#')
 
-    assert updateUser('tempuser', 'newtempuser',
-                      '22 university ave', 'y2k 1j3') is True
+    assert update_user('tempuser', 'newtempuser',
+                       '22 university ave', 'y2k 1j3') is True
 
     updatedUser = User.query.filter_by(username="newtempuser").first()
     assert (updatedUser.username == 'newtempuser') is True
@@ -110,164 +107,164 @@ def test_r3_1_update_user():
 def test_r3_2_update_user():
     # test for valid shipping address
     register('urqf', 'u299@queensu.ca', '123Ab#')
-    assert updateUser('urqf', 'urqf', '22 university ave', 'y2k 1j3') is True
-    assert updateUser('urqf', 'urqf', '@@ university ave', 'y2k 1j3') is False
+    assert update_user('urqf', 'urqf', '22 university ave', 'y2k 1j3') is True
+    assert update_user('urqf', 'urqf', '@@ university ave', 'y2k 1j3') is False
 
 
 def test_r3_3_update_user():
     # test for valid postal code
     register('urq223', '233q@queensu.ca', '123Ab#')
-    assert updateUser('urq223', 'urq223', '22 universty', 'k2r 1w5') is True
-    assert updateUser('urq223', 'urq223', '22 universty', 'z2r rw5') is False
+    assert update_user('urq223', 'urq223', '22 universty', 'k2r 1w5') is True
+    assert update_user('urq223', 'urq223', '22 universty', 'z2r rw5') is False
 
 
 def test_r3_4_update_user():
     # test for valid username
     register('urq9', 'u133@queensu.ca', '123Ab#')
-    assert updateUser('urq9', 'urq9', '22 universty', 'k2r 1w5') is True
-    assert updateUser('urq9', 'u', '22 universty', 'k2r 1w5') is False
-    assert updateUser('urq9', '', '22 universty', 'k2r 1w5') is False
-    assert updateUser('urq9', 'A$AP ROCK', '22 universty', 'k2r 1w5') is False
-    assert updateUser('urq9', ' qrr', '22 universty', 'k2r 1w5') is False
-    assert updateUser('urq9', 'qrr ', '22 universty', 'k2r 1w5') is False
-    assert updateUser('urq9', 'wwwwwwwwwwwwwwwwwwwwwwwww',
-                      '22 universty', 'k2r 1w5') is False
+    assert update_user('urq9', 'urq9', '22 universty', 'k2r 1w5') is True
+    assert update_user('urq9', 'u', '22 universty', 'k2r 1w5') is False
+    assert update_user('urq9', '', '22 universty', 'k2r 1w5') is False
+    assert update_user('urq9', 'A$AP ROCK', '22 universty', 'k2r 1w5') is False
+    assert update_user('urq9', ' qrr', '22 universty', 'k2r 1w5') is False
+    assert update_user('urq9', 'qrr ', '22 universty', 'k2r 1w5') is False
+    assert update_user('urq9', 'wwwwwwwwwwwwwwwwwwwwwwwww',
+                       '22 universty', 'k2r 1w5') is False
 
 
 def test_r4_1_create_product():
     # test for valid title characters
     # prefix/sufix!=space, must be alphanumerical
-    assert createProduct('title 1', 'description must be twenty chars',
-                         10, '2021-10-10', 'u0@test.ca') is True
+    assert create_product('title 1', 'description must be twenty chars',
+                          10, '2021-10-10', 'u0@test.ca') is True
 
-    assert createProduct(' title 2', 'description must be twenty chars',
-                         10, '2021-10-10', 'u0@test.ca') is False
+    assert create_product(' title 2', 'description must be twenty chars',
+                          10, '2021-10-10', 'u0@test.ca') is False
 
-    assert createProduct('title 3 ', 'description must be twenty chars',
-                         10, '2021-10-10', 'u0@test.ca') is False
+    assert create_product('title 3 ', 'description must be twenty chars',
+                          10, '2021-10-10', 'u0@test.ca') is False
 
-    assert createProduct('title $', 'description must be twenty chars',
-                         10, '2021-10-10', 'u0@test.ca') is False
+    assert create_product('title $', 'description must be twenty chars',
+                          10, '2021-10-10', 'u0@test.ca') is False
 
 
 def test_r4_2_create_product():
     # test for valid title length
     # no more than 80 characters
-    assert createProduct('title 4', 'description must be twenty chars',
-                         10, '2021-10-10', 'u0@test.ca') is True
+    assert create_product('title 4', 'description must be twenty chars',
+                          10, '2021-10-10', 'u0@test.ca') is True
 
-    assert createProduct('8080808080808080808080808080808080'
-                         '8080808080808080808080808080808080'
-                         '808080808080', 'description must be twenty chars',
-                         10, '2021-10-10', 'u0@test.ca') is False
+    assert create_product('8080808080808080808080808080808080'
+                          '8080808080808080808080808080808080'
+                          '808080808080', 'description must be twenty chars',
+                          10, '2021-10-10', 'u0@test.ca') is False
 
 
 def test_r4_3_create_product():
     # test for valid description length
     # total charcters between 20 and 2000
-    assert createProduct('title 5', 'description must be twenty chars',
-                         10, '2021-10-10', 'u0@test.ca') is True
+    assert create_product('title 5', 'description must be twenty chars',
+                          10, '2021-10-10', 'u0@test.ca') is True
 
-    assert createProduct('title 6', 'description',
-                         10, '2021-10-10', 'u0@test.ca') is False
+    assert create_product('title 6', 'description',
+                          10, '2021-10-10', 'u0@test.ca') is False
 
-    assert createProduct('title 7', """description must be > 2000
-                         200020002000200020002000200020002000200020002000
-                         200020002000200020002000200020002000200020002000
-                         200020002000200020002000200020002000200020002000
-                         200020002000200020002000200020002000200020002000
-                         200020002000200020002000200020002000200020002000
-                         200020002000200020002000200020002000200020002000
-                         200020002000200020002000200020002000200020002000
-                         200020002000200020002000200020002000200020002000
-                         200020002000200020002000200020002000200020002000
-                         200020002000200020002000200020002000200020002000
-                         200020002000200020002000200020002000200020002000
-                         200020002000200020002000200020002000200020002000
-                         200020002000200020002000200020002000200020002000
-                         200020002000200020002000200020002000200020002000
-                         200020002000200020002000200020002000200020002000
-                         200020002000200020002000200020002000200020002000
-                         200020002000200020002000200020002000200020002000
-                         200020002000200020002000200020002000200020002000
-                         200020002000200020002000200020002000200020002000
-                         200020002000200020002000200020002000200020002000
-                         200020002000200020002000200020002000200020002000
-                         200020002000200020002000200020002000200020002000
-                         200020002000200020002000200020002000200020002000
-                         200020002000200020002000200020002000200020002000
-                         200020002000200020002000200020002000200020002000
-                         200020002000200020002000200020002000200020002000
-                         200020002000200020002000200020002000200020002000
-                         200020002000200020002000200020002000200020002000""",
-                         10, '2021-10-10', 'u0@test.ca') is False
+    assert create_product('title 7', """description must be > 2000
+                          200020002000200020002000200020002000200020002000
+                          200020002000200020002000200020002000200020002000
+                          200020002000200020002000200020002000200020002000
+                          200020002000200020002000200020002000200020002000
+                          200020002000200020002000200020002000200020002000
+                          200020002000200020002000200020002000200020002000
+                          200020002000200020002000200020002000200020002000
+                          200020002000200020002000200020002000200020002000
+                          200020002000200020002000200020002000200020002000
+                          200020002000200020002000200020002000200020002000
+                          200020002000200020002000200020002000200020002000
+                          200020002000200020002000200020002000200020002000
+                          200020002000200020002000200020002000200020002000
+                          200020002000200020002000200020002000200020002000
+                          200020002000200020002000200020002000200020002000
+                          200020002000200020002000200020002000200020002000
+                          200020002000200020002000200020002000200020002000
+                          200020002000200020002000200020002000200020002000
+                          200020002000200020002000200020002000200020002000
+                          200020002000200020002000200020002000200020002000
+                          200020002000200020002000200020002000200020002000
+                          200020002000200020002000200020002000200020002000
+                          200020002000200020002000200020002000200020002000
+                          200020002000200020002000200020002000200020002000
+                          200020002000200020002000200020002000200020002000
+                          200020002000200020002000200020002000200020002000
+                          200020002000200020002000200020002000200020002000
+                          200020002000200020002000200020002000200020002000""",
+                          10, '2021-10-10', 'u0@test.ca') is False
 
 
 def test_r4_4_create_product():
     # test that description is longer than title
-    assert createProduct('title 8', 'description must be twenty chars',
-                         10, '2021-10-10', 'u0@test.ca') is True
+    assert create_product('title 8', 'description must be twenty chars',
+                          10, '2021-10-10', 'u0@test.ca') is True
 
-    assert createProduct('title 9 be longer than 20', 'description be twenty',
-                         10, '2021-10-10', 'u0@test.ca') is False
+    assert create_product('title 9 be longer than 20', 'description be twenty',
+                          10, '2021-10-10', 'u0@test.ca') is False
 
 
 def test_r4_5_create_product():
     # test for valid price range
     # between 10 and 10000
-    assert createProduct('title 10', 'description must be twenty chars',
-                         10, '2021-10-10', 'u0@test.ca') is True
+    assert create_product('title 10', 'description must be twenty chars',
+                          10, '2021-10-10', 'u0@test.ca') is True
 
-    assert createProduct('title 11', 'description must be twenty chars',
-                         9, '2021-10-10', 'u0@test.ca') is False
+    assert create_product('title 11', 'description must be twenty chars',
+                          9, '2021-10-10', 'u0@test.ca') is False
 
-    assert createProduct('title 12', 'description must be twenty chars',
-                         10001, '2021-10-10', 'u0@test.ca') is False
+    assert create_product('title 12', 'description must be twenty chars',
+                          10001, '2021-10-10', 'u0@test.ca') is False
 
 
 def test_r4_6_create_product():
     # test for valid date
     # must be after 2021-01-02 and before 2025-01-02.
-    assert createProduct('title 13', 'description must be twenty chars',
-                         10, '2021-10-10', 'u0@test.ca') is True
+    assert create_product('title 13', 'description must be twenty chars',
+                          10, '2021-10-10', 'u0@test.ca') is True
 
-    assert createProduct('title 14', 'description must be twenty chars',
-                         10, '2021-01-01', 'u0@test.ca') is False
+    assert create_product('title 14', 'description must be twenty chars',
+                          10, '2021-01-01', 'u0@test.ca') is False
 
-    assert createProduct('title 15', 'description must be twenty chars',
-                         10, '2026-01-01', 'u0@test.ca') is False
+    assert create_product('title 15', 'description must be twenty chars',
+                          10, '2026-01-01', 'u0@test.ca') is False
 
 
 def test_r4_7_create_product():
     # test for valid owner email
     # must be none empty and owner must exist
-    assert createProduct('title 16', 'description must be twenty chars',
-                         10, '2021-10-10', 'u0@test.ca') is True
+    assert create_product('title 16', 'description must be twenty chars',
+                          10, '2021-10-10', 'u0@test.ca') is True
 
-    assert createProduct('title 17', 'description must be twenty chars',
-                         10, '2021-10-10', 'fakeemail@gmail.com') is False
+    assert create_product('title 17', 'description must be twenty chars',
+                          10, '2021-10-10', 'fakeemail@gmail.com') is False
 
-    assert createProduct('title 18', 'description must be twenty chars',
-                         10, '2021-10-10', '') is False
+    assert create_product('title 18', 'description must be twenty chars',
+                          10, '2021-10-10', '') is False
 
 
 def test_r4_8_create_product():
     # test for unique product title
-    assert createProduct('title 19', 'description must be twenty chars',
-                         10, '2021-10-10', 'u0@test.ca') is True
+    assert create_product('title 19', 'description must be twenty chars',
+                          10, '2021-10-10', 'u0@test.ca') is True
 
-    assert createProduct('title 19', 'description must be twenty chars',
-                         10, '2021-10-10', 'u0@test.ca') is False
+    assert create_product('title 19', 'description must be twenty chars',
+                          10, '2021-10-10', 'u0@test.ca') is False
 
 
 def test_r5_1_update_product():
     # test for update
-    createProduct('testtitle', 'description must be twenty chars',
-                  10, '2021-10-10', 'u0@test.ca')
+    create_product('testtitle', 'description must be twenty chars',
+                   10, '2021-10-10', 'u0@test.ca')
 
-    assert updateProduct("testtitle", "new title",
-                         "new description must be twenty chars",
-                         100) is True
+    assert update_product("testtitle", "new title",
+                          "new description must be twenty chars",
+                          100) is True
 
     updatedproduct = Product.query.filter_by(title="new title").first()
     testString = "new description must be twenty chars"
@@ -278,12 +275,12 @@ def test_r5_1_update_product():
 
 def test_r5_2_update_product():
     # test for ensuring price increases
-    assert updateProduct("title 16", "new title2",
-                         "new description must be twenty chars",
-                         200) is True
-    assert updateProduct("title 16", "new title3",
-                         "new description must be twenty chars",
-                         50) is False
+    assert update_product("title 16", "new title2",
+                          "new description must be twenty chars",
+                          200) is True
+    assert update_product("title 16", "new title3",
+                          "new description must be twenty chars",
+                          50) is False
 
 
 def test_r5_3_update_product():
@@ -295,57 +292,57 @@ def test_r5_3_update_product():
 
 def test_r5_4_update_product():
     # testing for prequery checks
-    assert updateProduct("title 10", " new title4",
-                         "new description must be twenty chars",
-                         200) is False
+    assert update_product("title 10", " new title4",
+                          "new description must be twenty chars",
+                          200) is False
 
-    assert updateProduct("title 10", "new title5 ",
-                         "new description must be twenty chars",
-                         200) is False
+    assert update_product("title 10", "new title5 ",
+                          "new description must be twenty chars",
+                          200) is False
 
-    assert updateProduct("title 10", "new title$",
-                         "new description must be twenty chars",
-                         200) is False
+    assert update_product("title 10", "new title$",
+                          "new description must be twenty chars",
+                          200) is False
 
-    assert updateProduct("title 10", "new title6", "short desc",
-                         200) is False
+    assert update_product("title 10", "new title6", "short desc",
+                          200) is False
 
-    assert updateProduct("title 10", "new title7", """description must be
-                         > 2000
-                         200020002000200020002000200020002000200020002000
-                         200020002000200020002000200020002000200020002000
-                         200020002000200020002000200020002000200020002000
-                         200020002000200020002000200020002000200020002000
-                         200020002000200020002000200020002000200020002000
-                         200020002000200020002000200020002000200020002000
-                         200020002000200020002000200020002000200020002000
-                         200020002000200020002000200020002000200020002000
-                         200020002000200020002000200020002000200020002000
-                         200020002000200020002000200020002000200020002000
-                         200020002000200020002000200020002000200020002000
-                         200020002000200020002000200020002000200020002000
-                         200020002000200020002000200020002000200020002000
-                         200020002000200020002000200020002000200020002000
-                         200020002000200020002000200020002000200020002000
-                         200020002000200020002000200020002000200020002000
-                         200020002000200020002000200020002000200020002000
-                         200020002000200020002000200020002000200020002000
-                         200020002000200020002000200020002000200020002000
-                         200020002000200020002000200020002000200020002000
-                         200020002000200020002000200020002000200020002000
-                         200020002000200020002000200020002000200020002000
-                         200020002000200020002000200020002000200020002000
-                         200020002000200020002000200020002000200020002000
-                         200020002000200020002000200020002000200020002000
-                         200020002000200020002000200020002000200020002000
-                         200020002000200020002000200020002000200020002000
-                         200020002000200020002000200020002000200020002000""",
-                         200) is False
+    assert update_product("title 10", "new title7", """description must be
+                          > 2000
+                          200020002000200020002000200020002000200020002000
+                          200020002000200020002000200020002000200020002000
+                          200020002000200020002000200020002000200020002000
+                          200020002000200020002000200020002000200020002000
+                          200020002000200020002000200020002000200020002000
+                          200020002000200020002000200020002000200020002000
+                          200020002000200020002000200020002000200020002000
+                          200020002000200020002000200020002000200020002000
+                          200020002000200020002000200020002000200020002000
+                          200020002000200020002000200020002000200020002000
+                          200020002000200020002000200020002000200020002000
+                          200020002000200020002000200020002000200020002000
+                          200020002000200020002000200020002000200020002000
+                          200020002000200020002000200020002000200020002000
+                          200020002000200020002000200020002000200020002000
+                          200020002000200020002000200020002000200020002000
+                          200020002000200020002000200020002000200020002000
+                          200020002000200020002000200020002000200020002000
+                          200020002000200020002000200020002000200020002000
+                          200020002000200020002000200020002000200020002000
+                          200020002000200020002000200020002000200020002000
+                          200020002000200020002000200020002000200020002000
+                          200020002000200020002000200020002000200020002000
+                          200020002000200020002000200020002000200020002000
+                          200020002000200020002000200020002000200020002000
+                          200020002000200020002000200020002000200020002000
+                          200020002000200020002000200020002000200020002000
+                          200020002000200020002000200020002000200020002000""",
+                          200) is False
 
-    assert updateProduct("title 10", "new title8",
-                         "new description must be twenty chars",
-                         9) is False
+    assert update_product("title 10", "new title8",
+                          "new description must be twenty chars",
+                          9) is False
 
-    assert updateProduct("title 10", "new title9",
-                         "new description must be twenty chars",
-                         10001) is False
+    assert update_product("title 10", "new title9",
+                          "new description must be twenty chars",
+                          10001) is False

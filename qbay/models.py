@@ -15,7 +15,7 @@ class User(db.Model):
     balance = db.Column(db.Float, nullable=False, default=0.0)
     shipping_address = db.Column(db.Text, nullable=False)
     postal_code = db.Column(db.String(6), nullable=False)
-    # posts = db.relationship('Product', backref='creator', lazy=True)
+    posts = db.relationship('Product', backref='creator', lazy=True)
     reviews = db.relationship('Review', backref='author', lazy=True)
 
     def __repr__(self):
@@ -24,7 +24,8 @@ class User(db.Model):
 
 class Review(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user = db.Column(db.Integer, db.ForeignKey('user.email'), nullable=False)
+    user = db.Column(db.String(320), 
+                     db.ForeignKey('user.email'), nullable=False)
     user_email = db.Column(db.String(320), unique=False, nullable=False)
     score = db.Column(db.Integer)
     review = db.Column(db.Text, nullable=False)
@@ -48,7 +49,8 @@ class Transaction(db.Model):
 
 class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    owner_email = db.Column(db.String(120), nullable=False)
+    user_email = db.Column(db.String(320), 
+                           db.ForeignKey('user.email'), nullable=False)
     title = db.Column(db.Text, unique=True, nullable=False)
     description = db.Column(db.String(2000), nullable=False)
     price = db.Column(db.Float, nullable=False)
@@ -62,6 +64,13 @@ db.create_all()
 
 
 def is_complex_password(password):
+    '''
+    Checks to see if password given is correct
+      Parameters:
+        password (string):           password used
+      Returns:
+        True if correct password is passed otherwise False
+    '''
     regex = r'[\s!\"#\$%&\'\(\)\*\+,-\./:;<=>\?@\[\]\^_`\{\|\}~]'
     if not bool(re.search(regex, password)):
         return False
@@ -73,6 +82,13 @@ def is_complex_password(password):
 
 
 def is_email(email):
+    '''
+    Checks to see if email given is correct
+      Parameters:
+        email (string):           user email
+      Returns:
+        True if correct email is passed otherwise False
+    '''
     regex = (r'([!#-\'*+/-9=?A-Z^-~-]+(\.[!#-\'*+/-9=?A-Z^-~-]+)*|\'"([]!#-[^-'
              r'~\t]|(\\[\t -~]))+")@([!#-\'*+/-9=?A-Z^-~-]+(\.[!#-\'*+/-9=?'
              r'A-Z^-~-]+)*|\[[\t -Z^-~]*])')
@@ -81,6 +97,13 @@ def is_email(email):
 
 
 def is_proper_username(name):
+    '''
+    Checks to see if username given is correct
+      Parameters:
+        name (string):           username
+      Returns:
+        True if correct username is passed otherwise False
+    '''
     if len(name) < 3 or len(name) > 19:
         return False
     return bool(re.match(r'^[A-z0-9]+[A-z0-9 ]*[A-z0-9]+$', name))
@@ -127,50 +150,52 @@ def register(name, email, password):
     return True
 
 
-def createProduct(title, description, price, last_modified_date, owner_email):
-    # Register a new user
-    #   Parameters:
-    #     title (string):          prod title
-    #     description (string):    prod description
-    #     price (double):          prod price
-    #     last_modified_date(date):prod last_modified_date
-    #     owner_email (string):    prod owner_email
-    #   Returns:
-    #     True if product is succesfully added otherwise False
+def create_product(title, description, price, last_modified_date, owner_email):
+    '''
+    Create a new product
+      Parameters:
+        title (string):          prod title
+        description (string):    prod description
+        price (double):          prod price
+        last_modified_date(date):prod last_modified_date
+        owner_email (string):    prod owner_email
+      Returns:
+        True if product is successfully added otherwise False
+    '''
 
     # Check if user exists
-    userExists = User.query.filter_by(email=owner_email).all()
-    if len(userExists) == 0:
+    user_exists = User.query.filter_by(email=owner_email).all()
+    if len(user_exists) == 0:
         return False
 
     # Check if title is valid
-    if not validTitle(title):
+    if not valid_title(title):
         return False
 
     # Check if product name is uniqe
-    titleExists = Product.query.filter_by(title=title).all()
-    if len(titleExists) > 0:
+    title_exists = Product.query.filter_by(title=title).all()
+    if len(title_exists) > 0:
         return False
 
     # Check if description is valid
-    if not validDescription(description, title):
+    if not valid_description(description, title):
         return False
 
     # Check if price is valid
-    if not validPrice(price):
+    if not valid_price(price):
         return False
 
     # Check is date is valid
-    if not validDate(last_modified_date):
+    if not valid_date(last_modified_date):
         return False
 
     # Get prod id
-    productCount = db.session.query(Product).count()
+    product_count = db.session.query(Product).count()
 
     # Create product
     product = Product(
-        id=productCount + 1,
-        owner_email=owner_email,
+        id=product_count + 1,
+        user_email=owner_email,
         title=title,
         description=description,
         price=price,
@@ -183,23 +208,25 @@ def createProduct(title, description, price, last_modified_date, owner_email):
     return True
 
 
-def updateProduct(title, title2, description, price):
-    # updates a product
-    #   Parameters:
-    #     title (string):          prod title
-    #     title2(string):
-    #     description (string):    prod description
-    #     price (double):          prod price
-    #   Returns:
-    #     True if product is succesfully updated otherwise False
+def update_product(title, title2, description, price):
+    '''
+    Updates a product
+      Parameters:
+        title (string):          prod title
+        title2(string):
+        description (string):    prod description
+        price (double):          prod price
+      Returns:
+        True if product is successfully updated otherwise False
+    '''
 
     # Check if new title is valid
-    if not validTitle(title2):
+    if not valid_title(title2):
         return False
 
     # Check if old product name exists
-    titleExisted = Product.query.filter_by(title=title).all()
-    if len(titleExisted) == 0:
+    title_existed = Product.query.filter_by(title=title).all()
+    if len(title_existed) == 0:
         return False
 
     # Check if new product name is uniqe
@@ -209,11 +236,11 @@ def updateProduct(title, title2, description, price):
             return False
 
     # Check if description is valid
-    if not validDescription(description, title):
+    if not valid_description(description, title):
         return False
 
     # Check if price is valid
-    if not validPrice(price):
+    if not valid_price(price):
         return False
 
     # Query for product
@@ -231,9 +258,14 @@ def updateProduct(title, title2, description, price):
     return True
 
 
-def validTitle(title):
-    # Returns true is the title is alphanumerical, 80 or less characters
-    # and has no spaces at beginning or end
+def valid_title(title):
+    '''
+    Checks to see if title is correct
+      Parameters:
+        title (string):           title of product
+      Returns:
+        True if correct title is passed otherwise False
+    '''
     if(title[0] == " " or title[-1] == " " or len(title) > 80):
         return False
     if all(x.isalpha() or x.isnumeric() or x.isspace() for x in title):
@@ -241,35 +273,54 @@ def validTitle(title):
     return False
 
 
-def validPrice(price):
-    # Returns true if price falls in acceptable range
-    if 10 <= price <= 10000:
+def valid_price(price):
+    '''
+    Checks to see if price is correct
+      Parameters:
+        price (float):           price of product
+      Returns:
+        True if correct price is passed otherwise False
+    '''
+    if 10.0 <= price <= 10000.0:
         return True
     return False
 
 
-def validDescription(description, title):
-    # Returns true is description length is acceptable
+def valid_description(description, title):
+    '''
+    Checks to see if description is correct
+      Parameters:
+        description (string):           description of product
+      Returns:
+        True if correct description is passed otherwise False
+    '''
     if 20 <= len(description) <= 2000 and len(description) > len(title):
         return True
     return False
 
 
-def validDate(date):
-    # Returns true is date falls in acceptable range
+def valid_date(date):
+    '''
+    Checks to see if date is correct
+      Parameters:
+        date (string):           date of product
+      Returns:
+        True if correct date is passed otherwise False
+    '''
     if date > '2025-01-02' or date < '2021-01-02':
         return False
     return True
 
 
 def login(email, password):
-
-    # Check login information
-    #   Parameters:
-    #    email (string):    user email
-    #    password (string): user password
-    #   Returns:
-    #     The user object if login succeeded otherwise None
+    '''
+    Login users
+      Parameters:
+        email (string):           email of user
+        password (string):        email of password
+      Returns:
+        User account if correct info is passed otherwise None
+    '''
 
     # Perform checks prior to query
     # Check if email is valid
@@ -287,28 +338,30 @@ def login(email, password):
     return valids[0]
 
 
-def updateUser(username, new_username, shipping_address, postal_code):
-    # Check login information
-    # Parameters:
-    # update_type (string): user information to be updated
-    # ("username", "shipping address", "postal code")
-    # name (string): user username
-    # update_field (string): updated value
-    # Returns:
-    # The true if user info update succeeded otherwise None
+def update_user(username, new_username, shipping_address, postal_code):
+    '''
+    Updates user profile
+      Parameters:
+        username (string):           username of user
+        new_username (string):       new username of user
+        shipping_address (string):   shipping address of user
+        postal_code (string):        postal code of user
+      Returns:
+        True if user profile is updated otherwise False
+    '''
 
     if not is_proper_username(new_username):
         return False
 
     # Check if old username exists
-    userExisted = User.query.filter_by(username=username).all()
-    if len(userExisted) == 0:
+    user_existed = User.query.filter_by(username=username).all()
+    if len(user_existed) == 0:
         return False
 
     # Check if new name is uniqe
     if not username == new_username:
-        userExists = User.query.filter_by(username=new_username).all()
-        if len(userExists) > 0:
+        user_exists = User.query.filter_by(username=new_username).all()
+        if len(user_exists) > 0:
             return False
 
     if not is_proper_shipping_address(shipping_address):
@@ -327,6 +380,13 @@ def updateUser(username, new_username, shipping_address, postal_code):
 
 
 def is_proper_postal_code(postal_code):
+    '''
+    Checks postal code
+      Parameters:
+        postal_code (string):     postal code of user
+      Returns:
+        True if correct postal code otherwise False
+    '''
     regex = r'[ABCEGHJKLMNPRSTVXY][0-9][A-Z][0-9][A-Z][0-9]'
     if re.match(regex, postal_code.upper().replace(" ", "")):
         return True
@@ -335,7 +395,13 @@ def is_proper_postal_code(postal_code):
 
 
 def is_proper_shipping_address(address):
-    # returns true if shipping address is valid, false otherwise
+    '''
+    Checks shipping address
+      Parameters:
+        address (string):     address of user
+      Returns:
+        True if correct address otherwise False
+    '''
     address_ns = address.replace(" ", "")
     if address_ns == "" or not address_ns.isalnum():
         return False
