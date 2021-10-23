@@ -46,7 +46,8 @@ def create_product_page():
         print("Product creation failed")
 
 
-def update_product_page(initialtitle):
+def update_product_page():
+    initialtitle = input("Enter the title of the product you want to update")
     title = input("Enter the product's new title")
     description = input("Enter the product's new description")
     price = input("Enter the product's new price")

@@ -1,5 +1,5 @@
 from qbay import *
-from qbay.cli import login_page, register_page
+from qbay.cli import login_page, register_page, update_user_page, create_product_page, update_product_page
 
 
 def main():
@@ -19,16 +19,22 @@ def main():
             elif selection == '2':
                 register_page()
         else: 
-            selection = input(
-                'Please type 1 to go to homepage. Or 2 to update profile.')
-            selection = selection.strip()
+            while True:
+                selection = input(
+                    'Type 1 to logout and return to the main menu \n Type 2 to update profile \n Type 3 to create a product \n Type 3 to update a product')
+                selection = selection.strip()
 
-            if selection == '1':
-                # Home page here
-                continue
-            elif selection == '2':
-                # Update profile here
-                continue
+                if selection == '1':
+                    user = None
+                    break
+                elif selection == '2':
+                    update_user_page(user.username)
+                elif selection == '3':
+                    create_product_page()
+                elif selection == '4':
+                    update_product_page()
+                else:
+                    print("Invalid input")
 
 
 if __name__ == '__main__':
