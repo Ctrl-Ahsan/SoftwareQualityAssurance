@@ -1,5 +1,6 @@
 from qbay import *
-from qbay.cli import login_page, register_page, update_user_page, create_product_page, update_product_page
+from qbay.cli import login_page, register_page, update_user_page
+from qbay.cli import create_product_page, update_product_page
 
 
 def main():
@@ -21,7 +22,10 @@ def main():
         else: 
             while True:
                 selection = input(
-                    'Type 1 to logout and return to the main menu \n Type 2 to update profile \n Type 3 to create a product \n Type 3 to update a product')
+                    'Type 1 to logout and return to the main menu \n'
+                    ' Type 2 to update profile \n'
+                    ' Type 3 to create a product \n'
+                    ' Type 3 to update a product')
                 selection = selection.strip()
 
                 if selection == '1':

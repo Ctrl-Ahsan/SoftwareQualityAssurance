@@ -1,4 +1,5 @@
-from qbay.models import login, register, update_user, create_product, update_product
+from qbay.models import login, register, update_user
+from qbay.models import create_product, update_product
 from datetime import datetime
 
 
@@ -37,7 +38,7 @@ def create_product_page():
     title = input("Enter the product's title")
     description = input("Enter the product's description")
     price = input("Enter the product's price")
-    last_modified_date = datetime.today().strftime('%Y-%m-%d')
+    date = datetime.today().strftime('%Y-%m-%d')
     owner_email = input("Enter your email")
     
     if create_product(title, description, price, last_modified_date, owner_email):
