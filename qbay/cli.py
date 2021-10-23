@@ -41,7 +41,7 @@ def create_product_page():
     date = datetime.today().strftime('%Y-%m-%d')
     owner_email = input("Enter your email")
     
-    if create_product(title, description, price, last_modified_date, owner_email):
+    if create_product(title, description, price, date, owner_email):
         print("Product created succesfully")
     else:
         print("Product creation failed")
