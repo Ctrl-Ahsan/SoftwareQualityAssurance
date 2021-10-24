@@ -93,8 +93,8 @@ def update_product_page(user):
 
     if (int(post) - 1 >= 0 and int(post) - 1 < number_of_posts):
         title = user.posts[int(post) - 1].title
-        description = user.posts[int(post)-1].description
-        price = user.posts[int(post)-1].price
+        description = user.posts[int(post) - 1].description
+        price = user.posts[int(post) - 1].price
 
         print('\n1. Update title\n2. Update description\n3. Update price')
         selection = input('\nEnter option number: ')
@@ -112,7 +112,7 @@ def update_product_page(user):
                 return
 
         result = update_product(
-            user.posts[int(post)-1].title,
+            user.posts[int(post) - 1].title,
             title,
             description,
             float(price)
