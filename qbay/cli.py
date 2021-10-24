@@ -53,7 +53,7 @@ def is_float(string):
 
 def create_product_page(user):
     title = input('Enter title: ')
-    description= input('Enter description: ')
+    description = input('Enter description: ')
     price = input('Enter price: ')
 
     if not is_float(price):
@@ -73,6 +73,7 @@ def create_product_page(user):
     else:
         print('product creation failed.')
 
+
 def update_product_page(user):
     number_of_posts = len(user.posts)
     if number_of_posts == 0:
@@ -85,7 +86,12 @@ def update_product_page(user):
 
     post = input('\nEnter the product number you would like to update.\n')
     post = post.strip()
-    if post.isnumeric() and (int(post)-1 >= 0 and int(post)-1 < number_of_posts):
+
+    if not post.isnumeric():
+        print('product update failed.')
+        return
+
+    if (int(post)-1 >= 0 and int(post)-1 < number_of_posts):
         title = user.posts[int(post)-1].title
         description = user.posts[int(post)-1].description
         price = user.posts[int(post)-1].price
