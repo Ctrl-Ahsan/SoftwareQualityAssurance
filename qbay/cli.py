@@ -46,8 +46,10 @@ def register_page():
     else:
         print('regisration failed.')
 
+
 def is_float(string):
     return bool(re.match(r'[0-9]+(.[0-9]+)?', string))
+
 
 def create_product_page(user):
     title = input('Enter title: ')
