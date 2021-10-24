@@ -91,8 +91,8 @@ def update_product_page(user):
         print('product update failed.')
         return
 
-    if (int(post)-1 >= 0 and int(post)-1 < number_of_posts):
-        title = user.posts[int(post)-1].title
+    if (int(post) - 1 >= 0 and int(post) - 1 < number_of_posts):
+        title = user.posts[int(post) - 1].title
         description = user.posts[int(post)-1].description
         price = user.posts[int(post)-1].price
 
