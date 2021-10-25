@@ -5,6 +5,10 @@ import re
 
 
 def login_page():
+    '''
+    Initial login page for registered users
+
+    '''
     email = input('Please input email: ')
     password = input('Please input password: ')
 
@@ -12,19 +16,28 @@ def login_page():
 
 
 def register_page():
+    '''
+    Registration page for new user with 
+    email, username and password inputs.
+    '''
     email = input('Please input email: ')
+    username = input('Please input username: ')
     password = input('Please input password: ')
     password_twice = input('Please input the password again: ')
 
     if password != password_twice:
         print('password entered not the same')
-    elif register('default name', email, password):
+    elif register(username, email, password):
         print('registration succeeded')
     else:
         print('regisration failed.')
 
 
 def update_user_page(initialuser):
+    '''
+    User information update page. Can update username, 
+    shipping address and postal code
+    '''
     username = input("Enter the new username: ")
     shipping_address = input("Enter the new shipping address: ")
     postal_code = input("Enter the new postal code: ")
@@ -35,23 +48,23 @@ def update_user_page(initialuser):
         print("User update failed")
 
 
-def register_page():
-    email = input('\nPlease input email: ')
-    password = input('Please input password: ')
-    password_twice = input('Please input the password again: ')
-    if password != password_twice:
-        print('password entered not the same')
-    elif register('default name', email, password):
-        print('registration succeeded')
-    else:
-        print('regisration failed.')
-
-
 def is_float(string):
+    '''
+    Checks to see if string input is a float
+        Parameters: 
+            string : input
+        Returns: 
+            True if float
+    '''
     return bool(re.match(r'[0-9]+(.[0-9]+)?', string))
 
 
 def create_product_page(user):
+    '''
+    Product posting creation page
+        Parameters: 
+        user : product posting user
+    '''
     title = input('Enter title: ')
     description = input('Enter description: ')
     price = input('Enter price: ')
@@ -75,6 +88,11 @@ def create_product_page(user):
 
 
 def update_product_page(user):
+    '''
+    Update product posting page
+        Parameters: 
+        user : product posting user
+    '''
     number_of_posts = len(user.posts)
     if number_of_posts == 0:
         print('no products to update.')
