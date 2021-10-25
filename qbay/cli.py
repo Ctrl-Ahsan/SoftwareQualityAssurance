@@ -1,6 +1,7 @@
 from qbay.models import login, register, update_user
 from qbay.models import create_product, update_product
 from datetime import datetime
+import re
 
 
 def login_page():
@@ -34,28 +35,93 @@ def update_user_page(initialuser):
         print("User update failed")
 
 
-def create_product_page():
-    title = input("Enter the product's title")
-    description = input("Enter the product's description")
-    price = input("Enter the product's price")
-    date = datetime.today().strftime('%Y-%m-%d')
-    owner_email = input("Enter your email")
-    
-    if create_product(title, description, price, date, owner_email):
-        print("Product created succesfully")
+def register_page():
+    email = input('\nPlease input email: ')
+    password = input('Please input password: ')
+    password_twice = input('Please input the password again: ')
+    if password != password_twice:
+        print('password entered not the same')
+    elif register('default name', email, password):
+        print('registration succeeded')
     else:
-        print("Product creation failed")
+        print('regisration failed.')
 
 
-def update_product_page():
-    initialtitle = input("Enter the title of the product you want to update")
-    title = input("Enter the product's new title")
-    description = input("Enter the product's new description")
-    price = input("Enter the product's new price")
+def is_float(string):
+    return bool(re.match(r'[0-9]+(.[0-9]+)?', string))
 
-    if update_product(initialtitle, title, description, price):
-        print("Product updated succesfully")
+
+def create_product_page(user):
+    title = input('Enter title: ')
+    description = input('Enter description: ')
+    price = input('Enter price: ')
+
+    if not is_float(price):
+        print('product creation failed.')
+        return
+
+    result = create_product(
+        title=title,
+        description=description,
+        price=float(price),
+        last_modified_date=datetime.today().strftime('%Y-%m-%d'),
+        owner_email=user.email
+    )
+
+    if result:
+        print('product creation succeeded.')
     else:
-        print("Product updated filed")
+        print('product creation failed.')
+
+
+def update_product_page(user):
+    number_of_posts = len(user.posts)
+    if number_of_posts == 0:
+        print('no products to update.')
+        return 
+
+    print(f'\n{number_of_posts} Post(s):')
+    for i, product in enumerate(user.posts):
+        print(f'{i+1}. {product.title}')
+
+    post = input('\nEnter the product number you would like to update.\n')
+    post = post.strip()
+
+    if not post.isnumeric():
+        print('product update failed.')
+        return
+
+    if (int(post) - 1 >= 0 and int(post) - 1 < number_of_posts):
+        title = user.posts[int(post) - 1].title
+        description = user.posts[int(post) - 1].description
+        price = user.posts[int(post) - 1].price
+
+        print('\n1. Update title\n2. Update description\n3. Update price')
+        selection = input('\nEnter option number: ')
+        selection = selection.strip()
+
+        if selection == '1':
+            title = input('Enter new title: ')
+        elif selection == '2':
+            description = input('Enter new description: ')
+        elif selection == '3':
+            price = input('Enter a new price: ')
+
+            if not is_float(price):
+                print('product update failed.')
+                return
+
+        result = update_product(
+            user.posts[int(post) - 1].title,
+            title,
+            description,
+            float(price)
+        )
+
+        if result:
+            print('product update succeeded.')
+        else:
+            print('product update failed.')
+
     
 

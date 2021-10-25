@@ -37,9 +37,9 @@ def main():
                 elif selection == '2':
                     update_user_page(user.username)
                 elif selection == '3':
-                    create_product_page()
+                    create_product_page(user)
                 elif selection == '4':
-                    update_product_page()
+                    update_product_page(user)
                 else:
                     print("Invalid input")
 
