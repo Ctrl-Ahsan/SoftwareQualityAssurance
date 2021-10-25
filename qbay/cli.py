@@ -21,7 +21,7 @@ def register_page():
     email, username and password inputs.
     '''
     email = input('Please input email: ')
-    username = input('Please input username')
+    username = input('Please input username: ')
     password = input('Please input password: ')
     password_twice = input('Please input the password again: ')
 
