@@ -48,7 +48,6 @@ def update_user_page(initialuser):
         print("User update failed")
 
 
-
 def is_float(string):
     '''
     Checks to see if string input is a float
