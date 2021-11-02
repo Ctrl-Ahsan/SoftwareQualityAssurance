@@ -2,6 +2,7 @@ from os import popen
 from pathlib import Path
 import subprocess
 
+
 def test_login():
     current_folder = Path(__file__).parent
     expected_in = open(current_folder.joinpath('expected.in'), 'r')
