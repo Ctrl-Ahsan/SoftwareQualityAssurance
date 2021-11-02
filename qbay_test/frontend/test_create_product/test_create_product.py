@@ -8,9 +8,9 @@ current_folder = Path(__file__).parent
 
 # read expected in/out
 expected_in = open(current_folder.joinpath(
-    'test_login.in'))
+    'test_update_product.in'))
 expected_out = open(current_folder.joinpath(
-    'test_login.out')).read()
+    'test_update_product.out')).read()
 
 print(expected_out)
 
