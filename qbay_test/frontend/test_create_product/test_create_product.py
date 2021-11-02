@@ -16,8 +16,8 @@ print(f'Expected: {expected_out}')
 
 
 def test_login():
-    """capsys -- object created by pytest to 
-    capture stdout and stderr"""
+    '''capsys -- object created by pytest to 
+    capture stdout and stderr'''
 
     # pip the input
     output = subprocess.run(
@@ -26,5 +26,5 @@ def test_login():
         capture_output=True,
     ).stdout.decode()
 
-    print(f'OUTPUTS: {output}')
+    print(f'Outputs: {output}')
     assert output.strip() == expected_out.strip()
