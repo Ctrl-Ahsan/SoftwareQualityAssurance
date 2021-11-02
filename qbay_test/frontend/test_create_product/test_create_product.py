@@ -2,29 +2,12 @@ from os import popen
 from pathlib import Path
 import subprocess
 
-# get expected input/output file
-current_folder = Path(__file__).parent
-
-
-# read expected in/out
-expected_in = open(current_folder.joinpath(
-    'test_create_product.in'))
-expected_out = open(current_folder.joinpath(
-    'test_create_product.out')).read()
-
-print(f'Expected: {expected_out}')
-
-
 def test_login():
-    '''capsys -- object created by pytest to 
-    capture stdout and stderr'''
-
-    # pip the input
-    output = subprocess.run(
-        ['python3', '-m', 'qbay'],
-        stdin=expected_in,
-        capture_output=True,
-    ).stdout.decode()
-
-    print(f'Outputs: {output}')
-    assert output.strip() == expected_out.strip()
+    stream = popen('python3 -m qbay < expected.in > captured.out')
+    expected_file = open('expected.out', 'r')
+    captured_file = open('captured.out', 'r')
+    
+    assert expected_file.readlines() == captured_file.readlines()
+    stream.close()
+    stream = popen('rm captured.out')
+    stream.close()
