@@ -19,7 +19,7 @@ def main():
                 else:
                     print('login failed')
             elif selection == '2':
-                user = register_page()
+                register_page()
             else:
                 break
         else: 
