@@ -3,13 +3,14 @@ from pathlib import Path
 import subprocess
 
 def test_login():
-    stream = popen('python3 -m qbay < expected.in > captured.out')
-
     current_folder = Path(__file__).parent
-    expected_file = open(current_folder.joinpath('expected.out'), 'r')
-    captured_file = open(current_folder.joinpath('captured.out'), 'r')
+    expected_in = open(current_folder.joinpath('expected.in'), 'r')
+    expected_out = open(current_folder.joinpath('expected.out'), 'r').read()
     
-    assert expected_file.readlines() == captured_file.readlines()
-    stream.close()
-    # stream = popen('rm captured.out')
-    # stream.close()
+    output = subprocess.run(
+        ['python3', '-m', 'qbay'],
+        stdin=expected_in,
+        capture_output=True,
+    ).stdout.decode()
+
+    assert output == expected_out
