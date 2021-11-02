@@ -27,10 +27,14 @@ def register_page():
 
     if password != password_twice:
         print('password entered not the same')
-    elif register(username, email, password):
+
+    user = register(username, email, password)
+    if user:
         print('registration succeeded')
     else:
         print('regisration failed.')
+
+    return login(email, password)
 
 
 def update_user_page(initialuser):
