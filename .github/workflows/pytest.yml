@@ -20,4 +20,4 @@ jobs:
     - name: Test with pytest
       run: |
         pip install pytest
-        pytest qbay_test
+        pytest -s -v qbay_test
