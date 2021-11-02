@@ -12,7 +12,7 @@ expected_in = open(current_folder.joinpath(
 expected_out = open(current_folder.joinpath(
     'test_create_product.out')).read()
 
-print(expected_out)
+print(f'Expected: {expected_out}')
 
 
 def test_login():
@@ -26,5 +26,5 @@ def test_login():
         capture_output=True,
     ).stdout.decode()
 
-    print('outputs', output)
+    print(f'OUTPUTS: {output}')
     assert output.strip() == expected_out.strip()
