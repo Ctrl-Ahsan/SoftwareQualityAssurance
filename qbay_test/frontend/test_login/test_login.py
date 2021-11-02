@@ -21,7 +21,7 @@ def test_login():
 
     # pip the input
     output = subprocess.run(
-        ['python', '-m', 'qbay'],
+        ['python3', '-m', 'qbay'],
         stdin=expected_in,
         capture_output=True,
     ).stdout.decode()
