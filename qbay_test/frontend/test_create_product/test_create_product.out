@@ -6,21 +6,3 @@ Please input username:
 Please input password: 
 Please input the password again: 
 registration succeeded
-Welcome. Please type 1 to login
- Type 2 for register
-Any other inputs will exit
-Please input email: 
-Please input password: 
-welcome test
-Type 1 to logout and return to the main menu
-Type 2 to update profile
-Type 3 to create a product
-Type 4 to update a product
-Enter title: 
-Enter description: 
-Enter price: 
-product creation succeeded.
-Type 1 to logout and return to the main menu
-Type 2 to update profile
-Type 3 to create a product
-Type 4 to update a product
