@@ -24,13 +24,17 @@ def authenticate(inner_function):
         # check did we store the key in the session
         if 'logged_in' in session:
             email = session['logged_in']
+            print('EMAIL:', email)
             try:
-                user = User.query.filter_by(email=email).one_or_none()
+                user = User.query.filter_by(email=email).first()
                 if user:
                     # if the user exists, call the inner_function
                     # with user as parameter
+                    print('HERE', user.username)
                     return inner_function(user)
             except Exception:
+                user = User.query.filter_by(email=email).first()
+                return inner_function(user)
                 pass
         else:
             # else, redirect to the login page
@@ -65,10 +69,10 @@ def login_post():
         # code 303 is to force a 'GET' request
         return redirect('/', code=303)
     else:
-        return render_template('login.html', message='login failed')
+        return render_template('login.html', user=user, message='login failed')
 
 
-@app.route('/')
+@app.route('/', methods=['GET'])
 @authenticate
 def home(user):
     # authentication is done in the wrapper function
@@ -78,7 +82,7 @@ def home(user):
     # front-end portals
 
     # some fake product data
-    products = Product.query.filter_by(user_email=session['logged_in'])
+    products = Product.query.filter_by(user_email=user.email)
     return render_template('index.html', user=user, products=products)
 
 
