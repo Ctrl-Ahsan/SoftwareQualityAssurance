@@ -11,7 +11,10 @@ def test_r1_1_user_register():
 
 
 def test_r1_2_user_register():
-    assert inspect(User).primary_key[0].name == 'email'
+    register('abcdefg', 'abc@abc.ca', '123Ab#')
+    register('abcde', 'abc@abc.ca', '123Ab#')
+    users = list(User.query.filter_by(email='abc@abc.ca'))
+    assert len(users) == 1
 
 
 def test_r1_3_user_register():

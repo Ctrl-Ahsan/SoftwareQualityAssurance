@@ -1,51 +1,24 @@
 from flask import render_template, request, session, redirect
 from qbay.models import create_product, update_product, login
 from qbay.models import User, Product, register, is_float, update_user
+from flask_login import login_user, login_required, logout_user, current_user
+from flask_login import LoginManager
 from datetime import datetime
 
 from qbay import app
 
+from sqlalchemy.inspection import inspect
 
-def authenticate(inner_function):
-    """
-    :param inner_function: any python function that accepts a user object
-    Wrap any python function and check the current session to see if 
-    the user has logged in. If login, it will call the inner_function
-    with the logged in user object.
-    To wrap a function, we can put a decoration on that function.
-    Example:
-    @authenticate
-    def home_page(user):
-        pass
-    """
-
-    def wrapped_inner():
-
-        # check did we store the key in the session
-        if 'logged_in' in session:
-            email = session['logged_in']
-            print('EMAIL:', email)
-            try:
-                user = User.query.filter_by(email=email).first()
-                if user:
-                    # if the user exists, call the inner_function
-                    # with user as parameter
-                    print('HERE', user.username)
-                    return inner_function(user)
-            except Exception:
-                user = User.query.filter_by(email=email).first()
-                return inner_function(user)
-                pass
-        else:
-            # else, redirect to the login page
-            return redirect('/login')
-
-    # return the wrapped version of the inner_function:
-    return wrapped_inner
-
+login_manager = LoginManager()
+login_manager.login_view = 'login_get'
+login_manager.init_app(app)
+@login_manager.user_loader
+def load_user(id):
+    return User.query.get(int(id))
 
 @app.route('/login', methods=['GET'])
 def login_get():
+    print(User.email)
     return render_template('login.html', message='Please login')
 
 
@@ -55,40 +28,21 @@ def login_post():
     password = request.form.get('password')
     user = login(email, password)
     if user:
-        session['logged_in'] = user.email
-        """
-        Session is an object that contains sharing information 
-        between a user's browser and the end server. 
-        Typically it is packed and stored in the browser cookies. 
-        They will be past along between every request the browser made 
-        to this services. Here we store the user object into the 
-        session, so we can tell if the client has already login 
-        in the following sessions.
-        """
-        # success! go back to the home page
-        # code 303 is to force a 'GET' request
+        login_user(user, remember=True)
         return redirect('/', code=303)
     else:
-        return render_template('login.html', user=user, message='login failed')
+        return render_template('login.html', user=current_user, message='login failed')
 
 
 @app.route('/', methods=['GET'])
-@authenticate
-def home(user):
-    # authentication is done in the wrapper function
-    # see above.
-    # by using @authenticate, we don't need to re-write
-    # the login checking code all the time for other
-    # front-end portals
-
-    # some fake product data
-    products = Product.query.filter_by(user_email=user.email)
-    return render_template('index.html', user=user, products=products)
+@login_required
+def home():
+    products = Product.query.filter_by(user_email=current_user.email)
+    return render_template('index.html', user=current_user, products=products)
 
 
 @app.route('/register', methods=['GET'])
 def register_get():
-    # templates are stored in the templates folder
     return render_template('register.html', message='')
 
 
@@ -116,24 +70,21 @@ def register_post():
 
 
 @app.route('/logout')
+@login_required
 def logout():
-    if 'logged_in' in session:
-        session.pop('logged_in', None)
+    logout_user()
     return redirect('/')
 
 
 @app.route('/create', methods=['GET'])
+@login_required
 def create_page_get():
-    email = session['logged_in']
-    user = User.query.filter_by(email=email).first()
-    return render_template('create.html', user=user)
+    return render_template('create.html', user=current_user)
 
 
 @app.route('/create', methods=['POST'])
+@login_required
 def create_page_post():
-    email = session['logged_in']
-    user = User.query.filter_by(email=email).first()
-    
     title = request.form.get('title')
     description = request.form.get('description')
     price = request.form.get('price')
@@ -141,7 +92,7 @@ def create_page_post():
     if not is_float(price):
         return render_template(
             'create.html', 
-            user=user, 
+            user=current_user, 
             message='Wrong price.'
         )
     
@@ -150,30 +101,34 @@ def create_page_post():
         description=description,
         price=float(price),
         last_modified_date=datetime.today().strftime('%Y-%m-%d'),
-        owner_email=email
+        owner_email=current_user.email
     )
 
     if not result:
         return render_template(
             'create.html', 
-            user=user, 
+            user=current_user, 
             message='Product not created.'
         )
     return redirect('/', code=303)
 
 
 @app.route('/update/<prod_name>', methods=['GET'])
+@login_required
 def update_page_get(prod_name):
     product = Product.query.filter_by(title=prod_name).first()
+    if not product:
+        return redirect('/')
     return render_template('update.html', product=product)
 
 
 @app.route('/update/<prod_name>', methods=['POST'])
+@login_required
 def update_page_post(prod_name):
     product = Product.query.filter_by(title=prod_name).first()
 
-    email = session['logged_in']
-    user = User.query.filter_by(email=email).first()
+    if not product:
+        return redirect('/')
     
     title = request.form.get('title')
     description = request.form.get('description')
@@ -182,7 +137,7 @@ def update_page_post(prod_name):
     if not is_float(price):
         return render_template(
             'update.html', 
-            user=user, 
+            user=current_user, 
             product=product,
             message='Wrong price.'
         )
@@ -194,32 +149,42 @@ def update_page_post(prod_name):
         price=float(price)
     )
 
+    if not result:
+        return render_template(
+            'update.html', 
+            user=current_user, 
+            product=product,
+            message='Wrong information.'
+        )
+
     return redirect('/', code=303)
 
 
 @app.route('/profile', methods=['GET'])
+@login_required
 def profile_get():
-    if len(session) == 0:
-        return redirect('/', code=303)
-    email = session['logged_in']
-    user = User.query.filter_by(email=email).first()
-    return render_template('profile.html', user=user)
+    return render_template('profile.html', user=current_user)
 
 
 @app.route('/profile', methods=['POST'])
+@login_required
 def profile_post():
-    email = session['logged_in']
-    user = User.query.filter_by(email=email).first()
-
     new_username = request.form.get('username')
     shipping_address = request.form.get('address')
     postal_code = request.form.get('postal')
 
-    update_user(
-        username=user.username,
+    result = update_user(
+        username=current_user.username,
         new_username=new_username,
         shipping_address=shipping_address,
         postal_code=postal_code
     )
+    
+    if not result:
+        return render_template(
+            'profile.html', 
+            user=current_user,
+            message='Wrong information.'
+        )
 
     return redirect('/')

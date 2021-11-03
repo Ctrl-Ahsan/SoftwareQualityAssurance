@@ -1,15 +1,18 @@
+from enum import unique
 import re
 from datetime import datetime
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import UserMixin
 from qbay import app
 
 
 db = SQLAlchemy(app)
 
 
-class User(db.Model):
-    email = db.Column(db.String(320), primary_key=True)
+class User(db.Model, UserMixin):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(320), unique=True)
     username = db.Column(db.String(19), unique=True, nullable=False)
     password = db.Column(db.String(60), nullable=False)
     balance = db.Column(db.Float, nullable=False, default=0.0)
@@ -417,4 +420,4 @@ def is_float(string):
         Returns: 
             True if float
     '''
-    return bool(re.match(r'[0-9]+(.[0-9]+)?', string))
+    return bool(re.match(r'^[0-9]+(.[0-9]+)?$', string))
