@@ -180,7 +180,7 @@ def update_page_post(prod_name):
             'update.html', 
             user=user, 
             product=product,
-             message='Wrong price.'
+            message='Wrong price.'
         )
 
     result = update_product(

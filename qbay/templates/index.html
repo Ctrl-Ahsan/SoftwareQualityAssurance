@@ -5,6 +5,9 @@
 {% endblock %}
 
 {% block content %}
+{% if user is None %}
+    Hello
+{% else %}
 <h2 id="welcome-header">Welcome {{ user.username }} !</h2>
 
 
@@ -21,5 +24,5 @@
 <div><a href="/create">create</a></div>
 <div><a href="/profile">profile</a></div>
 <div><a href='/logout'>logout</a></div>
-
+{% endif %}
 {% endblock %}

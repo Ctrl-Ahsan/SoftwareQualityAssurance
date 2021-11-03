@@ -408,6 +408,7 @@ def is_proper_shipping_address(address):
     else:
         return True
 
+
 def is_float(string):
     '''
     Checks to see if string input is a float
