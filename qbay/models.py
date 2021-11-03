@@ -254,7 +254,7 @@ def update_product(title, title2, description, price):
     product.price = price
     product.last_modified = datetime.today().strftime('%Y-%m-%d')
 
-    db.session.commit
+    db.session.commit()
     return True
 
 
@@ -407,3 +407,13 @@ def is_proper_shipping_address(address):
         return False
     else:
         return True
+
+def is_float(string):
+    '''
+    Checks to see if string input is a float
+        Parameters: 
+            string : input
+        Returns: 
+            True if float
+    '''
+    return bool(re.match(r'[0-9]+(.[0-9]+)?', string))

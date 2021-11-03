@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>{% block title %}Profile{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<h2 id="welcome-header">Welcome {{ user.username }} !</h2>
+
+
+<h2>Here are all available products</h2>
+
+<div id="products">
+    {% for product in products %}
+    <div>
+        <h4>name: {{ product.title }} price: {{ product.price }} <a href='/update/{{product.title}}'>update</a></h4>
+    </div>
+    {% endfor %}
+</div>
+
+<div><a href="/create">create</a></div>
+<div><a href="/profile">profile</a></div>
+<div><a href='/logout'>logout</a></div>
+
+{% endblock %}
