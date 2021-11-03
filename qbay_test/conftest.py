@@ -5,6 +5,7 @@ import tempfile
 import threading
 from werkzeug.serving import make_server
 from qbay import app
+from qbay.models import register
 '''
 This file defines what to do BEFORE running any test cases:
 
@@ -27,7 +28,12 @@ def pytest_sessionfinish():
     Optional function called when testing is done.
     Do nothing for now
     '''
-    pass
+    print('Cleaning environment..')
+    db_file = 'db.sqlite'
+    if os.path.exists(db_file):
+        os.remove(db_file)
+
+    # register('test', 'test@test.ca', '123Ab#')
 
 
 base_url = 'http://127.0.0.1:{}'.format(8081)

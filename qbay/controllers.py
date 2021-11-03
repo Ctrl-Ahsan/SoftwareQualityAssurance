@@ -21,7 +21,6 @@ def load_user(id):
 
 @app.route('/login', methods=['GET'])
 def login_get():
-    print(User.email)
     return render_template('login.html', message='Please login')
 
 
@@ -100,7 +99,7 @@ def create_page_post():
         return render_template(
             'create.html', 
             user=current_user, 
-            message='Wrong price.'
+            message='Product not created.'
         )
     
     result = create_product(
@@ -146,7 +145,7 @@ def update_page_post(prod_name):
             'update.html', 
             user=current_user, 
             product=product,
-            message='Wrong price.'
+            message='Product not created.'
         )
 
     result = update_product(
@@ -161,7 +160,7 @@ def update_page_post(prod_name):
             'update.html', 
             user=current_user, 
             product=product,
-            message='Wrong information.'
+            message='Product not created.'
         )
 
     return redirect('/', code=303)
@@ -191,7 +190,7 @@ def profile_post():
         return render_template(
             'profile.html', 
             user=current_user,
-            message='Wrong information.'
+            message='Product not created.'
         )
 
     return redirect('/')
