@@ -1,5 +1,6 @@
 from flask import render_template, request, session, redirect
-from qbay.models import create_product, update_product, login, User, Product, register, is_float, update_user
+from qbay.models import create_product, update_product, login
+from qbay.models import User, Product, register, is_float, update_user
 from datetime import datetime
 
 from qbay import app
@@ -116,11 +117,13 @@ def logout():
         session.pop('logged_in', None)
     return redirect('/')
 
+
 @app.route('/create', methods=['GET'])
 def create_page_get():
     email = session['logged_in']
     user = User.query.filter_by(email=email).first()
     return render_template('create.html', user=user)
+
 
 @app.route('/create', methods=['POST'])
 def create_page_post():
@@ -132,7 +135,11 @@ def create_page_post():
     price = request.form.get('price')
 
     if not is_float(price):
-        return render_template('create.html', user=user, message='Wrong price.')
+        return render_template(
+            'create.html', 
+            user=user, 
+            message='Wrong price.'
+        )
     
     result = create_product(
         title=title,
@@ -143,13 +150,19 @@ def create_page_post():
     )
 
     if not result:
-        return render_template('create.html', user=user, message='Product not created.')
+        return render_template(
+            'create.html', 
+            user=user, 
+            message='Product not created.'
+        )
     return redirect('/', code=303)
+
 
 @app.route('/update/<prod_name>', methods=['GET'])
 def update_page_get(prod_name):
     product = Product.query.filter_by(title=prod_name).first()
     return render_template('update.html', product=product)
+
 
 @app.route('/update/<prod_name>', methods=['POST'])
 def update_page_post(prod_name):
@@ -163,7 +176,12 @@ def update_page_post(prod_name):
     price = request.form.get('price')
 
     if not is_float(price):
-        return render_template('update.html', user=user, product=product, message='Wrong price.')
+        return render_template(
+            'update.html', 
+            user=user, 
+            product=product,
+             message='Wrong price.'
+        )
 
     result = update_product(
         title=prod_name,
@@ -174,6 +192,7 @@ def update_page_post(prod_name):
 
     return redirect('/', code=303)
 
+
 @app.route('/profile', methods=['GET'])
 def profile_get():
     if len(session) == 0:
@@ -181,6 +200,7 @@ def profile_get():
     email = session['logged_in']
     user = User.query.filter_by(email=email).first()
     return render_template('profile.html', user=user)
+
 
 @app.route('/profile', methods=['POST'])
 def profile_post():
