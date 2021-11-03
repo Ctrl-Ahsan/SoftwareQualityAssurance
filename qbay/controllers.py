@@ -12,9 +12,12 @@ from sqlalchemy.inspection import inspect
 login_manager = LoginManager()
 login_manager.login_view = 'login_get'
 login_manager.init_app(app)
+
+
 @login_manager.user_loader
 def load_user(id):
     return User.query.get(int(id))
+
 
 @app.route('/login', methods=['GET'])
 def login_get():
@@ -31,7 +34,11 @@ def login_post():
         login_user(user, remember=True)
         return redirect('/', code=303)
     else:
-        return render_template('login.html', user=current_user, message='login failed')
+        return render_template(
+            'login.html', 
+            user=current_user, 
+            message='login failed'
+        )
 
 
 @app.route('/', methods=['GET'])
