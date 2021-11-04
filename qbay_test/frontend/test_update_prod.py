@@ -3,6 +3,7 @@ from seleniumbase import BaseCase
 from qbay_test.conftest import base_url
 import time
 
+
 class FrontEndHomePageTest(BaseCase):
         
 
@@ -27,14 +28,14 @@ class FrontEndHomePageTest(BaseCase):
         # create product
         self.open(base_url + '/create')
         self.type('#title', 'updateAbc')
-        self.type('#description', 'abcde'*5)
+        self.type('#description', 'abcde' * 5)
         self.type('#price', '10')
         self.click('input[type=\'submit\']')
 
         # partition 1
         self.open(base_url + '/update/updateAbc')
         self.type('#title', 'uABC')
-        self.type('#description', 'uABC'*10)
+        self.type('#description', 'uABC' * 10)
         self.type('#price', '102')
         self.click('input[type=\'submit\']')
 
@@ -73,7 +74,7 @@ class FrontEndHomePageTest(BaseCase):
         # create product
         self.open(base_url + '/create')
         self.type('#title', 'rFiveTwo')
-        self.type('#description', 'rFiveTwo'*5)
+        self.type('#description', 'rFiveTwo' * 5)
         self.type('#price', '11')
         self.click('input[type=\'submit\']')
 
