@@ -70,7 +70,7 @@ class FrontEndHomePageTest(BaseCase):
         # create page
         self.open(base_url + '/create')
         self.type('#title', 'p')
-        self.type('#description', 'abcde'*5)
+        self.type('#description', 'abcde' * 5)
         self.type('#price', '10')
         self.click('input[type=\'submit\']')
 
