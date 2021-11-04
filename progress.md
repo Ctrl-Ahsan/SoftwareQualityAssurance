@@ -26,3 +26,9 @@ Tyler
 2. Wrote R5_1 & R5_2. I also wrote R4-5.
 3. Difficult to understand the requirements of this assignment.
 4. Finish remaining tests & help team.
+
+Ahsan
+1. I worked on a4prodregtests
+2. R4_4, R4_8, R1_6
+3. Understanding how to do testing on web interface
+4. Fix code so it passes the tests and re-run through web interface implementation
