@@ -41,7 +41,7 @@ class FrontEndHomePageTest(BaseCase):
         self.assert_element('#uABC')
         self.assert_text('name: uABC price: 102.0', '#uABC')
 
-        #partition 2
+        # partition 2
         self.open(base_url + '/update/uABC')
         self.type('#title', '123')
         self.type('#description', 'uABC')
@@ -54,7 +54,6 @@ class FrontEndHomePageTest(BaseCase):
     def test_r5_2(self, *_):
         # Input coverage
         
-
         # open register page
         self.open(base_url + '/register')
         self.type('#email', 'updater5@test.com')
@@ -91,7 +90,7 @@ class FrontEndHomePageTest(BaseCase):
         self.assert_element('#rFiveTwo')
         self.assert_text('name: rFiveTwo price: 11.0', '#rFiveTwo')
 
-        #partition 3
+        # partition 3
         self.open(base_url + '/update/rFiveTwo')
         self.type('#price', '12')
         self.click('input[type=\'submit\']')
