@@ -30,8 +30,8 @@ class FrontEndHomePageTest(BaseCase):
         balance = 0,
         shipping_address = "",
         postal_code = "",
-        posts = None,
-        reviews = None,
+        posts = [],
+        reviews = [],
     )
 
     def test_login_R2_1_1(self, *_):

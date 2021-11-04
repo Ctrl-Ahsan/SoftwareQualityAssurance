@@ -18,8 +18,8 @@ class FrontEndHomePageTest(BaseCase):
         balance = 0,
         shipping_address = "",
         postal_code = "",
-        posts = None,
-        reviews = None,
+        posts = [],
+        reviews = [],
     )
 
     def test_Register_R1_1_1(self, *_):
