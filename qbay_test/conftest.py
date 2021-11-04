@@ -28,12 +28,6 @@ def pytest_sessionfinish():
     Optional function called when testing is done.
     Do nothing for now
     '''
-    print('Cleaning environment..')
-    db_file = 'db.sqlite'
-    if os.path.exists(db_file):
-        os.remove(db_file)
-
-    # register('test', 'test@test.ca', '123Ab#')
 
 
 base_url = 'http://127.0.0.1:{}'.format(8081)
