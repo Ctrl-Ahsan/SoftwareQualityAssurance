@@ -18,8 +18,8 @@ class FrontEndHomePageTest(BaseCase):
         balance = 0,
         shipping_address = "",
         postal_code = "",
-        posts = None,
-        reviews = None,
+        posts = [],
+        reviews = [],
     )
 
     test_user2 = User (
