@@ -6,7 +6,6 @@ import time
 
 class FrontEndHomePageTest(BaseCase):
         
-
     def test_r5_1(self, *_):
         '''
         Output coverage
@@ -48,15 +47,13 @@ class FrontEndHomePageTest(BaseCase):
         self.type('#description', 'uABC')
         self.type('#price', '10')
         self.click('input[type=\'submit\']')
-        # time.sleep(5)
         self.assert_element('#message')
         self.assert_text('Product not created.', '#message')
 
 
     def test_r5_2(self, *_):
-        '''
-        Input coverage
-        '''
+        # Input coverage
+        
 
         # open register page
         self.open(base_url + '/register')
