@@ -47,8 +47,6 @@ class FrontEndHomePageTest(BaseCase):
         # click enter button
         self.click('input[type="submit"]')
 
-        # open home page
-        self.open(base_url)
         # test if the page loads correctly
         self.assert_element("#welcome-header")
         self.assert_text("Welcome test !", "#welcome-header")
