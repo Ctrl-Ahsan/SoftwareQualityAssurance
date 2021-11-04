@@ -50,10 +50,8 @@ class FrontEndHomePageTest(BaseCase):
         self.assert_element('#message')
         self.assert_text('Product not created.', '#message')
 
-
     def test_r5_2(self, *_):
         # Input coverage
-        
         # open register page
         self.open(base_url + '/register')
         self.type('#email', 'updater5@test.com')
