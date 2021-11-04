@@ -2,3 +2,5 @@ Flask
 Flask-SQLAlchemy
 pytest
 flake8
+seleniumbase
+flask-login

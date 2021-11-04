@@ -2,14 +2,16 @@ import re
 from datetime import datetime
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import UserMixin
 from qbay import app
 
 
 db = SQLAlchemy(app)
 
 
-class User(db.Model):
-    email = db.Column(db.String(320), primary_key=True)
+class User(db.Model, UserMixin):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(320), unique=True)
     username = db.Column(db.String(19), unique=True, nullable=False)
     password = db.Column(db.String(60), nullable=False)
     balance = db.Column(db.Float, nullable=False, default=0.0)
@@ -254,7 +256,7 @@ def update_product(title, title2, description, price):
     product.price = price
     product.last_modified = datetime.today().strftime('%Y-%m-%d')
 
-    db.session.commit
+    db.session.commit()
     return True
 
 
@@ -407,3 +409,14 @@ def is_proper_shipping_address(address):
         return False
     else:
         return True
+
+
+def is_float(string):
+    '''
+    Checks to see if string input is a float
+        Parameters: 
+            string : input
+        Returns: 
+            True if float
+    '''
+    return bool(re.match(r'^[0-9]+(.[0-9]+)?$', string))

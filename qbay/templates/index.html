@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>{% block title %}Profile{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<h2 id="welcome-header">Welcome {{ user.username }} !</h2>
+{% if user.shipping_address != '' %}
+<h3>Information</h3>
+<h4 id="address">{{user.shipping_address}}</h4>
+{% if user.postal_code != '' %}
+<h4 id="postal">{{user.postal_code}}</h4>
+{% endif %}
+{% endif %}
+
+
+<h2>Here are all available products</h2>
+
+<div id="products">
+    {% for product in products %}
+    <div>
+        <h4 id={{product.title}}>name: {{ product.title.replace(' ', '-') }} price: {{ product.price }}<a href='/update/{{product.title}}'>update</a></h4>
+    </div>
+    {% endfor %}
+</div>
+
+<div><a href="/create">create</a></div>
+<div><a href="/profile">profile</a></div>
+<div><a href='/logout'>logout</a></div>
+{% endblock %}
