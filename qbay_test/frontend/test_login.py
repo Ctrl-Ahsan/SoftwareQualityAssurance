@@ -1,5 +1,4 @@
 from seleniumbase import BaseCase
-
 from qbay_test.conftest import base_url
 from unittest.mock import patch
 from qbay.models import User
@@ -34,6 +33,7 @@ class FrontEndHomePageTest(BaseCase):
         reviews = [],
     )
 
+    @patch('qbay.models.login', return_value="test_user")
     def test_login_R2_1_1(self, *_):
         """
         Output coverage testing R2_1 part 1
@@ -47,6 +47,8 @@ class FrontEndHomePageTest(BaseCase):
         # click enter button
         self.click('input[type="submit"]')
 
+        # open home page
+        self.open(base_url)
         # test if the page loads correctly
         self.assert_element("#welcome-header")
         self.assert_text("Welcome test !", "#welcome-header")
