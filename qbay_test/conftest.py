@@ -5,7 +5,7 @@ import tempfile
 import threading
 from werkzeug.serving import make_server
 from qbay import app
-from qbay.models import register
+
 '''
 This file defines what to do BEFORE running any test cases:
 
