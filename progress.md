@@ -22,7 +22,7 @@ These next couple days I will complete all test cases assignined to me in the st
 I will additionally, make the tests I have worked on until now work entirely.
 
 Tyler
-1. three
+1. progress
 2. Wrote R5_1 & R5_2. I also wrote R4-5.
 3. Difficult to understand the requirements of this assignment.
 4. Finish remaining tests & help team.
