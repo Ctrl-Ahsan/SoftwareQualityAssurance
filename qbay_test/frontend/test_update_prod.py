@@ -9,6 +9,14 @@ class FrontEndHomePageTest(BaseCase):
     def test_r5_1(self, *_):
         '''
         Output coverage
+
+        Partition 1
+        Update title, description, & price
+        Output new information
+
+        Partition 2
+        Failed update
+        Output should be that the product was not updated
         '''
 
         # open register page
@@ -48,10 +56,25 @@ class FrontEndHomePageTest(BaseCase):
         self.type('#price', '10')
         self.click('input[type=\'submit\']')
         self.assert_element('#message')
-        self.assert_text('Product not created.', '#message')
+        self.assert_text('Product not updated.', '#message')
 
     def test_r5_2(self, *_):
-        # Input coverage
+        '''
+        Input coverage
+
+        Partition 1
+        Lower price
+        Should not fail
+
+        Partition 2
+        Same price
+        Should not fail
+
+        Partition 3
+        Higher price
+        Should not fail
+        '''
+        
         # open register page
         self.open(base_url + '/register')
         self.type('#email', 'updater5@test.com')
@@ -85,16 +108,16 @@ class FrontEndHomePageTest(BaseCase):
         self.type('#price', '11')
         self.click('input[type=\'submit\']')
 
-        self.assert_element('#rFiveTwo')
-        self.assert_text('name: rFiveTwo price: 11.0', '#rFiveTwo')
+        self.assert_element('h3')
+        self.assert_text('Information', 'h3')
 
         # partition 3
         self.open(base_url + '/update/rFiveTwo')
         self.type('#price', '12')
         self.click('input[type=\'submit\']')
 
-        self.assert_element('#rFiveTwo')
-        self.assert_text('name: rFiveTwo price: 12.0', '#rFiveTwo')
+        self.assert_element('h3')
+        self.assert_text('Information', 'h3')
 
 
 

@@ -145,7 +145,7 @@ def update_page_post(prod_name):
             'update.html', 
             user=current_user, 
             product=product,
-            message='Product not created.'
+            message='Product not updated.'
         )
 
     result = update_product(
@@ -160,7 +160,7 @@ def update_page_post(prod_name):
             'update.html', 
             user=current_user, 
             product=product,
-            message='Product not created.'
+            message='Product not updated.'
         )
 
     return redirect('/', code=303)
@@ -190,7 +190,7 @@ def profile_post():
         return render_template(
             'profile.html', 
             user=current_user,
-            message='Product not created.'
+            message='Profile not updated.'
         )
 
     return redirect('/')

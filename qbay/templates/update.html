@@ -3,6 +3,7 @@
 {% block content %}
 <h1>{% block title %}Update Product{% endblock %}</h1>
 <h4 id='message'>{{message}}</h4>
+<h4 id="modified">Last Modified: {{product.last_modified}}</h4>
 <form method="post">
   <div class="form-group">
     <label for="title">Title</label>

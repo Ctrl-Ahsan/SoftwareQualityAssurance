@@ -6,12 +6,15 @@
 
 {% block content %}
 <h2 id="welcome-header">Welcome {{ user.username }} !</h2>
-{% if user.shipping_address != '' %}
 <h3>Information</h3>
+<h4 id="balance">Balance: {{user.balance}}</h4>
+{% if user.shipping_address != '' %}
 <h4 id="address">{{user.shipping_address}}</h4>
 {% if user.postal_code != '' %}
 <h4 id="postal">{{user.postal_code}}</h4>
 {% endif %}
+{% else %}
+<h4 id="empty">Add shipping address and postal code</h4>
 {% endif %}
 
 
