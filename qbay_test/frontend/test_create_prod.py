@@ -30,7 +30,7 @@ class FrontEndHomePageTest(BaseCase):
         self.click('input[type=\'submit\']')
 
         # shotgun
-        for i in range(1,10):
+        for i in range(1, 10):
             price = randint(10, 10000)
             self.open(base_url + '/create')
             self.type('#title', 'up' * i)
