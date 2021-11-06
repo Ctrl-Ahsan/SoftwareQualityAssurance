@@ -168,7 +168,7 @@ class FrontEndHomePageTest(BaseCase):
             password = ''
             
             for i in range(randlength):
-                password.join(random.choice(characters))
+                password = password + random.choice(characters)
 
             # open login page
             self.open(base_url + '/register')
