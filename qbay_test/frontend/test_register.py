@@ -155,17 +155,17 @@ class FrontEndHomePageTest(BaseCase):
         Shotgun testing
         Inputting random passwords to see if registration is succesful
         """
-        x=0
-        #Adjust this for number of tested passwords
-        while(x<10):
-            x+=1
-            username="R1_4_1"+"_"+str(x)
-            email=username+"@test.com"
+        x = 0
+        # Adjust this for number of tested passwords
+        while(x < 10):
+            x += 1
+            username = "R1_4_1" + "_" + str(x)
+            email = username + "@test.com"
 
-            randlength=randrange(70)
+            randlength = randrange(70)
 
-            characters = ascii_letters+digits+punctuation
-            password=''.join(random.choice(characters) for i in range(randlength))
+            characters = ascii_letters + digits+punctuation
+            password = ''.join(random.choice(characters) for i in range(randlength))
 
             # open login page
             self.open(base_url + '/register')
@@ -182,7 +182,7 @@ class FrontEndHomePageTest(BaseCase):
             if(is_complex_password(password)):
                 # open login page
                 self.open(base_url + "/login")
-                 # fill email and password
+                # fill email and password
                 self.type("#email", email)
                 self.type("#password", password)
                 # click enter button
@@ -190,7 +190,8 @@ class FrontEndHomePageTest(BaseCase):
 
                 # test if the page loads correctly
                 self.assert_element("#welcome-header")
-                self.assert_text("Welcome " + username + " !", "#welcome-header")
+                self.assert_text("Welcome " + username + 
+                                 " !", "#welcome-header")
             else:
                 self.assert_text("Registration failed.", "#message")
             self.open(base_url + '/logout')
