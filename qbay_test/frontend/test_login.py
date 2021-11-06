@@ -1,7 +1,7 @@
 from seleniumbase import BaseCase
 from qbay_test.conftest import base_url
 from unittest.mock import patch
-from qbay.models import User, testing_register
+from qbay.models import User, bypass_register
 
 
 """
@@ -15,7 +15,7 @@ class FrontEndHomePageTest(BaseCase):
         Output coverage testing R2_1 part 1
         Testing for the login succesful output
         """
-        testing_register("R2_1_1", "R2_1_1@test.com", "Test123$")
+        bypass_register("R2_1_1", "R2_1_1@test.com", "Test123$")
         # open login page
         self.open(base_url + '/login')
         # fill email and password
@@ -36,7 +36,7 @@ class FrontEndHomePageTest(BaseCase):
         Output coverage testing R2_1 part 2
         Testing for the login failure output
         """
-        testing_register("R2_1_2", "R2_1_2@test.com", "Test123$")
+        bypass_register("R2_1_2", "R2_1_2@test.com", "Test123$")
         # open login page
         self.open(base_url + '/login')
         # fill email and password
@@ -56,7 +56,7 @@ class FrontEndHomePageTest(BaseCase):
         as inputs are invalid the database will never be queried
         and login will fail even though user does exist
         """
-        testing_register("R2_2_1", "test", "test")
+        bypass_register("R2_2_1", "test", "test")
         # open login page
         self.open(base_url + '/login')
         # fill email and password

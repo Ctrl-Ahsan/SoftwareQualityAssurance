@@ -1,0 +1,27 @@
+test_login.py::FrontEndHomePageTest::test_login_R2_1_2
+--------------------------------------------------------------------
+Last Page: data:,
+  Browser: chrome
+Timestamp: 1636195116  (Unix Timestamp)
+     Date: Saturday, November 6, 2021
+     Time: 6:38:36 AM  (Eastern Daylight Time, UTC-05:00)
+--------------------------------------------------------------------
+Traceback: File "C:\Users\Wilson\AppData\Local\Programs\Python\Python39\lib\unittest\case.py", line 593, in run
+    self._callTestMethod(testMethod)
+  File "C:\Users\Wilson\AppData\Local\Programs\Python\Python39\lib\unittest\case.py", line 550, in _callTestMethod
+    method()
+  File "C:\Users\Wilson\CISC327\qbay_test\frontend\test_login.py", line 39, in test_login_R2_1_2
+    testing_register("R2_1_2", "R2_1_2@test.com", "Test123$")
+  File "C:\Users\Wilson\CISC327\qbay\models.py", line 165, in testing_register
+    db.session.commit()
+  File "<string>", line 2, in commit
+  File "C:\Users\Wilson\AppData\Roaming\Python\Python39\site-packages\sqlalchemy\orm\session.py", line 1428, in commit
+    self._transaction.commit(_to_root=self.future)
+  File "C:\Users\Wilson\AppData\Roaming\Python\Python39\site-packages\sqlalchemy\orm\session.py", line 827, in commit
+    self._assert_active(prepared_ok=True)
+  File "C:\Users\Wilson\AppData\Roaming\Python\Python39\site-packages\sqlalchemy\orm\session.py", line 601, in _assert_active
+    raise sa_exc.PendingRollbackError(
+Exception: This Session's transaction has been rolled back due to a previous exception during flush. To begin a new transaction with this Session, first issue Session.rollback(). Original exception was: (sqlite3.IntegrityError) UNIQUE constraint failed: user.username
+[SQL: INSERT INTO user (email, username, password, balance, shipping_address, postal_code) VALUES (?, ?, ?, ?, ?, ?)]
+[parameters: ('R2_1_1@test.com', 'R2_1_1', 'Test123$', 100.0, '', '')]
+(Background on this error at: http://sqlalche.me/e/14/gkpj) (Background on this error at: http://sqlalche.me/e/14/7s2a)

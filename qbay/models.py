@@ -151,7 +151,8 @@ def register(name, email, password):
 
     return True
 
-def testing_register(name, email, password):
+#bypass requirements, used in testing
+def bypass_register(name, email, password):
     user = User(
         email=email,
         username=name,
