@@ -162,7 +162,7 @@ class FrontEndHomePageTest(BaseCase):
             username = "R1_4_1" + "_" + str(x)
             email = username + "@test.com"
 
-            randlength = randrange(70)
+            randlength = randrange(1, 70)
 
             characters = ascii_letters + digits + punctuation
             password = ''
