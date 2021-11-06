@@ -1,5 +1,5 @@
 Wilson
-1. a4logregtests
+1. A4logregtests
 2. Test cases completed for login
 3. Difficulties interpreting the assignment. The wording was vague and I wasn't sure how the test cases should be formatted.
 4. Complete the remaining test cases for registration
