@@ -164,8 +164,11 @@ class FrontEndHomePageTest(BaseCase):
 
             randlength = randrange(70)
 
-            characters = ascii_letters + digits+punctuation
-            password = ''.join(random.choice(characters) for i in range(randlength))
+            characters = ascii_letters + digits + punctuation
+            password = ''
+            
+            for i in range(randlength):
+                password.join(random.choice(characters))
 
             # open login page
             self.open(base_url + '/register')
