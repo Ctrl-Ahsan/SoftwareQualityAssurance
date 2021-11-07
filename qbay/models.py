@@ -152,6 +152,21 @@ def register(name, email, password):
     return True
 
 
+# bypass requirements, used in testing
+def bypass_register(name, email, password):
+    user = User(
+        email=email,
+        username=name,
+        password=password,
+        balance=100.0,
+        shipping_address='',
+        postal_code=''
+    )
+
+    db.session.add(user)
+    db.session.commit()
+
+
 def create_product(title, description, price, last_modified_date, owner_email):
     '''
     Create a new product
