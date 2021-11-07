@@ -3,6 +3,7 @@ from seleniumbase import BaseCase
 from qbay_test.conftest import base_url
 from datetime import datetime
 
+
 class FrontEndHomePageTest(BaseCase):
         
     def test_r5_1(self, *_):
@@ -201,7 +202,7 @@ class FrontEndHomePageTest(BaseCase):
         self.assert_text('Product not updated.', '#message')
 
         # partition 2
-        self.type('#title', 'r' * 5 )
+        self.type('#title', 'r' * 5)
         self.type('#description', 'r' * 21)
         self.type('#price', '2000')
         self.click('input[type=\'submit\']')

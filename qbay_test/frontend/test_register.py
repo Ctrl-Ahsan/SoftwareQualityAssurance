@@ -6,7 +6,7 @@ from qbay.models import User, is_complex_password
 
 from random import randrange
 from string import ascii_letters, digits, punctuation
-
+import time
 import random
 
 """
@@ -57,6 +57,10 @@ class FrontEndHomePageTest(BaseCase):
         self.type("#password2", "")
         # click enter button
         self.click('input[type="submit"]')
+        
+        # prevent server from being overstressed
+        # server keeps crashing on this test
+        time.sleep(1)
 
         self.assert_element_not_visible("#message")
 
