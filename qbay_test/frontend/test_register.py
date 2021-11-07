@@ -302,9 +302,10 @@ class FrontEndHomePageTest(BaseCase):
         # register
         self.open(base_url + '/register')
         self.type('#email', 'emptyAddress@test.com')
-        self.type('#name', 'uniqueEmail')
+        self.type('#name', 'emptyAddress')
         self.type('#password', '123Ab#')
         self.type('#password2', '123Ab#')
+
         self.click('input[type=\'submit\']')
 
         # login
