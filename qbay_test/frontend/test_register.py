@@ -6,7 +6,7 @@ from qbay.models import User, is_complex_password
 
 from random import randrange
 from string import ascii_letters, digits, punctuation
-import time
+
 import random
 
 """
@@ -243,3 +243,95 @@ class FrontEndHomePageTest(BaseCase):
         self.click('input[type="submit"]')
 
         self.assert_text("Registration failed.", "#message")
+
+    def test_R1_7(self, *_):
+        '''
+        Output coverage
+
+        Partition 1
+        Email has not already been used
+
+        Partition 2
+        Email has already been used
+        '''
+
+        # partition 1
+        self.open(base_url + '/register')
+        self.type('#email', 'uniqueEmail@test.com')
+        self.type('#name', 'uniqueEmail')
+        self.type('#password', '123Ab#')
+        self.type('#password2', '123Ab#')
+        self.click('input[type=\'submit\']')
+
+        # login 
+        self.type('#email', 'uniqueEmail@test.com')
+        self.type('#password', '123Ab#')
+        self.click('input[type=\'submit\']')
+
+        # assert the welcome message
+        self.assert_element('#welcome-header')
+        self.assert_text('Welcome uniqueEmail !', '#welcome-header')
+
+        # logout
+        self.open(base_url + '/logout')
+
+        # partition 2
+        # register with email already used
+        self.open(base_url + '/register')
+        self.type('#email', 'uniqueEmail@test.com')
+        self.type('#name', 'uniqueUser')
+        self.type('#password', '123Ab#')
+        self.type('#password2', '123Ab#')
+        self.click('input[type=\'submit\']')
+
+        # assert fail output
+        self.assert_element('#message')
+        self.assert_text('Registration failed.', '#message')
+
+    def test_R1_8(self, *_):
+        '''
+        Output coverage test
+
+        Only 1 partition possible, the shipping address must be blank
+        '''
+
+        # register
+        self.open(base_url + '/register')
+        self.type('#email', 'emptyAddress@test.com')
+        self.type('#name', 'uniqueEmail')
+        self.type('#password', '123Ab#')
+        self.type('#password2', '123Ab#')
+        self.click('input[type=\'submit\']')
+
+        # login
+        self.type('#email', 'emptyAddress@test.com')
+        self.type('#password', '123Ab#')
+        self.click('input[type=\'submit\']')
+
+        # assert shipping output
+        self.assert_element('#empty')
+        self.assert_text('Add shipping address and postal code', '#empty')
+
+    def test_R1_9(self, *_):
+        '''
+        Output coverage test
+
+        Only 1 partition possible, the postal code must be blank
+        '''
+
+        # register
+        self.open(base_url + '/register')
+        self.type('#email', 'emptyPostal@test.com')
+        self.type('#name', 'emptyPostal')
+        self.type('#password', '123Ab#')
+        self.type('#password2', '123Ab#')
+        self.click('input[type=\'submit\']')
+
+        # login
+        self.type('#email', 'emptyPostal@test.com')
+        self.type('#password', '123Ab#')
+        self.click('input[type=\'submit\']')
+
+        # assert shipping output
+        self.assert_element('#empty')
+        self.assert_text('Add shipping address and postal code', '#empty')
