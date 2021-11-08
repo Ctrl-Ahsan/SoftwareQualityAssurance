@@ -111,6 +111,45 @@ class FrontEndHomePageTest(BaseCase):
         self.open(base_url)
         self.assert_element('h2')
         self.assert_text('Welcome upupey !', 'h2')
+
+    def test_r4_7(self, *_):
+        '''
+        Input coverage
+        '''
+        # open register page
+        self.open(base_url + '/register')
+        self.type('#email', 'raptor@test.com')
+        self.type('#name', 'raptor')
+        self.type('#password', '123Ab#')
+        self.type('#password2', '123Ab#')
+        self.click('input[type=\'submit\']')
+        
+        # case 1
+        self.open(base_url + '/create')
+        self.type('#title', 'something')
+        self.type('#description', 'super something')
+        self.type('#price', 10)
+        self.click('input[type=\'submit\']')
+
+        self.assert_element('#message')
+        self.assert_text('Product not created.')
+
+        # case 2
+
+        #login
+        self.type('#email', 'raptor@test.com')
+        self.type('#password', '123Ab#')
+        self.click('input[type=\'submit\']')
+
+        self.open(base_url + '/create')
+        self.type('#title', 'something')
+        self.type('#description', 'super something')
+        self.type('#price', 10)
+        self.click('input[type=\'submit\']')
+
+        self.assert_element('#temp')
+        self.assert_text('name: something price: 10.0')
+
     
     def test_r4_8(self, *_):
         # open register page
