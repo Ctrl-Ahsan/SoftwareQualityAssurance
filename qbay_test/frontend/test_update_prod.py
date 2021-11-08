@@ -5,7 +5,7 @@ from datetime import datetime
 
 
 class FrontEndHomePageTest(BaseCase):
-        
+
     def test_r5_1(self, *_):
         '''
         Output coverage
@@ -74,7 +74,7 @@ class FrontEndHomePageTest(BaseCase):
         Higher price
         Should not fail
         '''
-        
+
         # open register page
         self.open(base_url + '/register')
         self.type('#email', 'updater5@test.com')
@@ -99,7 +99,7 @@ class FrontEndHomePageTest(BaseCase):
         self.open(base_url + '/update/rFiveTwo')
         self.type('#price', '10')
         self.click('input[type=\'submit\']')
-        
+
         self.assert_element('h1')
         self.assert_text('Update Product', 'h1')
 
@@ -130,7 +130,7 @@ class FrontEndHomePageTest(BaseCase):
         self.type('#email', 'date@test.com')
         self.type('#name', 'date')
         self.type('#password', '123Ab#')
-        self.type('#password2', '123Ab#')   
+        self.type('#password2', '123Ab#')
         self.click('input[type=\'submit\']')
 
         # login
@@ -154,7 +154,7 @@ class FrontEndHomePageTest(BaseCase):
         self.open(base_url + '/update/modDate')
         self.assert_element('#modified')
         self.assert_text(
-            'Last Modified: ' + datetime.today().strftime('%Y-%m-%d'), 
+            'Last Modified: ' + datetime.today().strftime('%Y-%m-%d'),
             '#modified'
         )
 
@@ -176,7 +176,7 @@ class FrontEndHomePageTest(BaseCase):
         self.type('#email', 'meetsReq@test.com')
         self.type('#name', 'meetsReq')
         self.type('#password', '123Ab#')
-        self.type('#password2', '123Ab#')   
+        self.type('#password2', '123Ab#')
         self.click('input[type=\'submit\']')
 
         # login
@@ -209,7 +209,3 @@ class FrontEndHomePageTest(BaseCase):
 
         self.assert_element('#rrrrr')
         self.assert_text('name: rrrrr price: 2000.0', '#rrrrr')
-
-
-
-
