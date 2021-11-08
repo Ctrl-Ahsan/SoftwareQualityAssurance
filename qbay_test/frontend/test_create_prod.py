@@ -126,16 +126,9 @@ class FrontEndHomePageTest(BaseCase):
         
         # case 1
         self.open(base_url + '/create')
-        self.type('#title', 'something')
-        self.type('#description', 'super something')
-        self.type('#price', 10)
-        self.click('input[type=\'submit\']')
-
-        self.assert_element('#message')
-        self.assert_text('Product not created.')
+        self.assert_equal(self.get_current_url, base_url + '/login')
 
         # case 2
-
         #login
         self.type('#email', 'raptor@test.com')
         self.type('#password', '123Ab#')
@@ -147,8 +140,7 @@ class FrontEndHomePageTest(BaseCase):
         self.type('#price', 10)
         self.click('input[type=\'submit\']')
 
-        self.assert_element('#temp')
-        self.assert_text('name: something price: 10.0')
+        self.assert_equal(self.get_current_url, base_url + '/login')
 
     
     def test_r4_8(self, *_):
