@@ -8,7 +8,6 @@ import random
 import string
 from random import randint
 
-
 class FrontEndHomePageTest(BaseCase):
 
     def test_r4_3(self, *_):
@@ -41,7 +40,8 @@ class FrontEndHomePageTest(BaseCase):
         # partition 2
         self.open(base_url + '/create')
         self.type('#title', 'testing2')
-        self.type('#description', ''.join(random.choice(string.lowercase) for x in range(2001)))
+        dscrpt = ''.join(random.choice(string.lowercase) for x in range(2001))
+        self.type('#description', dscrpt)
         self.type('#price', '10')
         self.click('input[type=\'submit\']')
         self.assert_element('#message')
