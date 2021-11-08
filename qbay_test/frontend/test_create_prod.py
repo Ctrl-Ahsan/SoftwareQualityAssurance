@@ -8,6 +8,7 @@ import random
 import string
 from random import randint
 
+
 class FrontEndHomePageTest(BaseCase):
 
     def test_r4_3(self, *_):
@@ -135,13 +136,12 @@ class FrontEndHomePageTest(BaseCase):
 
         self.assert_equal(self.get_current_url, base_url + '\login')
 
-        # case 2
-
         # login
         self.type('#email', 'raptor@test.com')
         self.type('#password', '123Ab#')
         self.click('input[type=\'submit\']')
 
+        # case 2
         self.open(base_url + '/create')
         self.type('#title', 'something')
         self.type('#description', 'super something')
