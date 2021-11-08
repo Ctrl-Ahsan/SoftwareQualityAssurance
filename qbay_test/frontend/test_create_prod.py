@@ -110,7 +110,7 @@ class FrontEndHomePageTest(BaseCase):
         # partition 1
         self.open(base_url + '/create')
         self.type('#title', 'title' * 5)
-        self.type('#description', 'stuff'*5)
+        self.type('#description', 'stuff' * 5)
         self.type('#price', '180')
         self.click('input[type=\'submit\']')
 
@@ -133,7 +133,7 @@ class FrontEndHomePageTest(BaseCase):
         # partition 2
         self.open(base_url + '/create')
         self.type('#title', 'titles')
-        self.type('#description', 'stuff'*5)
+        self.type('#description', 'stuff' * 5)
         self.type('#price', '60')
         self.click('input[type=\'submit\']')
 
@@ -196,7 +196,7 @@ class FrontEndHomePageTest(BaseCase):
         # output coverage
         self.open(base_url + '/create')
         self.type('#title', 'upy')
-        self.type('#description', 'stuff'*5)
+        self.type('#description', 'stuff' * 5)
         self.type('#price', '50')
         self.click('input[type=\'submit\']')
         # Update Product
