@@ -31,7 +31,7 @@ class FrontEndHomePageTest(BaseCase):
         self.click('input[type="submit"]')
 
         # open login page
-        self.open(base_url + "/login")
+        self.open(base_url + '/login')
 
         # fill email and password
         self.type("#email", "R1_1_1@test.com")
@@ -39,10 +39,12 @@ class FrontEndHomePageTest(BaseCase):
         # click enter button
         self.click('input[type="submit"]')
 
+        time.sleep(1)
+
         # test if the page loads correctly
         self.assert_element("#welcome-header")
         self.assert_text("Welcome R1_1_1 !", "#welcome-header")
-    
+
     def test_Register_R1_1_2(self, *_):
         """
         Output coverage testing R1_1 part 2
@@ -57,7 +59,7 @@ class FrontEndHomePageTest(BaseCase):
         self.type("#password2", "")
         # click enter button
         self.click('input[type="submit"]')
-        
+
         # prevent server from being overstressed
         # server keeps crashing on this test
         time.sleep(1)
@@ -170,7 +172,7 @@ class FrontEndHomePageTest(BaseCase):
 
             characters = ascii_letters + digits + punctuation
             password = ''
-            
+
             for i in range(randlength):
                 password = password + random.choice(characters)
 
@@ -197,7 +199,7 @@ class FrontEndHomePageTest(BaseCase):
 
                 # test if the page loads correctly
                 self.assert_element("#welcome-header")
-                self.assert_text("Welcome " + username + 
+                self.assert_text("Welcome " + username +
                                  " !", "#welcome-header")
             else:
                 self.assert_text("Registration failed.", "#message")
@@ -270,10 +272,8 @@ class FrontEndHomePageTest(BaseCase):
     def test_R1_7(self, *_):
         '''
         Output coverage
-
         Partition 1
         Email has not already been used
-
         Partition 2
         Email has already been used
         '''
@@ -286,7 +286,7 @@ class FrontEndHomePageTest(BaseCase):
         self.type('#password2', '123Ab#')
         self.click('input[type=\'submit\']')
 
-        # login 
+        # login
         self.type('#email', 'uniqueEmail@test.com')
         self.type('#password', '123Ab#')
         self.click('input[type=\'submit\']')
@@ -314,7 +314,6 @@ class FrontEndHomePageTest(BaseCase):
     def test_R1_8(self, *_):
         '''
         Output coverage test
-
         Only 1 partition possible, the shipping address must be blank
         '''
 
@@ -339,7 +338,6 @@ class FrontEndHomePageTest(BaseCase):
     def test_R1_9(self, *_):
         '''
         Output coverage test
-
         Only 1 partition possible, the postal code must be blank
         '''
 
@@ -359,3 +357,27 @@ class FrontEndHomePageTest(BaseCase):
         # assert shipping output
         self.assert_element('#empty')
         self.assert_text('Add shipping address and postal code', '#empty')
+
+    def test_R1_10(self, *_):
+        '''
+        Output coverage test
+
+        Only 1 partition possible balance must be 100
+        '''
+
+        # register
+        self.open(base_url + '/register')
+        self.type('#email', 'balance@test.com')
+        self.type('#name', 'blancee')
+        self.type('#password', '123Ab#')
+        self.type('#password2', '123Ab#')
+        self.click('input[type=\'submit\']')
+
+        # login
+        self.type('#email', 'balance@test.com')
+        self.type('#password', '123Ab#')
+        self.click('input[type=\'submit\']')
+
+        # check balance
+        self.assert_element('#balance')
+        self.assert_text('Balance: 100.0', '#balance')
