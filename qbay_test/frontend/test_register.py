@@ -250,6 +250,25 @@ class FrontEndHomePageTest(BaseCase):
 
         self.assert_text("Registration failed.", "#message")
 
+    def test_r1_6(self, *_):
+        # partition 1
+        self.open(base_url + '/register')
+        self.type('#name', 'a')
+        self.type('#email', 'aaa@gmail.com')
+        self.type('#password', '123Ab#')
+        self.type('#password2', '123Ab#')
+        self.click('input[type=\'submit\']')
+
+        self.assert_element('#message')
+        self.assert_text('Registration failed.', '#message')
+
+        # partition 2
+        self.type('#name', 'aaaa')
+        self.type('#email', 'aaa@gmail.com')
+        self.type('#password', '123Ab#')
+        self.type('#password2', '123Ab#')
+        self.click('input[type=\'submit\']')
+
     def test_R1_7(self, *_):
         '''
         Output coverage
