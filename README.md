@@ -26,10 +26,11 @@
 │   └── models.py        ======> Data models
 ├── qbay_test            ======> Testing code
 │   ├── frontend         ======> Contains frontend tests
-│   │   ├── test_create_prod.py  ======> Tests for create product
-│   │   ├── test_login.py        ======> Tests for login
-│   │   ├── test_register.py     ======> Tests for register
-│   │   └── test_update_prod.py  ======> Tests for update product
+│   │   ├── test_create_prod.py  ======> Tests for create product (R4-1 to R4-8)
+│   │   ├── test_login.py        ======> Tests for login (R2-1 to R2-2)
+│   │   ├── test_register.py     ======> Tests for register (R1-1 to R1-10)
+│   │   ├── test_update_user.py  ======> Tests for updating user (R3-1 to R3-4)
+│   │   └── test_update_prod.py  ======> Tests for update product (R5-1 to R5-4)
 │   ├── __init__.py      ======> Required for a python module (can be empty)
 │   ├── conftest.py      ======> Code to run before/after all the testing
 │   └── test_models.py   ======> Testing code for models.py
