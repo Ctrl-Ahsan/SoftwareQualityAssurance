@@ -87,7 +87,7 @@ class FrontEndHomePageTest(BaseCase):
         self.type('#password', 'Test123$')
         self.click('input[type=\'submit\']')
 
-         # invalid postal code
+        # invalid postal code
         self.open(base_url + '/profile')
         self.type('#address', 'queens')
         self.type('#postal', '11111')
