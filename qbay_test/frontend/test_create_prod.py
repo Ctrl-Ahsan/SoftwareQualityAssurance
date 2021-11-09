@@ -13,7 +13,6 @@ class FrontEndHomePageTest(BaseCase):
     def test_r4_1_1(self, *_):
         '''
         Input coverage
-
         '''
     # open register
         self.open(base_url + '/register')
@@ -208,13 +207,11 @@ class FrontEndHomePageTest(BaseCase):
         self.assert_element('#message')
         self.assert_text('Product not created.')
         
-    
     def test_r4_5(self, *_):
         '''
         Shotgun testing
         Randomly input different prices
         '''
-
         # open register
         self.open(base_url + '/register')
         self.type('#name', 'upupey')
