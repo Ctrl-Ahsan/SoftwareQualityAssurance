@@ -14,7 +14,6 @@ class FrontEndHomePageTest(BaseCase):
         '''
         Boundary testing.
         '''
-        
         # open register page
         self.open(base_url + '/register')
         self.type('#email', 'lego@test.com')
@@ -40,8 +39,8 @@ class FrontEndHomePageTest(BaseCase):
         # upper boundary
         self.open(base_url + '/create')
         self.type('#title', 'testing2')
-        dscrpt = ''.join(random.choice(string.ascii_lowercase) for x in range(2002))
-        self.type('#description', dscrpt)
+        d = ''.join(random.choice(string.ascii_lowercase) for x in range(2002))
+        self.type('#description', d)
         self.type('#price', '10')
         self.click('input[type=\'submit\']')
         self.assert_element('#message')
@@ -147,7 +146,6 @@ class FrontEndHomePageTest(BaseCase):
         self.open(base_url)
         self.assert_element('#something')
         self.assert_text('name: something price: 10.0')
-
     
     def test_r4_8(self, *_):
         # open register page
