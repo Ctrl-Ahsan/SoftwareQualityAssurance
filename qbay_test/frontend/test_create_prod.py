@@ -8,8 +8,8 @@ import random
 import string
 from random import randint
 
-class FrontEndHomePageTest(BaseCase):
 
+class FrontEndHomePageTest(BaseCase):
     def test_r4_3(self, *_):
         '''
         Boundary testing.
@@ -28,7 +28,7 @@ class FrontEndHomePageTest(BaseCase):
         self.type('#password', '123Ab#')
         self.click('input[type=\'submit\']')
 
-        # partition 1
+        # lower boundary
         self.open(base_url + '/create')
         self.type('#title', 'testing')
         self.type('#description', '123456789abcdefghij')
@@ -37,10 +37,10 @@ class FrontEndHomePageTest(BaseCase):
         self.assert_element('#message')
         self.assert_text('Product not created.')
 
-        # partition 2
+        # upper boundary
         self.open(base_url + '/create')
         self.type('#title', 'testing2')
-        dscrpt = ''.join(random.choice(string.lowercase) for x in range(2001))
+        dscrpt = ''.join(random.choice(string.lowercase) for x in range(2002))
         self.type('#description', dscrpt)
         self.type('#price', '10')
         self.click('input[type=\'submit\']')
@@ -126,20 +126,16 @@ class FrontEndHomePageTest(BaseCase):
         self.type('#password2', '123Ab#')
         self.click('input[type=\'submit\']')
         
-        # case 1
+        # case 1 - user tries to create product without being logged in
         self.open(base_url + '/create')
-        self.type('#title', 'something')
-        self.type('#description', 'super something')
-        self.type('#price', 10)
-        self.click('input[type=\'submit\']')
-        self.assert_equal(self.get_current_url, base_url + '\login')
+        self.assert_equal(self.get_current_url, base_url + "/login?next=%2Fcreate")
 
         # login
         self.type('#email', 'raptor@test.com')
         self.type('#password', '123Ab#')
         self.click('input[type=\'submit\']')
 
-        # case 2
+        # case 2 - user tries to create product while logged in
         self.open(base_url + '/create')
         self.type('#title', 'something')
         self.type('#description', 'super something')
@@ -148,8 +144,8 @@ class FrontEndHomePageTest(BaseCase):
 
         # test that it didn't fail
         self.open(base_url)
-        self.assert_element('h2')
-        self.assert_text('Welcome raptor !', 'h2')
+        self.assert_element('h4')
+        self.assert_text('name: something price: 10.0', 'h4')
 
     
     def test_r4_8(self, *_):
