@@ -40,7 +40,7 @@ class FrontEndHomePageTest(BaseCase):
         # upper boundary
         self.open(base_url + '/create')
         self.type('#title', 'testing2')
-        dscrpt = ''.join(random.choice(string.lowercase) for x in range(2002))
+        dscrpt = ''.join(random.choice(string.ascii_lowercase) for x in range(2002))
         self.type('#description', dscrpt)
         self.type('#price', '10')
         self.click('input[type=\'submit\']')
@@ -128,7 +128,8 @@ class FrontEndHomePageTest(BaseCase):
         
         # case 1 - user tries to create product without being logged in
         self.open(base_url + '/create')
-        self.assert_equal(self.get_current_url, base_url + "/login?next=%2Fcreate")
+        self.assert_element('h1')
+        self.assert_text('Login', 'h1')
 
         # login
         self.type('#email', 'raptor@test.com')
@@ -138,14 +139,14 @@ class FrontEndHomePageTest(BaseCase):
         # case 2 - user tries to create product while logged in
         self.open(base_url + '/create')
         self.type('#title', 'something')
-        self.type('#description', 'super something')
+        self.type('#description', 'super something is something')
         self.type('#price', 10)
         self.click('input[type=\'submit\']')
 
         # test that it didn't fail
         self.open(base_url)
-        self.assert_element('h4')
-        self.assert_text('name: something price: 10.0', 'h4')
+        self.assert_element('#something')
+        self.assert_text('name: something price: 10.0')
 
     
     def test_r4_8(self, *_):
