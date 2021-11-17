@@ -131,3 +131,6 @@ dmypy.json
 # .DS_Store
 .DS_Store
 qbay_test/.DS_Store
+
+# docker
+mysql_data 

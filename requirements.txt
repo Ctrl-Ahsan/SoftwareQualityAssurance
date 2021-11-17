@@ -4,3 +4,4 @@ pytest
 flake8
 seleniumbase
 flask-login
+pymysql
