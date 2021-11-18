@@ -9,3 +9,9 @@ Wilson Hammell
 2. I've completed on question regarding the differences between the two runs.
 3. I've exerpienced issues with parameters that are not injectable causing the scanner to fail and give no output.
 4. I plan to resolve those issues and complete the report.
+
+Luka Milosevic 
+1. pawnXSS
+2. I've completed the first question about the difference between running with and without session id(with some issues)
+3. I excperience issues with pwnxss not running quite as intended and giving me errors of missing files in my python library.l
+4. I plan on fixing those issues and redoing question 1 correctly and completing the rest of the report.
