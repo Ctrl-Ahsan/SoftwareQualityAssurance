@@ -1,5 +1,8 @@
-1.
+1. Every field in the application was tested in the above cases and there was never a successful exploit.
 
-2. The two results of scanning are different due to the addition of the session id. Adding the session id allows for the scanner to check other fields beyond the ones present on the login and register pages as it gives user level access.
+2. The two results of scanning are different due to the addition of the session id. Adding the session id allows 
+for the scanner to check other fields beyond the ones present on the login and register pages as it gives user level access.
 
-3.
+3. The injection payload used was diverse and not limited to just a single type of SQL Injection, covering types like boolean 
+based injection, inline queries, etc. The purpose of this diverse payload is to ensure that the website is secure against a
+wide array of different forms of attack. This helps to ensure that malicious users will be unable to interfere with queries.
