@@ -38,5 +38,13 @@
 ├── Screenshot 1.png     ======> Screenshot 1 for A4
 ├── Screenshot 2.png     ======> Screenshot 1 for A4
 ├── progress.md          ======> Progress update for A4
+├── Dockerfile           ======> Defines what's included in container
+├── SQL-Injection Chart.docx ======> SQL-Injection results chart
+├── SQL-Injection Security Report.txt ======> Answer to SQL questions
+├── a5-board.png         ======> A5 Project Board (Shows everyone's roles)
+├── a5-progress-update.md ======> Progress updates from each member
+├── db_init.sql          ======> Init database
+├── docker-compose.yml   ======> Docker compose yml
+├── wait-for-it.sh       ======> Check available ports
 └── requirements.txt     ======> Dependencies
 ```
