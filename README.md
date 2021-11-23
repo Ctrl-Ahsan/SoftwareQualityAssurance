@@ -40,11 +40,13 @@
 ├── progress.md          ======> Progress update for A4
 ├── Dockerfile           ======> Defines what's included in container
 ├── SQL-Injection Chart.docx ======> SQL-Injection results chart
-├── SQL-Injection Security Report.txt ======> Answer to SQL questions
+├── SQL-Injection Security Report.txt ======> Answers to SQL questions
 ├── a5-board.png         ======> A5 Project Board (Shows everyone's roles)
 ├── a5-progress-update.md ======> Progress updates from each member (A5 only)
 ├── db_init.sql          ======> Init database
 ├── docker-compose.yml   ======> Docker compose yml
+├── XSS Scanner Security Report.txt ======> Answers to XSS questions
+├── XSS Security Scan Chart.docx ======> XSS results chart
 ├── wait-for-it.sh       ======> Check available ports
 └── requirements.txt     ======> Dependencies
 ```
