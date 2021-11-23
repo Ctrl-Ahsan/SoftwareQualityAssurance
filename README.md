@@ -42,7 +42,7 @@
 ├── SQL-Injection Chart.docx ======> SQL-Injection results chart
 ├── SQL-Injection Security Report.txt ======> Answer to SQL questions
 ├── a5-board.png         ======> A5 Project Board (Shows everyone's roles)
-├── a5-progress-update.md ======> Progress updates from each member
+├── a5-progress-update.md ======> Progress updates from each member (A5 only)
 ├── db_init.sql          ======> Init database
 ├── docker-compose.yml   ======> Docker compose yml
 ├── wait-for-it.sh       ======> Check available ports
