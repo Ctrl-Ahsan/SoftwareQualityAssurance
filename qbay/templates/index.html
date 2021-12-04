@@ -19,27 +19,28 @@
 
 <br>
 
-{% if myProducts|length != 0 %}
+{% if m|length != 0 %}
 <h2>Here are your available products</h2>
 
 <div id="products">
-    {% for product in myProducts %}
+    {% for product in m %}
     <div>
-        <h4 id={{product.title}}>name: {{ product.title }} price: {{ product.price }} 
+        <h4 id={{product.title}}>name: {{ product.title }} price: {{ product.price }}
         {% if product.transaction == None %}
-            <a href='/update/{{product.title}}'>update</a></h4>
+            <a href='/update/{{product.title}}'>update</a>
         {% else %}
             SOLD
         {% endif %}
+        </h4>
     </div>
     {% endfor %}
 </div>
 {% endif %}
 
-{% if allProducts|length != 0 %}
+{% if p|length != 0 %}
 <h2>Here are all available products</h2>
 <div id="all-products">
-        {% for product in allProducts %}
+        {% for product in p %}
         {% if product.transaction == None %}
         <div>
             <h4 id={{product.title}}>
