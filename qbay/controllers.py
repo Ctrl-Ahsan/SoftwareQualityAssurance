@@ -1,9 +1,10 @@
 from flask import render_template, request, session, redirect
-from qbay.models import create_product, update_product, login
+from qbay.models import Transaction, buy_product, create_product, update_product, login
 from qbay.models import User, Product, register, is_float, update_user
 from flask_login import login_user, login_required, logout_user, current_user
 from flask_login import LoginManager
 from datetime import datetime
+# from functools import filter
 
 from qbay import app
 
@@ -43,9 +44,22 @@ def login_post():
 @app.route('/', methods=['GET'])
 @login_required
 def home():
-    products = Product.query.filter_by(user_email=current_user.email)
-    return render_template('index.html', user=current_user, products=products)
+    myProducts = Product.query.filter_by(user_email=current_user.email)
+    allProducts = Product.query.filter(Product.user_email != current_user.email).all()
+    return render_template(
+        'index.html', 
+        user=current_user, 
+        myProducts=Product.query.filter_by(user_email=current_user.email).all(), 
+        allProducts=Product.query.filter(Product.user_email != current_user.email).all(),
+        transactions=Transaction.query.all()
+        
+    )
 
+@app.route('/buy/<prod_name>', methods=['GET']) 
+def buy(prod_name):
+    result = buy_product(prod_name, current_user)
+    print(result)
+    return redirect('/') if result else 'No!'
 
 @app.route('/register', methods=['GET'])
 def register_get():
@@ -123,7 +137,7 @@ def create_page_post():
 @login_required
 def update_page_get(prod_name):
     product = Product.query.filter_by(title=prod_name).first()
-    if not product:
+    if not product or product.transaction is not None:
         return redirect('/')
     return render_template('update.html', product=product)
 
@@ -133,7 +147,7 @@ def update_page_get(prod_name):
 def update_page_post(prod_name):
     product = Product.query.filter_by(title=prod_name).first()
 
-    if not product:
+    if not product or product.transaction is not None:
         return redirect('/')
     
     title = request.form.get('title')

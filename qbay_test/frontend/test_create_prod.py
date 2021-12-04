@@ -114,7 +114,7 @@ class FrontEndHomePageTest(BaseCase):
         self.click('input[type=\'submit\']')
 
         self.assert_element('#message')
-        self.assert_text('Product not created', '#message')
+        self.assert_text('Product not created.', '#message')
 
         self.open(base_url + '/register')
         self.type('#name', 'upupedyy')

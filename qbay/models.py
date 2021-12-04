@@ -3,6 +3,7 @@ from datetime import datetime
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
+from sqlalchemy.orm import backref
 from qbay import app
 
 
@@ -38,12 +39,11 @@ class Review(db.Model):
 
 class Transaction(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    user_email = db.Column(db.String(320), nullable=False, unique=False)
-    seller = db.Column(db.String(19), nullable=False)
-    buyer = db.Column(db.String(19), nullable=False)
+    date = db.Column(db.String(10), unique=False, nullable=False)
+    seller_email = db.Column(db.String(320), nullable=False, unique=False)
+    buyer_email = db.Column(db.String(320), nullable=False, unique=False)
+    product_id = db.Column(db.Integer, unique=True)
     price = db.Column(db.Float, nullable=False, default=0.0)
-    product_id = db.Column(db.Integer, nullable=False)
 
     def __repr__(self):
         return '<Transaction %r>' % self.id
@@ -57,6 +57,8 @@ class Product(db.Model):
     description = db.Column(db.String(2000), nullable=False)
     price = db.Column(db.Float, nullable=False)
     last_modified = db.Column(db.String(10), unique=False, nullable=False)
+
+    transaction = db.Column(db.Integer, unique=True, default=None)
 
     def __repr__(self):
         return '<Post %r>' % self.id
@@ -435,3 +437,26 @@ def is_float(string):
             True if float
     '''
     return bool(re.match(r'^[0-9]+(.[0-9]+)?$', string))
+
+def buy_product(prod_name, user):
+    product = Product.query.filter_by(title=prod_name).first()
+    if product is None or user.balance < product.price or product.user_email == user.email:
+        return False
+
+    user.balance -= product.price
+
+    transaction = Transaction(
+        seller_email = product.user_email,
+        buyer_email = user.email,
+        product_id = product.id,
+        price = product.price,
+        date = datetime.today().strftime('%Y-%m-%d')
+    )
+
+    db.session.add(transaction)
+    db.session.commit()
+    print(transaction.id)
+    product.transaction = transaction.id
+    db.session.commit()
+
+    return True
