@@ -438,6 +438,7 @@ def is_float(string):
     '''
     return bool(re.match(r'^[0-9]+(.[0-9]+)?$', string))
 
+
 def buy_product(prod_name, user):
     product = Product.query.filter_by(title=prod_name).first()
     if product is None or user.balance < product.price:
@@ -448,11 +449,11 @@ def buy_product(prod_name, user):
     user.balance -= product.price
 
     transaction = Transaction(
-        seller_email = product.user_email, 
-        buyer_email = user.email,
-        product_id = product.id,
-        price = product.price,
-        date = datetime.today().strftime('%Y-%m-%d')
+        seller_email=product.user_email, 
+        buyer_email=user.email,
+        product_id=product.id,
+        price=product.price,
+        date=datetime.today().strftime('%Y-%m-%d')
     )
 
     db.session.add(transaction)

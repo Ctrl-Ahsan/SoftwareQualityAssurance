@@ -54,11 +54,13 @@ def home():
         
     )
 
+
 @app.route('/buy/<prod_name>', methods=['GET']) 
 def buy(prod_name):
     result = buy_product(prod_name, current_user)
     print(result)
     return redirect('/') if result else 'No!'
+
 
 @app.route('/register', methods=['GET'])
 def register_get():
