@@ -5,12 +5,14 @@ from qbay.models import create_product, update_user, update_product
 
 
 def test_r1_1_user_register():
+    # Test that both the email and password cannot be empty
     assert register('ur0', 'u0@test.ca', '123Ab#') is True
     assert register('ur1', '', '123Ab#') is False
     assert register('ur2', 'u2@test.ca', '') is False
 
 
 def test_r1_2_user_register():
+    # Test that user is uniquely identified by his/her email address
     register('abcdefg', 'abc@abc.ca', '123Ab#')
     register('abcde', 'abc@abc.ca', '123Ab#')
     users = list(User.query.filter_by(email='abc@abc.ca'))
@@ -18,6 +20,7 @@ def test_r1_2_user_register():
 
 
 def test_r1_3_user_register():
+    # Test that email follows RFC 5322
     assert register('ura', 'u3@gmail.com', '123Ab#') is True
     assert register('urb', 'u.4@queensu.ca', '123Ab#') is True
     assert register('urc', '.u5@queensu.ca', '123Ab#') is False
@@ -26,6 +29,12 @@ def test_r1_3_user_register():
 
 
 def test_r1_4_user_register():
+    # Test that password has,
+    # 1. at least a length of 6
+    # 2. at least 1 upper case
+    # 3. has 1 or more lower cases
+    # 4. and at least 1 special case
+
     assert register('urf', 'u8@queensu.ca', '123Ab#') is True
     assert register('urg', 'u9@queensu.ca', '12Ab#') is False
     assert register('urh', 'u10@queensu.ca', '123bb#') is False
@@ -34,6 +43,7 @@ def test_r1_4_user_register():
 
 
 def test_r1_5_user_register():
+    # Tests that username is alphanumeric-only and can allow spaces
     assert register('User Thirteen', 'u13@queensu.ca', '123Ab#') is True
     assert register('User', 'u14@queensu.ca', '123Ab#') is True
     assert register('User ', 'u15@queensu.ca', '123Ab#') is False
@@ -41,30 +51,35 @@ def test_r1_5_user_register():
 
 
 def test_r1_6_user_register():
+    # Tests that username must be > 2 or < 20 characters
     assert register('urq', 'u19@queensu.ca', '123Ab#') is True
     assert register('u', 'u20@queensu.ca', '123Ab#') is False
     assert register('abcdefghijklmnopqrstuv', 'u21@qq.ca', '123Ab#') is False
 
 
 def test_r1_7_user_register():
+    # Tests that you cannot register with a used email
     register('urt', 'u22@queensu.ca', '123Ab#')
     result = register('urt', 'u22@queensu.ca', '123Ab#')
     assert result is False
 
 
 def test_r1_8_user_register():
+    # Tests that shipping address is empty
     register('tmp', 'tmp@queensu.ca', '123Ab#')
     user = User.query.filter_by(email='tmp@queensu.ca').first()
     assert user.shipping_address == ''
 
 
 def test_r1_9_user_register():
+    #Tests that postal code is empty
     register('tmp2', 'tmp2@queensu.ca', '123Ab#')
     user = User.query.filter_by(email='tmp2@queensu.ca').first()
     assert user.postal_code == ''
 
 
 def test_r1_10_user_register():
+    # Tests that balance is 100
     register('tmp3', 'tmp3@queensu.ca', '123Ab#')
     user = User.query.filter_by(email='tmp3@queensu.ca').first()
     assert user.balance == 100.0
@@ -352,10 +367,18 @@ def test_r5_4_update_product():
 
 
 def test_buy_product():
-    assert register('buy1', 'buy1@queensu.ca', 'Test#1') is True
-    assert register('buy2', 'buy2@queensu.ca', 'Test#1') is True
+    # Backend tests for A6
+    # Tests that users cannot order their own products, 
+    # that they cannot order products too expensive, and 
+    # lastly, that they can order other products.
+
+    # Create users for test
+    register('buy1', 'buy1@queensu.ca', 'Test#1')
+    register('buy2', 'buy2@queensu.ca', 'Test#1')
     user1 = User.query.filter_by(username='buy1').first()
     user2 = User.query.filter_by(username='buy2').first()
+
+    # Create products for test
     create_product(
         'overpriced', 
         'overpriced' * 10, 
