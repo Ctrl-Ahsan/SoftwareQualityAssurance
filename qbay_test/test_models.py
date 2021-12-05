@@ -350,6 +350,7 @@ def test_r5_4_update_product():
                           "new description must be twenty chars",
                           10001) is False
 
+
 def test_buy_product():
     assert register('buy1', 'buy1@queensu.ca', 'Test#1') is True
     assert register('buy2', 'buy2@queensu.ca', 'Test#1') is True
@@ -357,21 +358,21 @@ def test_buy_product():
     user2 = User.query.filter_by(username='buy2').first()
     create_product(
         'overpriced', 
-        'overpriced'*10, 
+        'overpriced' * 10, 
         1000, 
         datetime.today().strftime('%Y-%m-%d'),
         user2.email
     )
     create_product(
         'buy', 
-        'buy'*30, 
+        'buy' * 30, 
         10, 
         datetime.today().strftime('%Y-%m-%d'),
         user1.email
     )
     create_product(
         'yub', 
-        'yub'*30, 
+        'yub' * 30, 
         10, 
         datetime.today().strftime('%Y-%m-%d'),
         user2.email
