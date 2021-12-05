@@ -72,7 +72,7 @@ def test_r1_8_user_register():
 
 
 def test_r1_9_user_register():
-    #Tests that postal code is empty
+    # Tests that postal code is empty
     register('tmp2', 'tmp2@queensu.ca', '123Ab#')
     user = User.query.filter_by(email='tmp2@queensu.ca').first()
     assert user.postal_code == ''
