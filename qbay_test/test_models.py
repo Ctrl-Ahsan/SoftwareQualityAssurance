@@ -377,6 +377,9 @@ def test_buy_product():
         user2.email
     )
 
-    assert buy_product('overpriced', user1) is False # cannot buy if there is not enough money
-    assert buy_product('buy', user1) is False # cannot place order on own product
-    assert buy_product('yub', user1) is True # can place order on other products
+    # cannot buy if there is not enough money
+    assert buy_product('overpriced', user1) is False
+    # cannot place order on own product
+    assert buy_product('buy', user1) is False 
+    # can place order on other products
+    assert buy_product('yub', user1) is True 
