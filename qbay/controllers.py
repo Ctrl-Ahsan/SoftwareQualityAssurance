@@ -52,7 +52,7 @@ def home():
         m=Product.query.filter_by(user_email=current_user.email).all(), 
         p=Product.query.filter(
             Product.user_email != current_user.email, 
-            Product.transaction == None).all(),
+            Product.transaction is None).all(),
         purchases=purchases.all()
 
     )
