@@ -14,7 +14,7 @@ class FrontEndHomePageTest(BaseCase):
         '''
         Input coverage
         '''
-    # open register
+        # open register
         self.open(base_url + '/register')
         self.type('#name', 'upupeyy')
         self.type('#email', 'upupeyy@test.com')

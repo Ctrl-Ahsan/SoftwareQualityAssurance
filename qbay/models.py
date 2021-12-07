@@ -445,6 +445,8 @@ def buy_product(prod_name, user):
         return False
     if product.user_email == user.email:
         return False
+    if user.shipping_address == '' or user.postal_code == '':
+        return False
 
     user.balance -= product.price
 
@@ -460,6 +462,9 @@ def buy_product(prod_name, user):
     db.session.commit()
     print(transaction.id)
     product.transaction = transaction.id
+    product.user_email = user.email
+    product.last_modified = datetime.today().strftime('%Y-%m-%d')
     db.session.commit()
 
+    print(product.user_email)
     return True

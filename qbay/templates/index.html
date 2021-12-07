@@ -14,12 +14,12 @@
 <h4 id="postal">{{user.postal_code}}</h4>
 {% endif %}
 {% else %}
-<h4 id="empty">Add shipping address and postal code</h4>
+<h4 id="empty">Add shipping address and postal code before you can buy</h4>
 {% endif %}
 
 <br>
 
-{% if m|length != 0 %}
+{% if m|length != 0 or purchases|length != 0 %}
 <h2>Here are your available products</h2>
 
 <div id="products">
@@ -29,7 +29,7 @@
         {% if product.transaction == None %}
             <a href='/update/{{product.title}}'>update</a>
         {% else %}
-            SOLD
+            purchase date: {{ product.last_modified }}
         {% endif %}
         </h4>
     </div>
@@ -38,17 +38,15 @@
 {% endif %}
 
 {% if p|length != 0 %}
-<h2>Here are all available products</h2>
+<h2>Here are all available products {{ p|length }}</h2>
 <div id="all-products">
         {% for product in p %}
-        {% if product.transaction == None %}
         <div>
             <h4 id={{product.title}}>
                 name: {{ product.title }} price: {{ product.price }} 
-                <a href="/buy/{{product.title}}">buy</a>
+                <a href="/buy/{{product.title}}" id='{{ product.title }}Buy'>buy</a>
             </h4>
         </div>
-        {% endif %}
         {% endfor %} 
 </div>
 {% endif %}

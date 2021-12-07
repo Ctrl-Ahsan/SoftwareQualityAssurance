@@ -45,21 +45,23 @@ def login_post():
 @app.route('/', methods=['GET'])
 @login_required
 def home():
+    purchases = Transaction.query.filter_by(buyer_email=current_user.email)
     return render_template(
         'index.html', 
         user=current_user, 
         m=Product.query.filter_by(user_email=current_user.email).all(), 
-        p=Product.query.filter(Product.user_email != current_user.email).all(),
-        transactions=Transaction.query.all()
-        
+        p=Product.query.filter(
+            Product.user_email != current_user.email, 
+            Product.transaction == None).all(),
+        purchases=purchases.all()
+
     )
 
 
 @app.route('/buy/<prod_name>', methods=['GET']) 
 def buy(prod_name):
-    result = buy_product(prod_name, current_user)
-    print(result)
-    return redirect('/') if result else 'No!'
+    buy_product(prod_name, current_user)
+    return redirect('/')
 
 
 @app.route('/register', methods=['GET'])
