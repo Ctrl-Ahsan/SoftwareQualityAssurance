@@ -14,20 +14,44 @@
 <h4 id="postal">{{user.postal_code}}</h4>
 {% endif %}
 {% else %}
-<h4 id="empty">Add shipping address and postal code</h4>
+<h4 id="empty">Add shipping address and postal code before you can buy</h4>
 {% endif %}
 
+<br>
 
-<h2>Here are all available products</h2>
+{% if m|length != 0 or purchases|length != 0 %}
+<h2>Here are your available products</h2>
 
 <div id="products">
-    {% for product in products %}
+    {% for product in m %}
     <div>
-        <h4 id={{product.title}}>name: {{ product.title.replace(' ', '-') }} price: {{ product.price }}<a href='/update/{{product.title}}'>update</a></h4>
+        <h4 id={{product.title}}>name: {{ product.title }} price: {{ product.price }}
+        {% if product.transaction == None %}
+            <a href='/update/{{product.title}}'>update</a>
+        {% else %}
+            purchase date: {{ product.last_modified }}
+        {% endif %}
+        </h4>
     </div>
     {% endfor %}
 </div>
+{% endif %}
 
+{% if p|length != 0 %}
+<h2>Here are all available products {{ p|length }}</h2>
+<div id="all-products">
+        {% for product in p %}
+        <div>
+            <h4 id={{product.title}}>
+                name: {{ product.title }} price: {{ product.price }} 
+                <a href="/buy/{{product.title}}" id='{{ product.title }}Buy'>buy</a>
+            </h4>
+        </div>
+        {% endfor %} 
+</div>
+{% endif %}
+
+<br>
 <div><a href="/create">create</a></div>
 <div><a href="/profile">profile</a></div>
 <div><a href='/logout'>logout</a></div>
