@@ -2,6 +2,7 @@ from sqlalchemy.inspection import inspect
 from datetime import datetime
 from qbay.models import User, buy_product, register, login, Product
 from qbay.models import create_product, update_user, update_product
+from qbay.models import buy_product
 
 
 def test_r1_1_user_register():
@@ -364,3 +365,44 @@ def test_r5_4_update_product():
     assert update_product("title 10", "new title9",
                           "new description must be twenty chars",
                           10001) is False
+
+
+def test_r6_1_place_order():
+    #testing if a user can order a product
+    register('seller', 'seller@queensu.ca', '123Ab#')
+    register('buyer', 'buyer@queensu.ca', '123Ab#')
+    create_product('testsale1', 'description must be twenty chars',
+                   10, '2021-12-25', 'seller@test.ca')
+
+    buyer=User.query.filter_by(email="buyer@queensu.ca").first()
+    assert buy_product('testsale1','buyer') is True
+
+    assert buy_product('nottestsale','buyer') is False
+
+
+def test_r6_2_place_order():
+    #testing if a user can order their own product
+    register('seller2', 'seller2@queensu.ca', '123Ab#')
+    create_product('testsale2', 'description must be twenty chars',
+                   10, '2021-12-25', 'seller2@test.ca')
+
+    buyer=User.query.filter_by(email="seller2@queensu.ca").first()
+    assert buy_product('testsale2','buyer') is False
+
+
+def test_r6_3_place_order():
+    #testing if a user can order a product valued more than their balance
+    register('seller3', 'seller3@queensu.ca', '123Ab#')
+    register('buyer3', 'buyer3@queensu.ca', '123Ab#')
+
+    buyer=User.query.filter_by(email="buyer3@queensu.ca").first()
+
+    create_product('testsale3', 'description must be twenty chars',
+                   10, '2021-12-25', 'seller3@test.ca')
+
+    create_product('testsale4', 'description must be twenty chars',
+                   1000, '2021-12-25', 'seller3@test.ca')
+
+    assert buy_product('testsale3','buyer') is True
+    assert buy_product('testsale4','buyer') is False
+
