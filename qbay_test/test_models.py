@@ -2,6 +2,7 @@ from sqlalchemy.inspection import inspect
 from datetime import datetime
 from qbay.models import User, buy_product, register, login, Product
 from qbay.models import create_product, update_user, update_product
+from qbay.models import buy_product
 
 
 def test_r1_1_user_register():
@@ -364,3 +365,23 @@ def test_r5_4_update_product():
     assert update_product("title 10", "new title9",
                           "new description must be twenty chars",
                           10001) is False
+
+
+def test_r6_1_place_order():
+    # testing if a user can order a product
+    user = User.query.filter_by(email='u299@queensu.ca').first()
+    assert buy_product('title 1', user) is True
+    assert buy_product('nottestsale', 'u299@queensu.ca') is False
+
+
+def test_r6_2_place_order():
+    # testing if a user can order their own product
+    user = User.query.filter_by(email='u0@test.ca').first()
+    assert buy_product('title 8', user) is False
+
+
+def test_r6_3_place_order():
+    # testing if a user can order a product valued more than their balance
+    user = User.query.filter_by(email='u299@queensu.ca').first()
+    assert buy_product('title 4', user) is True
+    assert buy_product('new title2', user) is False
