@@ -375,9 +375,9 @@ def test_r6_1_place_order():
                    10, '2021-12-25', 'seller@test.ca')
 
     buyer=User.query.filter_by(email="buyer@queensu.ca").first()
-    assert buy_product('testsale1','buyer') is True
+    assert buy_product('testsale1', buyer) is True
 
-    assert buy_product('nottestsale','buyer') is False
+    assert buy_product('nottestsale', buyer) is False
 
 
 def test_r6_2_place_order():
@@ -387,7 +387,7 @@ def test_r6_2_place_order():
                    10, '2021-12-25', 'seller2@test.ca')
 
     buyer=User.query.filter_by(email="seller2@queensu.ca").first()
-    assert buy_product('testsale2','buyer') is False
+    assert buy_product('testsale2', buyer) is False
 
 
 def test_r6_3_place_order():
@@ -403,6 +403,6 @@ def test_r6_3_place_order():
     create_product('testsale4', 'description must be twenty chars',
                    1000, '2021-12-25', 'seller3@test.ca')
 
-    assert buy_product('testsale3','buyer') is True
-    assert buy_product('testsale4','buyer') is False
+    assert buy_product('testsale3', buyer) is True
+    assert buy_product('testsale4', buyer) is False
 
