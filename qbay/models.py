@@ -439,7 +439,8 @@ def is_float(string):
     return bool(re.match(r'^[0-9]+(.[0-9]+)?$', string))
 
 
-def buy_product(prod_name, user):
+def buy_product(prod_name, email):
+    user=User.query.filter_by(email=email).all()
     product = Product.query.filter_by(title=prod_name).first()
     if product is None or user.balance < product.price:
         return False

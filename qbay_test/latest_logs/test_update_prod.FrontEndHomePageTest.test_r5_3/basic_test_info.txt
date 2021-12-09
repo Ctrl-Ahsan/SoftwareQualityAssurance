@@ -1,0 +1,26 @@
+test_update_prod.py::FrontEndHomePageTest::test_r5_3
+--------------------------------------------------------------------
+Last Page: http://127.0.0.1:8081/login?next=%2Fcreate
+  Browser: chrome
+Timestamp: 1639021819  (Unix Timestamp)
+     Date: Wednesday, December 8, 2021
+     Time: 10:50:19 PM  (Eastern Daylight Time, UTC-05:00)
+--------------------------------------------------------------------
+Traceback: File "C:\Users\Wilson\AppData\Local\Programs\Python\Python39\lib\unittest\case.py", line 593, in run
+    self._callTestMethod(testMethod)
+  File "C:\Users\Wilson\AppData\Local\Programs\Python\Python39\lib\unittest\case.py", line 550, in _callTestMethod
+    method()
+  File "C:\Users\Wilson\CISC327\qbay_test\frontend\test_update_prod.py", line 143, in test_r5_3
+    self.type('#title', 'modDate')
+  File "C:\Users\Wilson\AppData\Local\Programs\Python\Python39\lib\site-packages\seleniumbase\fixtures\base_case.py", line 610, in type
+    self.update_text(selector, text, by=by, timeout=timeout, retry=retry)
+  File "C:\Users\Wilson\AppData\Local\Programs\Python\Python39\lib\site-packages\seleniumbase\fixtures\base_case.py", line 470, in update_text
+    element = self.wait_for_element_visible(
+  File "C:\Users\Wilson\AppData\Local\Programs\Python\Python39\lib\site-packages\seleniumbase\fixtures\base_case.py", line 6239, in wait_for_element_visible
+    return page_actions.wait_for_element_visible(
+  File "C:\Users\Wilson\AppData\Local\Programs\Python\Python39\lib\site-packages\seleniumbase\fixtures\page_actions.py", line 370, in wait_for_element_visible
+    timeout_exception(NoSuchElementException, message)
+  File "C:\Users\Wilson\AppData\Local\Programs\Python\Python39\lib\site-packages\seleniumbase\fixtures\page_actions.py", line 163, in timeout_exception
+    raise exception(message)
+Exception: Message: 
+ Element {#title} was not present after 10 seconds!

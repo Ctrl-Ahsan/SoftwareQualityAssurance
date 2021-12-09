@@ -368,34 +368,30 @@ def test_r5_4_update_product():
 
 
 def test_r6_1_place_order():
-    #testing if a user can order a product
+    # testing if a user can order a product
     register('seller', 'seller@queensu.ca', '123Ab#')
     register('buyer', 'buyer@queensu.ca', '123Ab#')
     create_product('testsale1', 'description must be twenty chars',
                    10, '2021-12-25', 'seller@test.ca')
 
-    buyer=User.query.filter_by(email="buyer@queensu.ca").first()
-    assert buy_product('testsale1', buyer) is True
+    assert buy_product('testsale1', 'buyer@queensu.ca') is True
 
-    assert buy_product('nottestsale', buyer) is False
+    assert buy_product('nottestsale', 'buyer@queensu.ca') is False
 
 
 def test_r6_2_place_order():
-    #testing if a user can order their own product
+    # testing if a user can order their own product
     register('seller2', 'seller2@queensu.ca', '123Ab#')
     create_product('testsale2', 'description must be twenty chars',
                    10, '2021-12-25', 'seller2@test.ca')
 
-    buyer=User.query.filter_by(email="seller2@queensu.ca").first()
     assert buy_product('testsale2', buyer) is False
 
 
 def test_r6_3_place_order():
-    #testing if a user can order a product valued more than their balance
+    # testing if a user can order a product valued more than their balance
     register('seller3', 'seller3@queensu.ca', '123Ab#')
     register('buyer3', 'buyer3@queensu.ca', '123Ab#')
-
-    buyer=User.query.filter_by(email="buyer3@queensu.ca").first()
 
     create_product('testsale3', 'description must be twenty chars',
                    10, '2021-12-25', 'seller3@test.ca')
@@ -403,6 +399,6 @@ def test_r6_3_place_order():
     create_product('testsale4', 'description must be twenty chars',
                    1000, '2021-12-25', 'seller3@test.ca')
 
-    assert buy_product('testsale3', buyer) is True
-    assert buy_product('testsale4', buyer) is False
+    assert buy_product('testsale3', 'buyer3@queensu.ca') is True
+    assert buy_product('testsale4', 'buyer3@queensu.ca') is False
 
