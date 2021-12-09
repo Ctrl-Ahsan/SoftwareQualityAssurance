@@ -385,7 +385,7 @@ def test_r6_2_place_order():
     create_product('testsale2', 'description must be twenty chars',
                    10, '2021-12-25', 'seller2@test.ca')
 
-    assert buy_product('testsale2', buyer) is False
+    assert buy_product('testsale2', 'seller2@test.ca') is False
 
 
 def test_r6_3_place_order():
