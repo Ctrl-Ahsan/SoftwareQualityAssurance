@@ -440,6 +440,14 @@ def is_float(string):
 
 
 def buy_product(prod_name, user):
+    '''
+    Handles buying products
+      Parameters:
+        prod_name (string):   name of product 
+        user    (User Obj):   user buying product
+      Returns:
+        True if correct price is passed otherwise False
+    '''
     product = Product.query.filter_by(title=prod_name).first()
     if product is None or user.balance < product.price:
         return False
@@ -449,6 +457,8 @@ def buy_product(prod_name, user):
         return False
 
     user.balance -= product.price
+    owner = User.query.filter_by(email=product.user_email).first()
+    owner.balance += product.price
 
     transaction = Transaction(
         seller_email=product.user_email, 
