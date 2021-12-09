@@ -371,6 +371,8 @@ def test_r6_1_place_order():
     # testing if a user can order a product
     register('seller', 'seller@queensu.ca', '123Ab#')
     register('buyer', 'buyer@queensu.ca', '123Ab#')
+
+    update_user('buyer', 'buyer','22 university ave', 'y2k 1j3')
     create_product('testsale1', 'description must be twenty chars',
                    10, '2021-12-25', 'seller@test.ca')
 
@@ -382,6 +384,7 @@ def test_r6_1_place_order():
 def test_r6_2_place_order():
     # testing if a user can order their own product
     register('seller2', 'seller2@queensu.ca', '123Ab#')
+    update_user('seller2', 'seller2','22 university ave', 'y2k 1j3')
     create_product('testsale2', 'description must be twenty chars',
                    10, '2021-12-25', 'seller2@test.ca')
 
@@ -392,6 +395,7 @@ def test_r6_3_place_order():
     # testing if a user can order a product valued more than their balance
     register('seller3', 'seller3@queensu.ca', '123Ab#')
     register('buyer3', 'buyer3@queensu.ca', '123Ab#')
+    update_user('seller3', 'seller3','22 university ave', 'y2k 1j3')
 
     create_product('testsale3', 'description must be twenty chars',
                    10, '2021-12-25', 'seller3@test.ca')
