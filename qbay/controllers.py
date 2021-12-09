@@ -45,16 +45,13 @@ def login_post():
 @app.route('/', methods=['GET'])
 @login_required
 def home():
-    purchases = Transaction.query.filter_by(buyer_email=current_user.email)
     return render_template(
         'index.html', 
         user=current_user, 
         m=Product.query.filter_by(user_email=current_user.email).all(), 
         p=Product.query.filter(
-            Product.user_email != current_user.email, 
-            Product.transaction is None).all(),
-        purchases=purchases.all()
-
+            Product.user_email != current_user.email
+        ).all()
     )
 
 
