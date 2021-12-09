@@ -369,18 +369,19 @@ def test_r5_4_update_product():
 
 def test_r6_1_place_order():
     # testing if a user can order a product
-    assert buy_product('title 1', 'u299@queensu.ca') is True
-
+    user = User.query.filter_by(email='u299@queensu.ca').first()
+    assert buy_product('title 1', user) is True
     assert buy_product('nottestsale', 'u299@queensu.ca') is False
 
 
 def test_r6_2_place_order():
     # testing if a user can order their own product
-    assert buy_product('title 8', 'u0@test.ca') is False
+    user = User.query.filter_by(email='u0@test.ca').first()
+    assert buy_product('title 8', user) is False
 
 
 def test_r6_3_place_order():
     # testing if a user can order a product valued more than their balance
-    assert buy_product('title 4', 'u299@queensu.ca') is True
-    assert buy_product('new title2', 'u299@queensu.ca') is False
-
+    user = User.query.filter_by(email='u299@queensu.ca').first()
+    assert buy_product('title 4', user) is True
+    assert buy_product('new title2', user) is False
