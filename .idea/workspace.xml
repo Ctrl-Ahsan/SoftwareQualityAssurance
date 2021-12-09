@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="bd5916c1-2b5c-444a-970d-66c215b2f76a" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/db.sqlite" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/qbay/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/qbay/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/qbay_test/latest_logs/test_update_prod.FrontEndHomePageTest.test_r5_3/basic_test_info.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/qbay_test/latest_logs/test_update_prod.FrontEndHomePageTest.test_r5_3/page_source.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/qbay_test/latest_logs/test_update_prod.FrontEndHomePageTest.test_r5_3/screenshot.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/qbay_test/test_models.py" beforeDir="false" afterPath="$PROJECT_DIR$/qbay_test/test_models.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ProjectId" id="222ZrQx7f9TQmgi3H90LAswXiAT" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="bd5916c1-2b5c-444a-970d-66c215b2f76a" name="Changes" comment="" />
+      <created>1639037844399</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1639037844399</updated>
+    </task>
+    <servers />
+  </component>
+</project>

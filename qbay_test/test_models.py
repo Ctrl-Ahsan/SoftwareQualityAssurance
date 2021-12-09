@@ -369,40 +369,18 @@ def test_r5_4_update_product():
 
 def test_r6_1_place_order():
     # testing if a user can order a product
-    register('seller', 'seller@queensu.ca', '123Ab#')
-    register('buyer', 'buyer@queensu.ca', '123Ab#')
+    assert buy_product('title 1', 'u299@queensu.ca') is True
 
-    update_user('buyer', 'buyer','22 university ave', 'y2k 1j3')
-    create_product('testsale1', 'description must be twenty chars',
-                   10, '2021-12-25', 'seller@test.ca')
-
-    assert buy_product('testsale1', 'buyer@queensu.ca') is True
-
-    assert buy_product('nottestsale', 'buyer@queensu.ca') is False
+    assert buy_product('nottestsale', 'u299@queensu.ca') is False
 
 
 def test_r6_2_place_order():
     # testing if a user can order their own product
-    register('seller2', 'seller2@queensu.ca', '123Ab#')
-    update_user('seller2', 'seller2','22 university ave', 'y2k 1j3')
-    create_product('testsale2', 'description must be twenty chars',
-                   10, '2021-12-25', 'seller2@test.ca')
-
-    assert buy_product('testsale2', 'seller2@test.ca') is False
+    assert buy_product('title 8', 'u0@test.ca') is False
 
 
 def test_r6_3_place_order():
     # testing if a user can order a product valued more than their balance
-    register('seller3', 'seller3@queensu.ca', '123Ab#')
-    register('buyer3', 'buyer3@queensu.ca', '123Ab#')
-    update_user('seller3', 'seller3','22 university ave', 'y2k 1j3')
-
-    create_product('testsale3', 'description must be twenty chars',
-                   10, '2021-12-25', 'seller3@test.ca')
-
-    create_product('testsale4', 'description must be twenty chars',
-                   1000, '2021-12-25', 'seller3@test.ca')
-
-    assert buy_product('testsale3', 'buyer3@queensu.ca') is True
-    assert buy_product('testsale4', 'buyer3@queensu.ca') is False
+    assert buy_product('title 4', 'u299@queensu.ca') is True
+    assert buy_product('new title2', 'u299@queensu.ca') is False
 

@@ -181,7 +181,6 @@ def create_product(title, description, price, last_modified_date, owner_email):
       Returns:
         True if product is successfully added otherwise False
     '''
-
     # Check if user exists
     user_exists = User.query.filter_by(email=owner_email).all()
     if len(user_exists) == 0:
@@ -443,10 +442,13 @@ def buy_product(prod_name, email):
     user = User.query.filter_by(email=email).first()
     product = Product.query.filter_by(title=prod_name).first()
     if product is None or user.balance < product.price:
+        print("first")
         return False
     if product.user_email == user.email:
+        print("second")
         return False
     if user.shipping_address == '' or user.postal_code == '':
+        print("third")
         return False
 
     user.balance -= product.price
