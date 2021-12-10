@@ -43,6 +43,8 @@
 ├── SQL-Injection Security Report.txt ======> Answers to SQL questions
 ├── a5-board.png         ======> A5 Project Board (Shows everyone's roles)
 ├── a5-progress-update.md ======> Progress updates from each member (A5 only)
+├── a6-board.png         ======> A6 Project Board (Shows everyone's roles)
+├── a6-progress-update.md ======> Progress updates from each member (A6 only)
 ├── db_init.sql          ======> Init database
 ├── docker-compose.yml   ======> Docker compose yml
 ├── XSS Scanner Security Report.txt ======> Answers to XSS questions
