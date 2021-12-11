@@ -26,6 +26,7 @@
 │   └── models.py        ======> Data models
 ├── qbay_test            ======> Testing code
 │   ├── frontend         ======> Contains frontend tests
+│   │   ├── test_buy_prod.py     ======> Frontend tests for A6
 │   │   ├── test_create_prod.py  ======> Tests for create product (R4-1 to R4-8)
 │   │   ├── test_login.py        ======> Tests for login (R2-1 to R2-2)
 │   │   ├── test_register.py     ======> Tests for register (R1-1 to R1-10)
@@ -33,7 +34,7 @@
 │   │   └── test_update_prod.py  ======> Tests for update product (R5-1 to R5-4)
 │   ├── __init__.py      ======> Required for a python module (can be empty)
 │   ├── conftest.py      ======> Code to run before/after all the testing
-│   └── test_models.py   ======> Testing code for models.py
+│   └── test_models.py   ======> Testing code for models.py & A6 backend
 ├── A0-contract.md       ======> A0 contract
 ├── Screenshot 1.png     ======> Screenshot 1 for A4
 ├── Screenshot 2.png     ======> Screenshot 1 for A4
