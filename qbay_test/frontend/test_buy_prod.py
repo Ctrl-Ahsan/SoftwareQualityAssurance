@@ -14,6 +14,7 @@ from random import randint
 class FrontEndHomePageTest(BaseCase):
     def test_1(self, *_):
         # Test that you can buy a product
+        # Output coverage
         self.open(base_url)
         register(
             'frontendBuyer', 
@@ -60,6 +61,7 @@ class FrontEndHomePageTest(BaseCase):
 
     def test_2(self, *_):
         # Test that you cannot buy a pricey item
+        # Output coverage
         self.open(base_url)
         self.type('#email', 'frontendBuyer@test.com')
         self.type('#password', '123Ab#')
@@ -74,6 +76,7 @@ class FrontEndHomePageTest(BaseCase):
 
     def test_3(self, *_):
         # Test that a bought item appears on the new owner's page
+        # Output coverage
         self.open(base_url)
         self.type('#email', 'frontendBuyer@test.com')
         self.type('#password', '123Ab#')
@@ -88,6 +91,7 @@ class FrontEndHomePageTest(BaseCase):
 
     def test_4(self, *_):
         # Test that a bought item no longer appears on the seller's page
+        # Output coverage
         self.open(base_url)
         self.type('#email', 'frontendSeller@test.com')
         self.type('#password', '123Ab#')
@@ -96,6 +100,7 @@ class FrontEndHomePageTest(BaseCase):
 
     def test_5(self, *_):
         # Test that a user cannot buy their own product.
+        # Output coverage
         self.open(base_url)
         self.type('#email', 'frontendSeller@test.com')
         self.type('#password', '123Ab#')
