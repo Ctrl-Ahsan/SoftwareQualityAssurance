@@ -68,8 +68,9 @@ class FrontEndHomePageTest(BaseCase):
         self.click('a[id=\'frontendPriceyBuy\']')
 
         self.assert_element('#frontendPricey')
-        self.assert_text('name: frontendPricey price: 1000.0 buy', 
-            '#frontendPricey')
+        self.assert_text(
+            'name: frontendPricey price: 1000.0 buy', '#frontendPricey'
+        )
 
     def test_3(self, *_):
         # Test that a bought item appears on the new owner's page
@@ -100,5 +101,6 @@ class FrontEndHomePageTest(BaseCase):
         self.type('#password', '123Ab#')
         self.click('input[type=\'submit\']')
         self.assert_element('#frontendPricey')
-        self.assert_text('name: frontendPricey price: 1000.0 update', 
-            '#frontendPricey')
+        self.assert_text(
+            'name: frontendPricey price: 1000.0 update', '#frontendPricey'
+        )
