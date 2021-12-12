@@ -15,3 +15,9 @@ Luka Milosevic
 2. Security testing -SqlInjection/xss
 3. no difficulties
 4. Complete security testing and write a short security report
+
+Ahsan Ahmad
+1. a6-ahsan
+2. frontend testing is completed
+3. no difficulties
+4. 1 more pr review
