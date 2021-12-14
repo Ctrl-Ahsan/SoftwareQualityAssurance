@@ -1,3 +1,0 @@
-Both XSS tests and SQL injection tests were completed for the the new purchase a product feature.
-All XSS tests showed no vulnerabilities again even with the user session id. SQL injection tests also showed no vulnerabilties. This is likely due to their not being any new textboxes for user input for an SQL injection attack to be conducted through. Additionally, pwnXSS was unable to detect any vulnerabilities as the new feature was developed with safe calls to the database and restrictions on what will execute when a user chooses to purchase a product.
-
