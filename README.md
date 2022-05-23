@@ -1,5 +1,15 @@
-# CISC327
+```
+ CISC327
 
+Frontend, backend and security testing for a simple marketplace built using Flask and SQLAlchemy. Concepts applied:
+
+- Git
+- Docker
+- Black / White Box Testing
+- Systematic Testing
+- Testing Automation
+- Buffer Overflow, SQL Injection, XSS Prevention
+```
 [![Pytest-All](https://github.com/wilsonhammell/CISC327/actions/workflows/pytest.yml/badge.svg)](https://github.com/wilsonhammell/CISC327/actions/workflows/pytest.yml)
 [![Python PEP8](https://github.com/wilsonhammell/CISC327/actions/workflows/style_check.yml/badge.svg)](https://github.com/wilsonhammell/CISC327/actions/workflows/style_check.yml)
 
